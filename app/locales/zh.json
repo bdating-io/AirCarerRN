@@ -1,0 +1,9 @@
+{
+    "account": "账户",
+    "login": "登录",
+    "logout": "登出",
+    "signup": "注册",
+    "publishTask": "发布任务",
+    "browsingTasks": "浏览任务",
+    "myTasks": "我的任务"
+}
