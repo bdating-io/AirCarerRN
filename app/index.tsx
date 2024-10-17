@@ -8,19 +8,23 @@ import theme from "@app/constants/theme";
 import Navigation from "@app/navigation";
 import { FontSizeProvider } from "./contexts/font.context";
 import { LanguageProvider } from "./contexts/language.context";
+import config from "./config/config";
+import { Auth0Provider } from 'react-native-auth0';
 
 
 export default function Index() {
     return (
         <SafeAreaProvider>
             <ReduxProvider store={store}>
-                <LanguageProvider>
-                    <FontSizeProvider>
-                        <PaperProvider theme={theme}>
-                            <Navigation />
-                        </PaperProvider>
-                    </FontSizeProvider>
-                </LanguageProvider>
+                <Auth0Provider domain={config.auth0Domain} clientId={config.auth0ClientId}>
+                    <LanguageProvider>
+                        <FontSizeProvider>
+                            <PaperProvider theme={theme}>
+                                <Navigation />
+                            </PaperProvider>
+                        </FontSizeProvider>
+                    </LanguageProvider>
+                </Auth0Provider>
             </ReduxProvider>
         </SafeAreaProvider >
     );

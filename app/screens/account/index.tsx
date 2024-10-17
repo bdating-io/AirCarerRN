@@ -6,6 +6,8 @@ import { Button } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { i18n } from "@app/locales/i18n";
 import { useLanguage } from "@app/contexts/language.context";
+import { useAuth0 } from "react-native-auth0";
+import { useEffect } from "react";
 
 const FontSizeControls: React.FC = () => {
     const { fontSize, changeFontSize } = useFontSize();
@@ -24,8 +26,21 @@ const FontSizeControls: React.FC = () => {
 };
 
 export default function AccountScreen() {
-    const dispatch = useDispatch();
+    const dirspatch = useDispatch();
+    const { user, authorize, error, clearSession } = useAuth0();
     const { lang, changeLanguage } = useLanguage();
+
+    useEffect(() => {
+        console.log(error)
+    },[error])
+    const signin = async () => {
+        await authorize();
+    };
+
+    const signout = async  () => {
+        await clearSession();
+    }
+
     return (
         <View>
             <FontSizeControls />
@@ -38,6 +53,15 @@ export default function AccountScreen() {
             </Button>
             <Button mode="contained" onPress={() => changeLanguage('en')}>
                 <AirCarerText variant="button">EN</AirCarerText>
+            </Button>
+
+            <AirCarerText variant="h2">User</AirCarerText>
+            <AirCarerText>{user ? user.name : 'No user'}</AirCarerText> 
+            <Button mode="contained" onPress={signin}>
+                <AirCarerText variant="button">Login</AirCarerText>
+            </Button>
+            <Button mode="contained" onPress={signout}>
+                <AirCarerText variant="button">Log out</AirCarerText>
             </Button>
         </View>
     )
