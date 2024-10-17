@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AirCarerRN",
-    "slug": "AirCarerRN",
+    "slug": "aircarerrn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -42,8 +42,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "7b4e6440-13d3-4e1e-a515-582043876773"
+        "projectId": "d2289215-71d0-40e0-8a8d-d1bf71bcff74"
       }
-    }
+    },
+    "owner": "aircarer"
   }
 }
