@@ -6,8 +6,15 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#0A3E6C',
-    secondary: '#AFA69A',
+    secondary: '#e77d7d',
+    scrim: '#005CAFCC',
     error: '#B00020',
+    contrastText: '#FFFFFF',
+  },
+  rouded: {
+    small: 10,
+    medium: 20,
+    large: 30,
   }
 };
 

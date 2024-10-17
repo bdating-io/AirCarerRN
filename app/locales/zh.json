@@ -5,5 +5,11 @@
     "signup": "注册",
     "publishTask": "发布任务",
     "browsingTasks": "浏览任务",
-    "myTasks": "我的任务"
+    "myTasks": "我的任务",
+    "publishTab": {
+        "goodday": "早上好",
+        "publishTaskSlogen": "寻找您的清洁专家",
+        "taskTitle": "任务标题",
+        "getItDone": "Get it done!"
+    }
 }
