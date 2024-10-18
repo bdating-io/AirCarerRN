@@ -16,6 +16,7 @@ import { RootStackParamList } from '@app/types/common.type';
 import PublishTaskScreen from '@app/screens/publish-task';
 import MyTaskScreen from '@app/screens/my-task';
 import AccountScreen from '@app/screens/account';
+import LoginScreen from '@app/screens/login';
 import { Icon } from 'react-native-paper';
 import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
@@ -121,10 +122,16 @@ const Navigation = () => {
                 headerTitleAlign: 'center',
             })}>
             <Stack.Screen
+                name='login'
+                component={LoginScreen}
+                options={{ headerShown: true, headerTitle: 'Login' }}
+            />
+            <Stack.Screen
                 name='index'
                 component={RenderTabNavigation}
                 options={{ headerShown: false }}
             />
+
             <Stack.Screen
                 name='browsing-task/task-detail'
                 component={MyTaskDetailScreen}

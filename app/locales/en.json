@@ -3,6 +3,7 @@
     "login": "Log In",
     "logout": "Log Out",
     "signup": "Sign Up",
+    "termsAndConditions":"By signing up,I agree to AirCarer‘s Terms & Conditions",
     "publishTask": "Need a hand?",
     "browsingTasks": "Browser",
     "myTasks": "My Tasks",
@@ -11,5 +12,5 @@
         "publishTaskSlogen": "Need a hand? We’ve got you covered.",
         "taskTitle": "Task Title",
         "getItDone": "Get it done!"
-    },
+    }
 }

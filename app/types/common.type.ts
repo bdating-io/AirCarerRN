@@ -5,6 +5,7 @@ export type RootStackParamList = {
     index: undefined;
     browsingTask: undefined;
     goBack: undefined;
+    'login': undefined;
     'my-task/detail': undefined;
     'browsing-task/task-detail': undefined;
 };
