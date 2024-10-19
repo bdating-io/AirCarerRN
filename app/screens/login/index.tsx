@@ -11,54 +11,62 @@ import { useEffect } from "react";
 import theme from "@app/constants/theme";
 import Welcome from "@assets/images/welcome.png";
 
-export default function LoginScreen() {
+export default function LoginScreen(props: any) {
   const dirspatch = useDispatch();
   const { user, authorize, error, clearSession } = useAuth0();
   const { lang, changeLanguage } = useLanguage();
+  const { navigation } = props;
 
   useEffect(() => {
     console.log(error);
   }, [error]);
+
   const signin = async () => {
     await authorize();
+  };
+
+  //test only
+  const testSignIN = () => {
+    navigation.navigate("index");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <View style={styles.imagesContainer}>
-        <Image
-          source={Welcome}
-          style={styles.welcomeImage}
-          resizeMode="contain"
-        />
+          <Image
+            source={Welcome}
+            style={styles.welcomeImage}
+            resizeMode="contain"
+          />
         </View>
-
-        <View style={styles.buttonContainer}>
-          <Button
-            mode="contained"
-            buttonColor={theme.colors.secondary}
-            textColor="white"
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-            onPress={signin}
-          >
-            <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
-          </Button>
-          <Button
-            mode="contained"
-            buttonColor={theme.colors.primary}
-            textColor="white"
-            style={styles.button}
-            contentStyle={styles.buttonContent}
-            onPress={signin}
-          >
-            <AirCarerText variant="button">{i18n.t("signup")}</AirCarerText>
-          </Button>
+        <View style={styles.bottomContainer}>
+          <View style={styles.buttonContainer}>
+            <Button
+              mode="contained"
+              buttonColor={theme.colors.secondary}
+              textColor="white"
+              style={styles.button}
+              contentStyle={styles.buttonContent}
+              onPress={testSignIN}
+            >
+              <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
+            </Button>
+            <Button
+              mode="contained"
+              buttonColor={theme.colors.primary}
+              textColor="white"
+              style={styles.button}
+              contentStyle={styles.buttonContent}
+              onPress={signin}
+            >
+              <AirCarerText variant="button">{i18n.t("signup")}</AirCarerText>
+            </Button>
+          </View>
+          <AirCarerText style={styles.termsText}>
+            {i18n.t("termsAndConditions")}
+          </AirCarerText>
         </View>
-        <AirCarerText style={styles.termsText}>
-          {i18n.t("termsAndConditions")}
-        </AirCarerText>
       </View>
     </View>
   );
@@ -72,50 +80,43 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: theme.colors.scrim,
-    width:'100%'
+    width: "100%",
   },
   searchContainer: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 20,
-  },
-  goodDayText: {
-    color: theme.colors.contrastText,
-  },
-  slogan: {
-    paddingTop: 20,
-    color: theme.colors.contrastText,
-    fontWeight: "900",
   },
   imagesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginTop: 20,
-    width:'100%'
-  },
-  newTaskButton: {
-    justifyContent: "center",
     width: "100%",
-    marginTop: 20,
-    borderRadius: theme.rouded.large,
-  },
-  newTaskButtonContent: {
-    height: 53,
   },
   welcomeImage: {
-    width: '100%',
+    width: "100%",
     height: 500,
     marginTop: 20,
     marginBottom: 20,
     borderRadius: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
+  },
+  bottomContainer: {
+    backgroundColor: "white",
+    width: "100%",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top:600,
+    borderRadius: theme.rouded.large,
+    padding: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
   },
   button: {
@@ -124,13 +125,18 @@ const styles = StyleSheet.create({
     borderRadius: theme.rouded.large,
   },
   buttonContent: {
-    height: 53,
-    paddingVertical: 8,
+    height: 60,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    textAlign: "center",
   },
   termsText: {
-    marginTop: 20,
     color: theme.colors.contrastText,
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

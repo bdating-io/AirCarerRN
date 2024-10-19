@@ -124,7 +124,7 @@ const Navigation = () => {
             <Stack.Screen
                 name='login'
                 component={LoginScreen}
-                options={{ headerShown: true, headerTitle: 'Login' }}
+                options={{headerShown: false }}
             />
             <Stack.Screen
                 name='index'
