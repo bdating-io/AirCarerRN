@@ -25,7 +25,7 @@ export default function LoginScreen(props: any) {
     await authorize();
   };
 
-  //test only
+  //test only，to index
   const testSignIN = () => {
     navigation.navigate("index");
   };
