@@ -7,6 +7,11 @@
     "publishTask": "Need a hand?",
     "browsingTasks": "Browser",
     "myTasks": "My Tasks",
+    "signupTab": {
+        "createProfile": "Create your profile",
+        "expectedPricing": "Expected pricing",
+        "servicingTime": "Servicing hours",
+    },
     "publishTab": {
         "goodday": "Good day",
         "publishTaskSlogen": "Need a hand? We’ve got you covered.",

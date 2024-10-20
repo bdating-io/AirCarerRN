@@ -17,20 +17,20 @@ const AirCarerText: React.FC<AircarerTextProps> = ({ style, variant='default', c
     switch (variant) {
         case 'h1':
             return (
-                <Text style={[{ fontSize: fontSize + H1_OFFSET, fontWeight: 'bold' }, style]} {...props}>
+                <Text style={[{ fontSize: fontSize + H1_OFFSET, fontWeight: '900' }, style]} {...props}>
                     {children}
                 </Text>
             );
         case 'h2':
             return (
-                <Text style={[{ fontSize: fontSize + H2_OFFSET }, style]} {...props}>
+                <Text style={[{ fontSize: fontSize + H2_OFFSET, fontWeight: '700' }, style]} {...props}>
                     {children}
                 </Text>
             );
         case 'bold':
         case 'button':
             return (
-                <Text style={[{ fontSize, fontWeight: 'bold' }, style]} {...props}>
+                <Text style={[{ fontSize, fontWeight: '900', }, style]} {...props}>
                     {children}
                 </Text>
             );

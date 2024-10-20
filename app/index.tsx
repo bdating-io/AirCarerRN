@@ -26,6 +26,6 @@ export default function Index() {
                     </LanguageProvider>
                 </Auth0Provider>
             </ReduxProvider>
-        </SafeAreaProvider >
+        </SafeAreaProvider>
     );
 }

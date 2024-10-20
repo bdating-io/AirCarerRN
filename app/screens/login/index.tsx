@@ -10,6 +10,7 @@ import { useAuth0 } from "react-native-auth0";
 import { useEffect } from "react";
 import theme from "@app/constants/theme";
 import Welcome from "@assets/images/welcome.png";
+import HalfScreenModal from "../../components/halfScreen.modal";
 
 export default function LoginScreen(props: any) {
   const dirspatch = useDispatch();
@@ -22,7 +23,15 @@ export default function LoginScreen(props: any) {
   }, [error]);
 
   const signin = async () => {
-    await authorize();
+    authorize()
+    .then((user) => {
+      if (user?.accessToken !== undefined) {
+        navigation.navigate("index");
+      }
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
   };
 
   //test only，to index
@@ -40,33 +49,36 @@ export default function LoginScreen(props: any) {
             resizeMode="contain"
           />
         </View>
-        <View style={styles.bottomContainer}>
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              buttonColor={theme.colors.secondary}
-              textColor="white"
-              style={styles.button}
-              contentStyle={styles.buttonContent}
-              onPress={testSignIN}
-            >
-              <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
-            </Button>
-            <Button
-              mode="contained"
-              buttonColor={theme.colors.primary}
-              textColor="white"
-              style={styles.button}
-              contentStyle={styles.buttonContent}
-              onPress={signin}
-            >
-              <AirCarerText variant="button">{i18n.t("signup")}</AirCarerText>
-            </Button>
+
+        <HalfScreenModal heightPerc={"20%"} persist>
+          <View style={styles.bottomContainer}>
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                buttonColor={theme.colors.secondary}
+                textColor="white"
+                style={styles.button}
+                contentStyle={styles.buttonContent}
+                onPress={testSignIN}
+              >
+                <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
+              </Button>
+              <Button
+                mode="contained"
+                buttonColor={theme.colors.primary}
+                textColor="white"
+                style={styles.button}
+                contentStyle={styles.buttonContent}
+                onPress={signin}
+              >
+                <AirCarerText variant="button">{i18n.t("signup")}</AirCarerText>
+              </Button>
+            </View>
+            <AirCarerText style={styles.termsText}>
+              {i18n.t("termsAndConditions")}
+            </AirCarerText>
           </View>
-          <AirCarerText style={styles.termsText}>
-            {i18n.t("termsAndConditions")}
-          </AirCarerText>
-        </View>
+        </HalfScreenModal>
       </View>
     </View>
   );
@@ -106,18 +118,10 @@ const styles = StyleSheet.create({
   bottomContainer: {
     backgroundColor: "white",
     width: "100%",
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top:600,
-    borderRadius: theme.rouded.large,
-    padding: 20,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
   },
   button: {
     flex: 1,

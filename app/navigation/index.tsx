@@ -22,14 +22,27 @@ import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useLanguage } from '@app/contexts/language.context';
+import { useAuth0 } from 'react-native-auth0';
+import { useNavigation } from 'expo-router';
+import SignupServicing from '@app/screens/signup/signup-servicing';
 
 
 const Navigation = () => {
     const { lang } = useLanguage();
     const Tab = createBottomTabNavigator();
     const Stack = createNativeStackNavigator<RootStackParamList>();
+    const navigation = useNavigation();
+
+    const { user, isLoading } = useAuth0();
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            navigation.navigate('login' as never);
+            console.log('not logged in, redirect to signup');
+        }
+    }, [isLoading, user]);
 
     const renderTabIcon = (route: any, focused: boolean) => {
         let icon = '';
@@ -122,16 +135,27 @@ const Navigation = () => {
                 headerTitleAlign: 'center',
             })}>
             <Stack.Screen
-                name='login'
-                component={LoginScreen}
-                options={{headerShown: false }}
-            />
-            <Stack.Screen
                 name='index'
                 component={RenderTabNavigation}
                 options={{ headerShown: false }}
             />
-
+            <Stack.Screen
+                name='login'
+                component={LoginScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="signup/servicing"
+                component={SignupServicing}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
             <Stack.Screen
                 name='browsing-task/task-detail'
                 component={MyTaskDetailScreen}
