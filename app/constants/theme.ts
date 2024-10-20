@@ -9,6 +9,7 @@ const theme = {
     secondary: '#e77d7d',
     scrim: '#005CAFCC',
     error: '#B00020',
+    paper: '#FFFFFF',
     contrastText: '#FFFFFF',
   },
   rouded: {
