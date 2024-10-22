@@ -4,7 +4,8 @@ import { NavigationProp } from '@react-navigation/core';
 export type RootStackParamList = {
     index: undefined;
     signup: undefined;
-    'signup/servicing': undefined;
+    'signup/pricing': undefined;
+    'signup/servicingHours': undefined;
     browsingTask: undefined;
     goBack: undefined;
     'login': undefined;

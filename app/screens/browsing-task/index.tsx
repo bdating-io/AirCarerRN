@@ -6,7 +6,7 @@ export default function BrowsingTaskScreen({navigation}: any) {
     return (
         <View>
             <AirCarerText>Browsing Task.</AirCarerText>
-            <Button mode="contained" onPress={() => navigation.navigate("signup/servicing")}>
+            <Button mode="contained" onPress={() => navigation.navigate("signup/pricing")}>
                 <AirCarerText variant="button">Test signup</AirCarerText>
                 </Button>
         </View>

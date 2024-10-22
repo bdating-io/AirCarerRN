@@ -1,4 +1,4 @@
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
     createNativeStackNavigator,
@@ -26,7 +26,9 @@ import { useCallback, useEffect } from 'react';
 import { useLanguage } from '@app/contexts/language.context';
 import { useAuth0 } from 'react-native-auth0';
 import { useNavigation } from 'expo-router';
-import SignupServicing from '@app/screens/signup/signup-servicing';
+import SignupPricing from '@app/screens/signup/signupPricing';
+import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import AirCarerText from '@app/constants/AirCarerText';
 
 
 const Navigation = () => {
@@ -129,7 +131,10 @@ const Navigation = () => {
                             navigation.goBack();
                         }}
                         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                        <Icon source='chevron-left' size={24} color={theme.colors.primary} />
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Icon source='chevron-left' size={24} color={theme.colors.primary} />
+                            <AirCarerText variant='default'>{i18n.t('back')}</AirCarerText>
+                        </View>
                     </TouchableOpacity>
                 ),
                 headerTitleAlign: 'center',
@@ -145,8 +150,20 @@ const Navigation = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="signup/servicing"
-                component={SignupServicing}
+                name="signup/pricing"
+                component={SignupPricing}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="signup/servicingHours"
+                component={SignupServicingHours}
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),
