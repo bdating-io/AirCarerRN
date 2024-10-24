@@ -16,7 +16,11 @@
     "3b2b": "3 Bedroom 2 Bathroom",
     "edit":"Edit",
     "accountTab":{
-       "publicProfile": "See your public profile"
+       "publicProfile": "See your public profile",
+       "language": "Language",
+       "currentFont":"Current font size",
+       "loginLogout":"Log In/Log Out",
+       "accountSettings": "ACCOUNT SETTINGS"
     },
     "signupTab": {
         "createProfile": "Create your profile",

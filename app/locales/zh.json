@@ -13,7 +13,11 @@
     "3b2b": "三室两卫",
     "edit":"编辑",
     "accountTab":{
-        "publicProfile": "查看您的公共资料"
+        "publicProfile": "查看您的公共资料",
+        "language": "语言",
+        "currentFont":"目前字体大小",
+        "loginLogout":"登录登出",
+        "accountSettings": "账户设置"
      },
     "signupTab": {
         "createProfile": "创建个人资料",

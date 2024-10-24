@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import AirCarerText from "@app/constants/AirCarerText";
 import { useFontSize } from "@app/contexts/font.context";
 import { useLanguage } from "@app/contexts/language.context";
@@ -14,7 +14,7 @@ const FontSizeControls: React.FC = () => {
 
   return (
     <View style={styles.fontControlsContainer}>
-      <AirCarerText>Current font size: {fontSize}</AirCarerText>
+      <AirCarerText>{i18n.t("accountTab.currentFont")} {fontSize}</AirCarerText>
       <View style={styles.buttonGroup}>
         <Button
           icon="plus"
@@ -36,6 +36,27 @@ const FontSizeControls: React.FC = () => {
     </View>
   );
 };
+
+const MenuItem = ({ icon, text, onPress }) => (
+  <TouchableOpacity onPress={onPress}>
+    <View style={styles.menuItem}>
+      <View style={styles.menuItemContent}>
+        <IconButton
+          icon={icon}
+          size={24}
+          iconColor={theme.colors.primary}
+          style={styles.menuIcon}
+        />
+        <AirCarerText style={styles.menuText}>{text}</AirCarerText>
+      </View>
+      <IconButton
+        icon="chevron-right"
+        size={24}
+        iconColor={theme.colors.primary}
+      />
+    </View>
+  </TouchableOpacity>
+);
 
 const AccountScreen: React.FC = (props: any) => {
   const dispatch = useDispatch();
@@ -77,8 +98,9 @@ const AccountScreen: React.FC = (props: any) => {
           <AirCarerText style={styles.username}>
             {user ? user.name : "No user"}
           </AirCarerText>
+
           <AirCarerText style={styles.location}>
-            Melbourne VIC, Australia (Sample)
+            Melbourne VIC, Australia
           </AirCarerText>
           <View style={styles.editContainer}>
             <TouchableOpacity onPress={handlePublicProfile}>
@@ -91,7 +113,7 @@ const AccountScreen: React.FC = (props: any) => {
               buttonColor={theme.colors.primary}
               textColor="white"
               style={styles.button}
-              contentStyle={styles.editContainer}
+              icon="pencil"
               onPress={Edit}
             >
               <AirCarerText variant="button">{i18n.t("edit")}</AirCarerText>
@@ -100,36 +122,11 @@ const AccountScreen: React.FC = (props: any) => {
         </View>
       </View>
 
-      <View style={styles.settingsSection}>
-        <AirCarerText style={styles.sectionTitle}>
-          ACCOUNT SETTINGS
-        </AirCarerText>
-
-        <View style={styles.menuItem}>
-          <AirCarerText style={styles.menuText}>Payment options</AirCarerText>
-        </View>
-
-        <View style={styles.menuItem}>
-          <AirCarerText style={styles.menuText}>
-            Notification preferences
-          </AirCarerText>
-        </View>
-
-        <View style={styles.menuItem}>
-          <AirCarerText style={styles.menuText}>
-            Account information
-          </AirCarerText>
-        </View>
-
-        <AirCarerText style={styles.sectionTitle}>EARNING MONEY</AirCarerText>
-        <View style={styles.menuItem}>
-          <AirCarerText style={styles.menuText}>My dashboard</AirCarerText>
-        </View>
-      </View>
-
       <View style={styles.controlsSection}>
         <FontSizeControls />
-
+        <AirCarerText style={styles.languageTitle}>
+          {i18n.t("accountTab.language")}
+        </AirCarerText>
         <View style={styles.languageControls}>
           <Button
             mode="contained"
@@ -146,11 +143,8 @@ const AccountScreen: React.FC = (props: any) => {
             <AirCarerText variant="button">EN</AirCarerText>
           </Button>
         </View>
-
+        <AirCarerText>{i18n.t("accountTab.loginLogout")}</AirCarerText>
         <View style={styles.authControls}>
-          <AirCarerText variant="h2">User</AirCarerText>
-          <AirCarerText>{user ? user.name : "No user"}</AirCarerText>
-
           <View style={styles.buttonGroup}>
             <Button mode="contained" onPress={signin} style={styles.button}>
               <AirCarerText variant="button">Login</AirCarerText>
@@ -160,6 +154,40 @@ const AccountScreen: React.FC = (props: any) => {
             </Button>
           </View>
         </View>
+      </View>
+
+      <View style={styles.settingsSection}>
+        <AirCarerText style={styles.sectionTitle}>
+          {i18n.t("accountTab.accountSettings")}
+        </AirCarerText>
+
+        <MenuItem
+          icon="credit-card"
+          text="Payment options"
+          onPress={() => console.log('Payment options')}
+        />
+
+        <MenuItem
+          icon="bell"
+          text="Notification preferences"
+          onPress={() => console.log('Notifications')}
+        />
+
+        <MenuItem
+          icon="lock"
+          text="Account information"
+          onPress={() => console.log('Account info')}
+        />
+
+        <AirCarerText style={[styles.sectionTitle, styles.earningTitle]}>
+          EARNING MONEY
+        </AirCarerText>
+        
+        <MenuItem
+          icon="view-dashboard"
+          text="My dashboard"
+          onPress={() => navigation.navigate('browsing-task/task-detail')}
+        />
       </View>
     </ScrollView>
   );
@@ -173,6 +201,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     marginTop: -20,
   },
+  userContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
   profileSection: {
     backgroundColor: theme.colors.scrim,
     padding: 20,
@@ -181,6 +214,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingBottom: 60,
     paddingRight: 15,
+  },
+  languageTitle: {
+    marginBottom: 10,
   },
   avatarContainer: {
     marginRight: 24,
@@ -197,13 +233,11 @@ const styles = StyleSheet.create({
   },
   username: {
     color: theme.colors.contrastText,
-    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
   },
   location: {
     color: theme.colors.contrastText,
-    fontSize: 16,
     marginBottom: 12,
   },
   editContainer: {
@@ -214,37 +248,43 @@ const styles = StyleSheet.create({
   },
   publicProfile: {
     color: theme.colors.contrastText,
-    fontSize: 15,
     flex: 1,
     fontWeight: "bold",
   },
-  editButton: {
-    color: theme.colors.contrastText,
-    paddingHorizontal: 12,
-    paddingVertical: 0,
-    backgroundColor: "transparent",
-  },
   settingsSection: {
+    marginTop: 20,
     padding: 20,
     backgroundColor: theme.colors.contrastText,
     borderRadius: theme.rouded.large,
   },
   sectionTitle: {
-    color: "#666",
-    fontSize: 12,
     marginBottom: 15,
+    fontWeight: "600",
   },
   menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: '#E5E5E5',
+  },
+  menuItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  menuIcon: {
+    marginRight: 12,
+    margin: 0,
   },
   menuText: {
+    flex: 1,
     fontSize: 16,
-    color: "#333",
   },
   controlsSection: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     backgroundColor: theme.colors.contrastText,
     borderRadius: theme.rouded.large,
   },
@@ -263,7 +303,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    marginRight: 10,
+    flex: 1,
+    marginHorizontal: 5,
+    borderRadius: theme.rouded.large,
+  },
+  earningTitle: {
+    marginTop: 20,
   },
 });
 
