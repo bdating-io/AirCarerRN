@@ -11,6 +11,10 @@
     "2b1b": "两室一卫",
     "2b2b": "两室两卫",
     "3b2b": "三室两卫",
+    "edit":"编辑",
+    "accountTab":{
+        "publicProfile": "查看您的公共资料"
+     },
     "signupTab": {
         "createProfile": "创建个人资料",
         "expectedPricing": "收费标准",
