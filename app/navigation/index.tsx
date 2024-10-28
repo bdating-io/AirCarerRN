@@ -1,35 +1,38 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-    createNativeStackNavigator,
-    NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Screens
 import BrowsingTaskScreen from '@app/screens/browsing-task';
-
-// images
-import Logo from '@assets/images/logo.png';
-
-// Others
-import { RootStackParamList } from '@app/types/common.type';
 import PublishTaskScreen from '@app/screens/publish-task';
 import MyTaskScreen from '@app/screens/my-task';
 import AccountScreen from '@app/screens/account';
 import LoginScreen from '@app/screens/login';
-import { Icon } from 'react-native-paper';
 import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
+import SignupPricing from '@app/screens/signup/signupPricing';
+import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import EditPublicProfileScreen from '@app/screens/account/EditPublicProfileScreen';
+import SkillsSettingsScreen from '@app/screens/skills/SkillsSettingsScreen';
+import TransportationScreen from '@app/screens/skills/TransportationScreen';
+import LanguagesScreen from '@app/screens/skills/LanguagesScreen';
+import EducationScreen from '@app/screens/skills/EducationScreen';
+import WorkScreen from '@app/screens/skills/WorkScreen';
+import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
+
+// Images
+import Logo from '@assets/images/logo.png';
+
+// Others
+import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
 import { useCallback, useEffect } from 'react';
 import { useLanguage } from '@app/contexts/language.context';
 import { useAuth0 } from 'react-native-auth0';
 import { useNavigation } from 'expo-router';
-import SignupPricing from '@app/screens/signup/signupPricing';
-import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import { Icon } from 'react-native-paper';
 import AirCarerText from '@app/constants/AirCarerText';
-
 
 const Navigation = () => {
     const { lang } = useLanguage();
@@ -42,7 +45,7 @@ const Navigation = () => {
     useEffect(() => {
         if (!isLoading && !user) {
             navigation.navigate('login' as never);
-            console.log('not logged in, redirect to signup');
+            console.log('Not logged in, redirect to login');
         }
     }, [isLoading, user]);
 
@@ -71,6 +74,7 @@ const Navigation = () => {
             />
         );
     };
+
     const RenderTabNavigation = useCallback(() => {
         return (
             <Tab.Navigator
@@ -83,9 +87,11 @@ const Navigation = () => {
                     headerTitle: () => (
                         <Image
                             source={Logo}
-                            style={{ width: 240, height: 45 }} />
+                            style={{ width: 240, height: 45 }}
+                        />
                     )
-                })}>
+                })}
+            >
                 <Tab.Screen
                     name='PublishTaskScreen'
                     component={PublishTaskScreen}
@@ -120,45 +126,27 @@ const Navigation = () => {
 
     return (
         <Stack.Navigator
-            screenOptions={({
-                navigation,
-            }: {
-                navigation: NativeStackNavigationProp<RootStackParamList>;
-            }) => ({
+            screenOptions={{
                 headerLeft: () => (
-                    <TouchableOpacity
-                        onPress={() => {
-                            navigation.goBack();
-                        }}
-                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                        <View style={{ flexDirection: 'row' }}>
                             <Icon source='chevron-left' size={24} color={theme.colors.primary} />
                             <AirCarerText variant='default'>{i18n.t('back')}</AirCarerText>
                         </View>
                     </TouchableOpacity>
                 ),
                 headerTitleAlign: 'center',
-            })}>
-            <Stack.Screen
-                name='index'
-                component={RenderTabNavigation}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name='login'
-                component={LoginScreen}
-                options={{ headerShown: false }}
-            />
+            }}
+        >
+            <Stack.Screen name='index' component={RenderTabNavigation} options={{ headerShown: false }} />
+            <Stack.Screen name='login' component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen
                 name="signup/pricing"
                 component={SignupPricing}
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),
-                    headerTitleStyle: {
-                        fontWeight: "800",
-                        color: theme.colors.primary
-                    }
+                    headerTitleStyle: { fontWeight: "800", color: theme.colors.primary },
                 }}
             />
             <Stack.Screen
@@ -167,22 +155,18 @@ const Navigation = () => {
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),
-                    headerTitleStyle: {
-                        fontWeight: "800",
-                        color: theme.colors.primary
-                    }
+                    headerTitleStyle: { fontWeight: "800", color: theme.colors.primary },
                 }}
             />
-            <Stack.Screen
-                name='browsing-task/task-detail'
-                component={MyTaskDetailScreen}
-                options={{ headerShown: true, headerTitle: 'Task Detail' }}
-            />
-            <Stack.Screen
-                name='my-task/detail'
-                component={TaskDetailScreen}
-                options={{ headerShown: true, headerTitle: 'My Task Detail' }}
-            />
+            <Stack.Screen name='browsing-task/task-detail' component={MyTaskDetailScreen} options={{ headerShown: true, headerTitle: 'Task Detail' }} />
+            <Stack.Screen name='my-task/detail' component={TaskDetailScreen} options={{ headerShown: true, headerTitle: 'My Task Detail' }} />
+            <Stack.Screen name='EditPublicProfile' component={EditPublicProfileScreen} options={{ headerShown: true, headerTitle: 'Edit public profile' }} />
+            <Stack.Screen name='SkillsSettings' component={SkillsSettingsScreen} options={{ headerShown: true, headerTitle: 'Skills Settings' }} />
+            <Stack.Screen name='Transportation' component={TransportationScreen} options={{ headerShown: true, headerTitle: 'Transportation' }} />
+            <Stack.Screen name='Languages' component={LanguagesScreen} options={{ headerShown: true, headerTitle: 'Languages' }} />
+            <Stack.Screen name='Education' component={EducationScreen} options={{ headerShown: true, headerTitle: 'Education' }} />
+            <Stack.Screen name='Work' component={WorkScreen} options={{ headerShown: true, headerTitle: 'Work Experience' }} />
+            <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{ headerShown: true, headerTitle: 'Specialties' }} />
         </Stack.Navigator>
     );
 };

@@ -80,8 +80,8 @@ const AccountScreen: React.FC = (props: any) => {
     await clearSession();
   };
 
-  const Edit = async () => {
-    console.log("Edit on click");
+  const Edit = () => {
+    navigation.navigate("EditPublicProfile"); // Replace "EditPublicProfile" with the actual screen name in navigation
   };
 
   const handlePublicProfile = () => {
