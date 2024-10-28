@@ -1,11 +1,14 @@
 {
     "account": "Account",
-    "login": "Log In",
-    "logout": "Log Out",
-    "signup": "Sign Up",
+    "login": "Log in",
+    "logout": "Log out",
+    "signup": "Sign up",
     "next": "Next",
+    "finish": "Get started",
     "back": "Back",
-    "termsAndConditions": "By signing up, I agree to AirCarer's Terms & Conditions",
+    "add": "Add",
+    "save": "Save",
+    "termsAndConditions":"By signing up,I agree to AirCarer's Terms & Conditions",
     "publishTask": "Need a hand?",
     "browsingTasks": "Browse",
     "myTasks": "My Tasks",
@@ -25,8 +28,11 @@
     "signupTab": {
         "createProfile": "Create your profile",
         "expectedPricing": "Expected pricing",
-        "expectedPricingExplain": "AirCarer will keep you posted when tasks matched your pricing model is available.",
-        "servicingTime": "Servicing hours"
+        "expectedPricingExplain": "AirCarer will keep you posted when tasks matched your pricing model are available.",
+        "servicingHourExplain": "AirCare will keep you posted when tasks matched your servicing hours are available.",
+        "servicingHours": "Servicing hours",
+        "manageRoutine": "Manage your routine",
+        "noRoutineWarning": "You haven't set up your routine yet. Set up your routine to get more tasks."
     },
     "publishTab": {
         "goodday": "Good day",

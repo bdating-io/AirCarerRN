@@ -89,39 +89,71 @@ const Navigation = () => {
                 headerTitleAlign: 'center',
             }}
         >
-            <Stack.Screen name='index' component={RenderTabNavigation} options={{ headerShown: false }} />
-            <Stack.Screen name='login' component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="signup/pricing" component={SignupPricing} options={{
-                headerShown: true, headerTitle: i18n.t('signupTab.createProfile'),
-                headerTitleStyle: { fontWeight: "800", color: theme.colors.primary }
-            }} />
-            <Stack.Screen name="signup/servicingHours" component={SignupServicingHours} options={{
-                headerShown: true, headerTitle: i18n.t('signupTab.createProfile'),
-                headerTitleStyle: { fontWeight: "800", color: theme.colors.primary }
-            }} />
-            <Stack.Screen name='browsing-task/task-detail' component={MyTaskDetailScreen} options={{ headerShown: true, headerTitle: 'Task Detail' }} />
-            <Stack.Screen name='my-task/detail' component={TaskDetailScreen} options={{ headerShown: true, headerTitle: 'My Task Detail' }} />
+            <Stack.Screen
+                name='index'
+                component={RenderTabNavigation}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen name='EditPublicProfile' component={EditPublicProfileScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.title') 
+                headerShown: true, headerTitle: i18n.t('editProfile.title')
             }} />
             <Stack.Screen name='SkillsSettings' component={SkillsSettingsScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.skillsSettingsTitle') 
+                headerShown: true, headerTitle: i18n.t('editProfile.skillsSettingsTitle')
             }} />
             <Stack.Screen name='Transportation' component={TransportationScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.transportation') 
+                headerShown: true, headerTitle: i18n.t('editProfile.transportation')
             }} />
             <Stack.Screen name='Languages' component={LanguagesScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.languages') 
+                headerShown: true, headerTitle: i18n.t('editProfile.languages')
             }} />
             <Stack.Screen name='Education' component={EducationScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.education') 
+                headerShown: true, headerTitle: i18n.t('editProfile.education')
             }} />
             <Stack.Screen name='Work' component={WorkScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.work') 
+                headerShown: true, headerTitle: i18n.t('editProfile.work')
             }} />
             <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{
-                headerShown: true, headerTitle: i18n.t('editProfile.specialties') 
+                headerShown: true, headerTitle: i18n.t('editProfile.specialties')
             }} />
+            <Stack.Screen
+                name='login'
+                component={LoginScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="signup/servicingHours"
+                component={SignupServicingHours}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="signup/pricing"
+                component={SignupPricing}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen
+                name='browsing-task/task-detail'
+                component={MyTaskDetailScreen}
+                options={{ headerShown: true, headerTitle: 'Task Detail' }}
+            />
+            <Stack.Screen
+                name='my-task/detail'
+                component={TaskDetailScreen}
+                options={{ headerShown: true, headerTitle: 'My Task Detail' }}
+            />
         </Stack.Navigator>
     );
 };

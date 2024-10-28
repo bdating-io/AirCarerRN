@@ -1,3 +1,4 @@
+import useManageTimeSlot from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
@@ -67,6 +68,8 @@ const SignupPricing = (props: any) => {
         navigation.navigate('signup/servicingHours');
     }
 
+
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.expectedPricingContainer}>
@@ -111,6 +114,7 @@ const SignupPricing = (props: any) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: theme.colors.paper,
+        minHeight: '100%',
         justifyContent: 'flex-start',
         paddingHorizontal: 20,
         gap: 15,
