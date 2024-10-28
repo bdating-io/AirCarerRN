@@ -1,13 +1,14 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSkills } from '@app/contexts/SkillsContext';
+import { i18n } from '@app/locales/i18n';
 
 const EducationScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-
-  const [education, setEducation] = useState(route.params?.education || []);
+  const { skills, updateSkills } = useSkills();
+  const [education, setEducation] = useState<string[]>(skills.education || []);
   const [educationInput, setEducationInput] = useState('');
 
   const addEducation = () => {
@@ -17,12 +18,13 @@ const EducationScreen = () => {
     }
   };
 
-  const removeEducation = (item) => {
+  const removeEducation = (item: string) => {
     setEducation(education.filter((entry) => entry !== item));
   };
 
   const saveChanges = () => {
-    navigation.navigate('SkillsSettings', { updatedEducation: education });
+    updateSkills("education", education); // Update context with new education list
+    navigation.navigate('SkillsSettings');
   };
 
   useLayoutEffect(() => {
@@ -30,9 +32,10 @@ const EducationScreen = () => {
       headerLeft: () => (
         <TouchableOpacity onPress={saveChanges} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{i18n.t("common.back")}</Text>
         </TouchableOpacity>
       ),
+      title: i18n.t("educationScreen.title")
     });
   }, [navigation, education]);
 
@@ -40,7 +43,7 @@ const EducationScreen = () => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Enter your educational background"
+        placeholder={i18n.t("educationScreen.placeholder")}
         placeholderTextColor="#000"
         value={educationInput}
         onChangeText={setEducationInput}
@@ -61,7 +64,7 @@ const EducationScreen = () => {
       />
 
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-        <Text style={styles.saveButtonText}>Save settings</Text>
+        <Text style={styles.saveButtonText}>{i18n.t("educationScreen.saveButton")}</Text>
       </TouchableOpacity>
     </View>
   );

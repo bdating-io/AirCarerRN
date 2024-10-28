@@ -1,13 +1,15 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSkills } from '@app/contexts/SkillsContext';
+import { i18n } from '@app/locales/i18n';
 
 const WorkScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const { skills, updateSkills } = useSkills();
 
-  const [work, setWork] = useState(route.params?.work || []);
+  const [work, setWork] = useState<string[]>(skills.work || []);
   const [workInput, setWorkInput] = useState('');
 
   const addWork = () => {
@@ -17,12 +19,13 @@ const WorkScreen = () => {
     }
   };
 
-  const removeWork = (item) => {
+  const removeWork = (item: string) => {
     setWork(work.filter((entry) => entry !== item));
   };
 
   const saveChanges = () => {
-    navigation.navigate('SkillsSettings', { updatedWork: work });
+    updateSkills("work", work); // Update context with new work list
+    navigation.navigate('SkillsSettings');
   };
 
   useLayoutEffect(() => {
@@ -30,9 +33,10 @@ const WorkScreen = () => {
       headerLeft: () => (
         <TouchableOpacity onPress={saveChanges} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{i18n.t("common.back")}</Text>
         </TouchableOpacity>
       ),
+      title: i18n.t("workScreen.title")
     });
   }, [navigation, work]);
 
@@ -40,8 +44,8 @@ const WorkScreen = () => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Enter your work experience"
-        placeholderTextColor="#000" // Updated for better visibility
+        placeholder={i18n.t("workScreen.placeholder")}
+        placeholderTextColor="#000"
         value={workInput}
         onChangeText={setWorkInput}
         onSubmitEditing={addWork}
@@ -61,7 +65,7 @@ const WorkScreen = () => {
       />
 
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-        <Text style={styles.saveButtonText}>Save settings</Text>
+        <Text style={styles.saveButtonText}>{i18n.t("workScreen.saveButton")}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
     marginBottom: 20,
-    color: '#000', // Updated input text color for better visibility
+    color: '#000',
   },
   row: {
     flexDirection: 'row',

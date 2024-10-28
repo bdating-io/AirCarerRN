@@ -1,42 +1,43 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSkills } from '@app/contexts/SkillsContext';
+import { i18n } from '@app/locales/i18n';
 
-const transportationOptions = ['Bicycle', 'Car', 'Online', 'Scooter', 'Truck', 'Walk'];
+const transportationOptions = [
+  { label: 'Bicycle', key: 'bicycle' },
+  { label: 'Car', key: 'car' },
+  { label: 'Online', key: 'online' },
+  { label: 'Scooter', key: 'scooter' },
+  { label: 'Truck', key: 'truck' },
+  { label: 'Walk', key: 'walk' }
+];
 
 const TransportationScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const [selectedTransport, setSelectedTransport] = useState([]);
+  const { skills, updateSkills } = useSkills();
 
-  // Load previous selections when navigating to the Transportation screen
-  useEffect(() => {
-    if (route.params?.selectedTransport) {
-      setSelectedTransport(route.params.selectedTransport);
-    }
-  }, [route.params?.selectedTransport]);
+  const [selectedTransport, setSelectedTransport] = useState<string[]>(skills.transportation || []);
 
-  const toggleOption = (option) => {
-    setSelectedTransport((prev) => {
-      if (prev.includes(option)) {
-        return prev.filter((item) => item !== option);
-      } else {
-        return [...prev, option];
-      }
-    });
+  const toggleOption = (option: string) => {
+    setSelectedTransport((prev) => 
+      prev.includes(option) ? prev.filter((item) => item !== option) : [...prev, option]
+    );
   };
 
   const goBackWithSelected = () => {
-    navigation.navigate('SkillsSettings', { selectedTransport });
+    updateSkills("transportation", selectedTransport);
+    navigation.navigate('SkillsSettings');
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: i18n.t('editProfile.transportation'),
       headerLeft: () => (
         <TouchableOpacity onPress={goBackWithSelected} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{i18n.t('back')}</Text>
         </TouchableOpacity>
       ),
     });
@@ -45,11 +46,11 @@ const TransportationScreen = () => {
   return (
     <View style={styles.container}>
       {transportationOptions.map((option) => (
-        <View key={option} style={styles.row}>
-          <Text style={styles.optionLabel}>{option}</Text>
+        <View key={option.key} style={styles.row}>
+          <Text style={styles.optionLabel}>{i18n.t(`editProfile.${option.key}`)}</Text>
           <Switch
-            value={selectedTransport.includes(option)}
-            onValueChange={() => toggleOption(option)}
+            value={selectedTransport.includes(option.key)}
+            onValueChange={() => toggleOption(option.key)}
           />
         </View>
       ))}
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   backButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 5, // Adjust the margin to match the SkillsSettings back button
+    marginLeft: 5,
   },
   backText: {
     fontSize: 18,

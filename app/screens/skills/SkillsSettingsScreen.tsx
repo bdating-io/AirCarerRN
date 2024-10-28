@@ -1,41 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSkills } from '@app/contexts/SkillsContext';
+import { i18n } from '@app/locales/i18n';
 
 const SkillsSettingsScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const { skills, updateSkills } = useSkills();
 
-  const [transportation, setTransportation] = useState([]);
-  const [languages, setLanguages] = useState([]);
-  const [education, setEducation] = useState([]);
-  const [work, setWork] = useState([]);
-  const [specialties, setSpecialties] = useState([]);
+  // Local state initialized with context values
+  const [transportation, setTransportation] = useState(skills.transportation);
+  const [languages, setLanguages] = useState(skills.languages);
+  const [education, setEducation] = useState(skills.education);
+  const [work, setWork] = useState(skills.work);
+  const [specialties, setSpecialties] = useState(skills.specialties);
 
-  const MAX_VISIBLE_ITEMS = 2; // Maximum number of items to show before using "..."
-
+  // Sync changes to context once the screen is closed
   useEffect(() => {
-    if (route.params?.selectedTransport) {
-      setTransportation(route.params.selectedTransport);
-    }
-    if (route.params?.updatedLanguages) {
-      setLanguages(route.params.updatedLanguages);
-    }
-    if (route.params?.updatedEducation) {
-      setEducation(route.params.updatedEducation);
-    }
-    if (route.params?.updatedWork) {
-      setWork(route.params.updatedWork);
-    }
-    if (route.params?.updatedSpecialties) {
-      setSpecialties(route.params.updatedSpecialties);
-    }
-  }, [route.params]);
+    const unsubscribe = navigation.addListener('blur', () => {
+      updateSkills("transportation", transportation);
+      updateSkills("languages", languages);
+      updateSkills("education", education);
+      updateSkills("work", work);
+      updateSkills("specialties", specialties);
+    });
+    return unsubscribe;
+  }, [navigation, transportation, languages, education, work, specialties]);
 
-  // Helper function to display skill values concisely
-  const renderSkillValue = (skillArray) => {
-    if (skillArray.length === 0) return 'Not specified';
+  const MAX_VISIBLE_ITEMS = 2;
+
+  const renderSkillValue = (skillArray: string[]) => {
+    if (skillArray.length === 0) return i18n.t("common.notSpecified");
     if (skillArray.length > MAX_VISIBLE_ITEMS) {
       return `${skillArray.slice(0, MAX_VISIBLE_ITEMS).join(', ')}...`;
     }
@@ -44,41 +40,41 @@ const SkillsSettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('Transportation', { selectedTransport: transportation })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Transportation', { selectedTransport: transportation, setTransportation })}>
         <View style={styles.row}>
-          <Text style={styles.skillLabel}>Transportation</Text>
+          <Text style={styles.skillLabel}>{i18n.t("editProfile.transportation")}</Text>
           <Text style={styles.skillValue}>{renderSkillValue(transportation)}</Text>
           <Ionicons name="chevron-forward" size={24} color="#ccc" />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Languages', { languages })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Languages', { languages, setLanguages })}>
         <View style={styles.row}>
-          <Text style={styles.skillLabel}>Languages</Text>
+          <Text style={styles.skillLabel}>{i18n.t("editProfile.languages")}</Text>
           <Text style={styles.skillValue}>{renderSkillValue(languages)}</Text>
           <Ionicons name="chevron-forward" size={24} color="#ccc" />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Education', { education })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Education', { education, setEducation })}>
         <View style={styles.row}>
-          <Text style={styles.skillLabel}>Education</Text>
+          <Text style={styles.skillLabel}>{i18n.t("editProfile.education")}</Text>
           <Text style={styles.skillValue}>{renderSkillValue(education)}</Text>
           <Ionicons name="chevron-forward" size={24} color="#ccc" />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Work', { work })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Work', { work, setWork })}>
         <View style={styles.row}>
-          <Text style={styles.skillLabel}>Work</Text>
+          <Text style={styles.skillLabel}>{i18n.t("editProfile.work")}</Text>
           <Text style={styles.skillValue}>{renderSkillValue(work)}</Text>
           <Ionicons name="chevron-forward" size={24} color="#ccc" />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Specialties', { specialties })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Specialties', { specialties, setSpecialties })}>
         <View style={styles.row}>
-          <Text style={styles.skillLabel}>Specialties</Text>
+          <Text style={styles.skillLabel}>{i18n.t("editProfile.specialties")}</Text>
           <Text style={styles.skillValue}>{renderSkillValue(specialties)}</Text>
           <Ionicons name="chevron-forward" size={24} color="#ccc" />
         </View>

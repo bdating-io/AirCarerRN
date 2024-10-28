@@ -1,13 +1,15 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSkills } from '@app/contexts/SkillsContext';
+import { i18n } from '@app/locales/i18n';
 
 const SpecialtiesScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const { skills, updateSkills } = useSkills();
 
-  const [specialties, setSpecialties] = useState(route.params?.specialties || []);
+  const [specialties, setSpecialties] = useState(skills.specialties || []);
   const [specialtyInput, setSpecialtyInput] = useState('');
 
   const addSpecialty = () => {
@@ -17,12 +19,13 @@ const SpecialtiesScreen = () => {
     }
   };
 
-  const removeSpecialty = (item) => {
+  const removeSpecialty = (item: string) => {
     setSpecialties(specialties.filter((entry) => entry !== item));
   };
 
   const saveChanges = () => {
-    navigation.navigate('SkillsSettings', { updatedSpecialties: specialties });
+    updateSkills("specialties", specialties);
+    navigation.navigate('SkillsSettings');
   };
 
   useLayoutEffect(() => {
@@ -30,9 +33,10 @@ const SpecialtiesScreen = () => {
       headerLeft: () => (
         <TouchableOpacity onPress={saveChanges} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>Back</Text>
+          <Text style={styles.backText}>{i18n.t("common.back")}</Text>
         </TouchableOpacity>
       ),
+      title: i18n.t("specialtiesScreen.title")
     });
   }, [navigation, specialties]);
 
@@ -40,7 +44,7 @@ const SpecialtiesScreen = () => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Enter your area of expertise"
+        placeholder={i18n.t("specialtiesScreen.placeholder")}
         placeholderTextColor="#000"
         value={specialtyInput}
         onChangeText={setSpecialtyInput}
@@ -61,7 +65,7 @@ const SpecialtiesScreen = () => {
       />
 
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-        <Text style={styles.saveButtonText}>Save settings</Text>
+        <Text style={styles.saveButtonText}>{i18n.t("specialtiesScreen.saveButton")}</Text>
       </TouchableOpacity>
     </View>
   );

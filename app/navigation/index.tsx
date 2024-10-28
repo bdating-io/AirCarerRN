@@ -1,6 +1,10 @@
+import React, { useCallback, useEffect } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useAuth0 } from 'react-native-auth0';
+import { useNavigation } from 'expo-router';
+import { Icon } from 'react-native-paper';
 
 // Screens
 import BrowsingTaskScreen from '@app/screens/browsing-task';
@@ -20,27 +24,20 @@ import EducationScreen from '@app/screens/skills/EducationScreen';
 import WorkScreen from '@app/screens/skills/WorkScreen';
 import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
 
-// Images
-import Logo from '@assets/images/logo.png';
-
-// Others
+// Context and Constants
+import { SkillsProvider } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
-import { useCallback, useEffect } from 'react';
-import { useLanguage } from '@app/contexts/language.context';
-import { useAuth0 } from 'react-native-auth0';
-import { useNavigation } from 'expo-router';
-import { Icon } from 'react-native-paper';
 import AirCarerText from '@app/constants/AirCarerText';
+import Logo from '@assets/images/logo.png';
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
-    const { lang } = useLanguage();
-    const Tab = createBottomTabNavigator();
-    const Stack = createNativeStackNavigator<RootStackParamList>();
-    const navigation = useNavigation();
-
     const { user, isLoading } = useAuth0();
+    const navigation = useNavigation();
 
     useEffect(() => {
         if (!isLoading && !user) {
@@ -51,78 +48,32 @@ const Navigation = () => {
 
     const renderTabIcon = (route: any, focused: boolean) => {
         let icon = '';
-
         switch (route.name) {
-            case 'PublishTaskScreen':
-                icon = 'check-circle-outline';
-                break;
-            case 'BrowsingTaskScreen':
-                icon = 'magnify';
-                break;
-            case 'MyTaskScreen':
-                icon = 'clipboard-text-outline';
-                break;
-            case 'Account':
-                icon = 'account-circle-outline';
-                break;
+            case 'PublishTaskScreen': icon = 'check-circle-outline'; break;
+            case 'BrowsingTaskScreen': icon = 'magnify'; break;
+            case 'MyTaskScreen': icon = 'clipboard-text-outline'; break;
+            case 'Account': icon = 'account-circle-outline'; break;
         }
-        return (
-            <Icon
-                source={`${icon}`}
-                color={focused ? theme.colors.secondary : theme.colors.primary}
-                size={24}
-            />
-        );
+        return <Icon source={`${icon}`} color={focused ? theme.colors.secondary : theme.colors.primary} size={24} />;
     };
 
-    const RenderTabNavigation = useCallback(() => {
-        return (
-            <Tab.Navigator
-                screenOptions={({ route }) => ({
-                    headerShown: true,
-                    tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
-                    tabBarInactiveTintColor: theme.colors.primary,
-                    tabBarActiveTintColor: theme.colors.secondary,
-                    headerTitleAlign: 'center',
-                    headerTitle: () => (
-                        <Image
-                            source={Logo}
-                            style={{ width: 240, height: 45 }}
-                        />
-                    )
-                })}
-            >
-                <Tab.Screen
-                    name='PublishTaskScreen'
-                    component={PublishTaskScreen}
-                    options={{
-                        tabBarLabel: i18n.t('publishTask'),
-                    }}
-                />
-                <Tab.Screen
-                    name='BrowsingTaskScreen'
-                    component={BrowsingTaskScreen}
-                    options={{
-                        tabBarLabel: i18n.t('browsingTasks'),
-                    }}
-                />
-                <Tab.Screen
-                    name='MyTaskScreen'
-                    component={MyTaskScreen}
-                    options={{
-                        tabBarLabel: i18n.t('myTasks'),
-                    }}
-                />
-                <Tab.Screen
-                    name='Account'
-                    component={AccountScreen}
-                    options={{
-                        tabBarLabel: i18n.t('account'),
-                    }}
-                />
-            </Tab.Navigator>
-        );
-    }, [lang]);
+    const RenderTabNavigation = useCallback(() => (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                headerShown: true,
+                tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
+                tabBarInactiveTintColor: theme.colors.primary,
+                tabBarActiveTintColor: theme.colors.secondary,
+                headerTitleAlign: 'center',
+                headerTitle: () => <Image source={Logo} style={{ width: 240, height: 45 }} />
+            })}
+        >
+            <Tab.Screen name='PublishTaskScreen' component={PublishTaskScreen} options={{ tabBarLabel: i18n.t('publishTask') }} />
+            <Tab.Screen name='BrowsingTaskScreen' component={BrowsingTaskScreen} options={{ tabBarLabel: i18n.t('browsingTasks') }} />
+            <Tab.Screen name='MyTaskScreen' component={MyTaskScreen} options={{ tabBarLabel: i18n.t('myTasks') }} />
+            <Tab.Screen name='Account' component={AccountScreen} options={{ tabBarLabel: i18n.t('account') }} />
+        </Tab.Navigator>
+    ), []);
 
     return (
         <Stack.Navigator
@@ -140,35 +91,45 @@ const Navigation = () => {
         >
             <Stack.Screen name='index' component={RenderTabNavigation} options={{ headerShown: false }} />
             <Stack.Screen name='login' component={LoginScreen} options={{ headerShown: false }} />
-            <Stack.Screen
-                name="signup/pricing"
-                component={SignupPricing}
-                options={{
-                    headerShown: true,
-                    headerTitle: i18n.t('signupTab.createProfile'),
-                    headerTitleStyle: { fontWeight: "800", color: theme.colors.primary },
-                }}
-            />
-            <Stack.Screen
-                name="signup/servicingHours"
-                component={SignupServicingHours}
-                options={{
-                    headerShown: true,
-                    headerTitle: i18n.t('signupTab.createProfile'),
-                    headerTitleStyle: { fontWeight: "800", color: theme.colors.primary },
-                }}
-            />
+            <Stack.Screen name="signup/pricing" component={SignupPricing} options={{
+                headerShown: true, headerTitle: i18n.t('signupTab.createProfile'),
+                headerTitleStyle: { fontWeight: "800", color: theme.colors.primary }
+            }} />
+            <Stack.Screen name="signup/servicingHours" component={SignupServicingHours} options={{
+                headerShown: true, headerTitle: i18n.t('signupTab.createProfile'),
+                headerTitleStyle: { fontWeight: "800", color: theme.colors.primary }
+            }} />
             <Stack.Screen name='browsing-task/task-detail' component={MyTaskDetailScreen} options={{ headerShown: true, headerTitle: 'Task Detail' }} />
             <Stack.Screen name='my-task/detail' component={TaskDetailScreen} options={{ headerShown: true, headerTitle: 'My Task Detail' }} />
-            <Stack.Screen name='EditPublicProfile' component={EditPublicProfileScreen} options={{ headerShown: true, headerTitle: 'Edit public profile' }} />
-            <Stack.Screen name='SkillsSettings' component={SkillsSettingsScreen} options={{ headerShown: true, headerTitle: 'Skills Settings' }} />
-            <Stack.Screen name='Transportation' component={TransportationScreen} options={{ headerShown: true, headerTitle: 'Transportation' }} />
-            <Stack.Screen name='Languages' component={LanguagesScreen} options={{ headerShown: true, headerTitle: 'Languages' }} />
-            <Stack.Screen name='Education' component={EducationScreen} options={{ headerShown: true, headerTitle: 'Education' }} />
-            <Stack.Screen name='Work' component={WorkScreen} options={{ headerShown: true, headerTitle: 'Work Experience' }} />
-            <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{ headerShown: true, headerTitle: 'Specialties' }} />
+            <Stack.Screen name='EditPublicProfile' component={EditPublicProfileScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.title') 
+            }} />
+            <Stack.Screen name='SkillsSettings' component={SkillsSettingsScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.skillsSettingsTitle') 
+            }} />
+            <Stack.Screen name='Transportation' component={TransportationScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.transportation') 
+            }} />
+            <Stack.Screen name='Languages' component={LanguagesScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.languages') 
+            }} />
+            <Stack.Screen name='Education' component={EducationScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.education') 
+            }} />
+            <Stack.Screen name='Work' component={WorkScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.work') 
+            }} />
+            <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{
+                headerShown: true, headerTitle: i18n.t('editProfile.specialties') 
+            }} />
         </Stack.Navigator>
     );
 };
 
-export default Navigation;
+const AppNavigation = () => (
+    <SkillsProvider>
+        <Navigation />
+    </SkillsProvider>
+);
+
+export default AppNavigation;
