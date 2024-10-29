@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
 import { Button, IconButton } from "react-native-paper";
 import AirCarerText from "@app/constants/AirCarerText";
 import { useFontSize } from "@app/contexts/font.context";
@@ -8,6 +8,7 @@ import { useAuth0 } from "react-native-auth0";
 import { useDispatch } from "react-redux";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 const FontSizeControls: React.FC = () => {
   const { fontSize, changeFontSize } = useFontSize();
@@ -16,20 +17,10 @@ const FontSizeControls: React.FC = () => {
     <View style={styles.fontControlsContainer}>
       <AirCarerText>{i18n.t("accountTab.currentFont")} {fontSize}</AirCarerText>
       <View style={styles.buttonGroup}>
-        <Button
-          icon="plus"
-          mode="contained"
-          onPress={() => changeFontSize(fontSize + 2)}
-          style={styles.button}
-        >
+        <Button icon="plus" mode="contained" onPress={() => changeFontSize(fontSize + 2)} style={styles.button}>
           <AirCarerText variant="button">increase</AirCarerText>
         </Button>
-        <Button
-          icon="minus"
-          mode="contained"
-          onPress={() => changeFontSize(fontSize - 2)}
-          style={styles.button}
-        >
+        <Button icon="minus" mode="contained" onPress={() => changeFontSize(fontSize - 2)} style={styles.button}>
           <AirCarerText variant="button">decrease</AirCarerText>
         </Button>
       </View>
@@ -41,28 +32,28 @@ const MenuItem = ({ icon, text, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <View style={styles.menuItem}>
       <View style={styles.menuItemContent}>
-        <IconButton
-          icon={icon}
-          size={24}
-          iconColor={theme.colors.primary}
-          style={styles.menuIcon}
-        />
+        <IconButton icon={icon} size={24} iconColor={theme.colors.primary} style={styles.menuIcon} />
         <AirCarerText style={styles.menuText}>{text}</AirCarerText>
       </View>
-      <IconButton
-        icon="chevron-right"
-        size={24}
-        iconColor={theme.colors.primary}
-      />
+      <IconButton icon="chevron-right" size={24} iconColor={theme.colors.primary} />
     </View>
   </TouchableOpacity>
 );
 
 const AccountScreen: React.FC = (props: any) => {
   const dispatch = useDispatch();
-  const { user, authorize, error, clearSession } = useAuth0();
+  const { user, authorize, clearSession } = useAuth0();
   const { lang, changeLanguage } = useLanguage();
-  const { navigation } = props;
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
+  // Profile data states
+  const [profileImage, setProfileImage] = useState(null);
+  const [firstName, setFirstName] = useState("No user");
+  const [lastName, setLastName] = useState("");
+  const [location, setLocation] = useState("Melbourne VIC, Australia");
+  const [portfolioImages, setPortfolioImages] = useState([]);
+  const [bio, setBio] = useState("");
 
   const signin = async () => {
     authorize()
@@ -81,32 +72,51 @@ const AccountScreen: React.FC = (props: any) => {
   };
 
   const Edit = () => {
-    navigation.navigate("EditPublicProfile"); // Replace "EditPublicProfile" with the actual screen name in navigation
+    navigation.navigate("EditPublicProfile", {
+      profileImage,
+      firstName,
+      lastName,
+      location,
+      portfolioImages,
+      bio,
+    });
   };
 
-  const handlePublicProfile = () => {
-    console.log("Public profile clicked");
-  };
+  useEffect(() => {
+    if (isFocused) {
+      const updateListener = navigation.addListener("focus", () => {
+        if (props.route?.params) {
+          const { profileImage, firstName, lastName, location, portfolioImages, bio } = props.route.params;
+          setProfileImage(profileImage);
+          setFirstName(firstName || "No user");
+          setLastName(lastName || "");
+          setLocation(location || "Melbourne VIC, Australia");
+          setPortfolioImages(portfolioImages || []);
+          setBio(bio || "");
+          Alert.alert("Profile Updated", "Your profile changes have been saved successfully.");
+        }
+      });
+
+      return updateListener;
+    }
+  }, [isFocused, props.route?.params]);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileSection}>
         <View style={styles.avatarContainer}>
-          <View style={styles.avatar} />
+          {profileImage ? (
+            <Image source={{ uri: profileImage }} style={styles.avatar} />
+          ) : (
+            <View style={styles.avatar} />
+          )}
         </View>
         <View style={styles.profileInfo}>
-          <AirCarerText style={styles.username}>
-            {user ? user.name : "No user"}
-          </AirCarerText>
-
-          <AirCarerText style={styles.location}>
-            Melbourne VIC, Australia
-          </AirCarerText>
+          <AirCarerText style={styles.username}>{firstName} {lastName}</AirCarerText>
+          <AirCarerText style={styles.location}>{location}</AirCarerText>
           <View style={styles.editContainer}>
-            <TouchableOpacity onPress={handlePublicProfile}>
-              <AirCarerText style={styles.publicProfile}>
-                {i18n.t("accountTab.publicProfile")}
-              </AirCarerText>
+            <TouchableOpacity onPress={() => navigation.navigate("PublicProfile")}>
+              <AirCarerText style={styles.publicProfile}>{i18n.t("accountTab.publicProfile")}</AirCarerText>
             </TouchableOpacity>
             <Button
               mode="contained"
@@ -124,22 +134,12 @@ const AccountScreen: React.FC = (props: any) => {
 
       <View style={styles.controlsSection}>
         <FontSizeControls />
-        <AirCarerText style={styles.languageTitle}>
-          {i18n.t("accountTab.language")}
-        </AirCarerText>
+        <AirCarerText style={styles.languageTitle}>{i18n.t("accountTab.language")}</AirCarerText>
         <View style={styles.languageControls}>
-          <Button
-            mode="contained"
-            onPress={() => changeLanguage("zh")}
-            style={styles.button}
-          >
+          <Button mode="contained" onPress={() => changeLanguage("zh")} style={styles.button}>
             <AirCarerText variant="button">ZH</AirCarerText>
           </Button>
-          <Button
-            mode="contained"
-            onPress={() => changeLanguage("en")}
-            style={styles.button}
-          >
+          <Button mode="contained" onPress={() => changeLanguage("en")} style={styles.button}>
             <AirCarerText variant="button">EN</AirCarerText>
           </Button>
         </View>
@@ -157,37 +157,13 @@ const AccountScreen: React.FC = (props: any) => {
       </View>
 
       <View style={styles.settingsSection}>
-        <AirCarerText style={styles.sectionTitle}>
-          {i18n.t("accountTab.accountSettings")}
-        </AirCarerText>
-
-        <MenuItem
-          icon="credit-card"
-          text="Payment options"
-          onPress={() => console.log('Payment options')}
-        />
-
-        <MenuItem
-          icon="bell"
-          text="Notification preferences"
-          onPress={() => console.log('Notifications')}
-        />
-
-        <MenuItem
-          icon="lock"
-          text="Account information"
-          onPress={() => console.log('Account info')}
-        />
-
-        <AirCarerText style={[styles.sectionTitle, styles.earningTitle]}>
-          EARNING MONEY
-        </AirCarerText>
+        <AirCarerText style={styles.sectionTitle}>{i18n.t("accountTab.accountSettings")}</AirCarerText>
+        <MenuItem icon="credit-card" text="Payment options" onPress={() => console.log('Payment options')} />
+        <MenuItem icon="bell" text="Notification preferences" onPress={() => console.log('Notifications')} />
+        <MenuItem icon="lock" text="Account information" onPress={() => console.log('Account info')} />
         
-        <MenuItem
-          icon="view-dashboard"
-          text="My dashboard"
-          onPress={() => navigation.navigate('browsing-task/task-detail')}
-        />
+        <AirCarerText style={[styles.sectionTitle, styles.earningTitle]}>EARNING MONEY</AirCarerText>
+        <MenuItem icon="view-dashboard" text="My dashboard" onPress={() => navigation.navigate('browsing-task/task-detail')} />
       </View>
     </ScrollView>
   );
