@@ -203,7 +203,7 @@ const EditPublicProfileScreen: React.FC = () => {
                     <View style={styles.verificationContainer}>
                         <Ionicons name={skills.verificationStatus === "verified" ? "checkmark-circle" : "alert-circle-outline"} size={24} color={skills.verificationStatus === "verified" ? theme.colors.success : "#999"} />
                         <Text style={styles.verificationText}>
-                            {skills.verificationStatus === "verified" ? i18n.t("editProfile.getVerified") : i18n.t("editProfile.notVerified")}
+                            {skills.verificationStatus === "verified" ? i18n.t("editProfile.verified") : i18n.t("editProfile.notVerified")}
                         </Text>
                         {skills.verificationStatus !== "verified" && (
                             <TouchableOpacity onPress={() => navigation.navigate("VerificationScreen")}>

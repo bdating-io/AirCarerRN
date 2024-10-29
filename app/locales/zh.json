@@ -31,7 +31,7 @@
         "expectedPricingExplain": "AirCarer将根据您的收费标准为您推送适合您的任务",
         "servicingHourExplain": "AirCarer将根据您的服务时间为您推送适合您的任务",
         "servicingHours": "服务时间",
-        "manageTimeslots": "管理您的日程",
+        "manageRoutine": "管理您的日程",
         "noRoutineWarning": "您还没有设置您的日程。设置您的日程以获取更多任务。"
     },
     "publishTab": {
@@ -71,6 +71,9 @@
         "libraryPermissionMessage": "我们需要访问您的相册以选择照片。",
         "verificationTitle": "验证",
         "verificationDescription": "通过添加验证来建立信任。",
+        "uploadFile": "上传文件",
+        "currentVerificationStatus": "当前验证状态",
+        "verified": "已验证",
         "notVerified": "身份证尚未验证",
         "getVerified": "进行验证",
         "skills": "技能",
@@ -85,6 +88,14 @@
         "education": "教育背景",
         "work": "工作经验",
         "specialties": "专长",
+        "bicycle": "自行车",
+        "car": "汽车",
+        "online": "在线",
+        "scooter": "滑板车",
+        "truck": "卡车",
+        "walk": "步行"
+    },
+    "transportationOptions": {
         "bicycle": "自行车",
         "car": "汽车",
         "online": "在线",

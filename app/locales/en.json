@@ -8,7 +8,7 @@
     "back": "Back",
     "add": "Add",
     "save": "Save",
-    "termsAndConditions":"By signing up,I agree to AirCarer's Terms & Conditions",
+    "termsAndConditions": "By signing up, I agree to AirCarer's Terms & Conditions",
     "publishTask": "Need a hand?",
     "browsingTasks": "Browse",
     "myTasks": "My Tasks",
@@ -71,6 +71,9 @@
         "libraryPermissionMessage": "We need access to your photo library to select a photo.",
         "verificationTitle": "Verifications",
         "verificationDescription": "Build trust by adding verifications.",
+        "uploadFile": "Upload File",
+        "currentVerificationStatus": "Current Verification Status",
+        "verified": "Verified",
         "notVerified": "ID not verified yet",
         "getVerified": "Get verified",
         "skills": "Skills",
@@ -84,7 +87,13 @@
         "languages": "Languages",
         "education": "Education",
         "work": "Work Experience",
-        "specialties": "Specialties"
+        "specialties": "Specialties",
+        "bicycle": "Bicycle",
+        "car": "Car",
+        "online": "Online",
+        "scooter": "Scooter",
+        "truck": "Truck",
+        "walk": "Walk"
     },
     "transportationOptions": {
         "bicycle": "Bicycle",

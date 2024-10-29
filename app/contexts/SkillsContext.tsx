@@ -24,9 +24,11 @@ const initialState: SkillsState = {
 const SkillsContext = createContext<{
   skills: SkillsState;
   updateSkills: (section: keyof SkillsState, data: string[] | string) => void;
+  setVerificationStatus: (status: string) => void;
 }>({
   skills: initialState,
   updateSkills: () => {}, // placeholder function to avoid undefined
+  setVerificationStatus: () => {}, // placeholder function for verification status
 });
 
 // Provider component
@@ -41,8 +43,16 @@ export const SkillsProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }));
   };
 
+  // Function to update verification status
+  const setVerificationStatus = (status: string) => {
+    setSkillsState((prevSkills) => ({
+      ...prevSkills,
+      verificationStatus: status,
+    }));
+  };
+
   return (
-    <SkillsContext.Provider value={{ skills, updateSkills }}>
+    <SkillsContext.Provider value={{ skills, updateSkills, setVerificationStatus }}>
       {children}
     </SkillsContext.Provider>
   );

@@ -23,6 +23,7 @@ import LanguagesScreen from '@app/screens/skills/LanguagesScreen';
 import EducationScreen from '@app/screens/skills/EducationScreen';
 import WorkScreen from '@app/screens/skills/WorkScreen';
 import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
+import VerificationScreen from '@app/screens/account/VerificationScreen'; // Ensure this import is correct
 
 // Context and Constants
 import { SkillsProvider } from '@app/contexts/SkillsContext';
@@ -153,6 +154,15 @@ const Navigation = () => {
                 name='my-task/detail'
                 component={TaskDetailScreen}
                 options={{ headerShown: true, headerTitle: 'My Task Detail' }}
+            />
+            {/* Verification Screen */}
+            <Stack.Screen
+                name="VerificationScreen"
+                component={VerificationScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('editProfile.verificationTitle')
+                }}
             />
         </Stack.Navigator>
     );
