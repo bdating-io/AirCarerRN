@@ -25,6 +25,7 @@ const AddPropertyPhotos = () => {
     // Launch the image picker
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
       allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
@@ -33,7 +34,9 @@ const AddPropertyPhotos = () => {
     // Check if the user canceled the picker
     if (!result.canceled) {
       // Add the selected image to the photos state
-      setPhoto([...photo, result.assets[0].uri]);
+      const selectedUris = result.assets.map(asset => asset.uri);
+      //setPhoto([...photo, result.assets[0].uri]);
+      setPhoto((photo) => [...photo, ...selectedUris]); // Append new selections
     }
   };
 
@@ -79,7 +82,7 @@ const AddPropertyPhotos = () => {
       <FlatList
         data={photo}
         renderItem={renderItem}
-        keyExtractor={(item) => item}
+        keyExtractor={(item, index) => index.toString()}
         numColumns={3} // Show 3 photos per row
         contentContainerStyle={styles.grid}
       />

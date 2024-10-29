@@ -53,6 +53,7 @@ const AddProperty = () => {
     Alert.alert('Success', 'Property information submitted successfully!');
     const newProperty = { bedrooms, bathrooms, address, suburb, postcode, state, photos };
     setProperties((prevProperties) => [...prevProperties, newProperty]);
+    console.log(photos);
     navigation.goBack();
   };
 

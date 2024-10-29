@@ -1,5 +1,5 @@
 import AirCarerText from "@app/constants/AirCarerText";
-import { View, StyleSheet, Image, FlatList } from "react-native";
+import { View, StyleSheet, Image, FlatList, Alert, Text} from "react-native";
 import { Button, Card, Icon} from "react-native-paper";
 import { i18n } from "@app/locales/i18n";
 import { useState } from "react";
@@ -30,9 +30,15 @@ const PropertyList = (props: any) => {
     }
   }
 
-  const renderPhoto = ({item}) => (
+  const showInfo = (props:any) => {
+    console.log(props);
+  }
+  const renderPhoto = (item) => (
     <View style={styles.photoContainer}>
-      <Image source={item} style={styles.photo} />
+      {/* <Image source={item} style={styles.photo} /> */}
+      {item.map((url, index) => (
+        <Image key={index} source={{ uri: url }} style={styles.photo} />
+      ))}
     </View>
   );
 
@@ -47,11 +53,12 @@ const PropertyList = (props: any) => {
       </Button>
       {properties.length > 0 ? (
         properties.map((property, index) => (
+          
           <Card key={index} style={styles.card}>
+            {showInfo(property)}
             {/* <Card.Title title={`Property ${index + 1}`} /> */}
             <Card.Content>
-
-              <AirCarerText variant="bold">{property.address}</AirCarerText>
+              <AirCarerText variant="bold" style={styles.title}>{property.address}</AirCarerText>
               <AirCarerText variant="default">{property.suburb}, {property.state}, {property.postcode}</AirCarerText>
               
               <View style={styles.address}>
@@ -62,7 +69,8 @@ const PropertyList = (props: any) => {
                 data={property.photos}
                 horizontal
                 showsHorizontalScrollIndicator={true}
-                renderItem={renderPhoto}
+                //renderItem={renderPhoto}
+                renderItem={({ item }) => renderPhoto(item)}
                 keyExtractor={(item, index) => index.toString()}
                 pagingEnabled
              />
@@ -91,6 +99,11 @@ const styles = StyleSheet.create({
   },
   card: {
     marginBottom: 15,
+    //paddingTop: 10,
+  },
+  title: {
+    marginTop: 10,
+    marginBottom: 5,
   },
   address: {
     flexDirection: 'row',
@@ -108,6 +121,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: 5,
     borderRadius: 5,
+    marginRight: 5,
   },
 });
 
