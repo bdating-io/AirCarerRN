@@ -28,6 +28,9 @@ import { useAuth0 } from 'react-native-auth0';
 import { useNavigation } from 'expo-router';
 import SignupPricing from '@app/screens/signup/signupPricing';
 import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import PropertyList from '@app/screens/property/propertyList';
+import AddProperty from '@app/screens/property/addProperty';
+import AddPropertyPhotos from '@app/screens/property/addPropertyPhotos';
 import AirCarerText from '@app/constants/AirCarerText';
 
 
@@ -164,6 +167,42 @@ const Navigation = () => {
             <Stack.Screen
                 name="signup/servicingHours"
                 component={SignupServicingHours}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="property/list"
+                component={PropertyList}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen 
+                name='property/add'
+                component={AddProperty}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen 
+                name='property/addPhotos'
+                component={AddPropertyPhotos}
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),

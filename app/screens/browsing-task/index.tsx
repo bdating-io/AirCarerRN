@@ -8,7 +8,10 @@ export default function BrowsingTaskScreen({navigation}: any) {
             <AirCarerText>Browsing Task.</AirCarerText>
             <Button mode="contained" onPress={() => navigation.navigate("signup/pricing")}>
                 <AirCarerText variant="button">Test signup</AirCarerText>
-                </Button>
+            </Button>
+            <Button mode="contained" onPress={() => navigation.navigate("property/list")}>
+                <AirCarerText variant="button">Test Property List</AirCarerText>
+            </Button>
         </View>
     )
 }
