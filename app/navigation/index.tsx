@@ -16,6 +16,11 @@ import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
 import SignupPricing from '@app/screens/signup/signupPricing';
 import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+
+import PropertyList from '@app/screens/property/propertyList';
+import AddProperty from '@app/screens/property/addProperty';
+import AddPropertyPhotos from '@app/screens/property/addPropertyPhotos';
+
 import EditPublicProfileScreen from '@app/screens/account/EditPublicProfileScreen';
 import SkillsSettingsScreen from '@app/screens/skills/SkillsSettingsScreen';
 import TransportationScreen from '@app/screens/skills/TransportationScreen';
@@ -30,6 +35,7 @@ import { SkillsProvider } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
+
 import AirCarerText from '@app/constants/AirCarerText';
 import Logo from '@assets/images/logo.png';
 
@@ -136,6 +142,42 @@ const Navigation = () => {
             <Stack.Screen
                 name="signup/pricing"
                 component={SignupPricing}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="property/list"
+                component={PropertyList}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen 
+                name='property/add'
+                component={AddProperty}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+            <Stack.Screen 
+                name='property/addPhotos'
+                component={AddPropertyPhotos}
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),
