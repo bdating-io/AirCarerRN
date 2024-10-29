@@ -1,5 +1,6 @@
+import theme from '@app/constants/theme';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { View, Text, Modal, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Modal, Button, StyleSheet, TouchableOpacity, Platform, TouchableWithoutFeedback } from 'react-native';
 
 interface HalfScreenModalProps {
   heightPerc?: string;
@@ -11,12 +12,8 @@ interface HalfScreenModalProps {
 }
 
 const HalfScreenModal = (props: HalfScreenModalProps) => {
-  const { heightPerc="30%", backdropColor="none", children, persist=false, visibility } = props;
-  const [modalVisible, setModalVisible] = useState(visibility);
+  const { heightPerc = "30%", backdropColor = "none", children, persist = false, visibility, setVisibility } = props;
 
-  useEffect(() => {
-    setModalVisible(visibility);
-  }, [visibility]);
 
   const styles = StyleSheet.create({
     container: {
@@ -30,11 +27,21 @@ const HalfScreenModal = (props: HalfScreenModalProps) => {
       backgroundColor: backdropColor,
     },
     modalContainer: {
-      height: heightPerc, 
+      height: heightPerc,
       backgroundColor: 'white',
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       padding: 20,
+      shadowColor: theme.colors.shadow,
+      ...Platform.select({
+        ios: {
+          shadowOffset: { width: 0, height: -1 },
+          shadowOpacity: 0.3,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
     },
     modalContent: {
       flex: 1,
@@ -74,28 +81,29 @@ const HalfScreenModal = (props: HalfScreenModalProps) => {
 
   const pressOut = () => {
     if (persist) return;
-    setModalVisible(false);
+    setVisibility(false);
   }
 
   return (
     <View style={styles.container}>
-
       <Modal
         transparent={true}
-        animationType={persist ? "none": "slide"}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+        animationType={persist ? "none" : "slide"}
+        visible={visibility}
+        onRequestClose={() => setVisibility(false)}
       >
-        <TouchableOpacity 
-          style={styles.backdrop} 
-          activeOpacity={1} 
+        <TouchableOpacity
+          style={styles.backdrop}
+          activeOpacity={1}
           onPressOut={pressOut}
         >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              {children}
+          <TouchableWithoutFeedback>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                {children}
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </TouchableOpacity>
       </Modal>
     </View>

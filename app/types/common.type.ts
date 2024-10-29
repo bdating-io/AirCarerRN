@@ -11,6 +11,13 @@ export type RootStackParamList = {
     'login': undefined;
     'my-task/detail': undefined;
     'browsing-task/task-detail': undefined;
+    EditPublicProfile: undefined;
+    SkillsSettings: undefined;
+    Specialties: undefined;
+    Transportation: undefined;
+    Languages: undefined;
+    Education: undefined;
+    Work: undefined;
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;
