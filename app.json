@@ -14,14 +14,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aircarer.ACRN"
+      "bundleIdentifier": "com.aircarer.acrn"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aircarer.ACRN"
+      "package": "com.aircarer.acrn"
     },
     "web": {
       "bundler": "metro",

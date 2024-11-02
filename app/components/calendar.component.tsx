@@ -50,13 +50,13 @@ const Calendar = (props: CalenderProps) => {
 const styles = StyleSheet.create({
     calendarContainer: {
         flexDirection: 'row',
-        padding: 10,
+        padding: 0,
         width: '100%',
     },
     dayColumn: {
         flex: 1,
         alignItems: 'center',
-        marginHorizontal: 5,
+        marginHorizontal: 0,
     },
     dayLabel: {
         fontWeight: 'bold',
