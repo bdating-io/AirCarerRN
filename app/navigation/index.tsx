@@ -16,6 +16,8 @@ import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
 import SignupPricing from '@app/screens/signup/signupPricing';
 import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import AirCarerText from '@app/constants/AirCarerText';
+import CreateProfile from '@app/screens/signup/createProfile';
 
 import PropertyList from '@app/screens/property/propertyList';
 import AddProperty from '@app/screens/property/addProperty';
@@ -197,6 +199,7 @@ const Navigation = () => {
                 component={TaskDetailScreen}
                 options={{ headerShown: true, headerTitle: 'My Task Detail' }}
             />
+
             {/* Verification Screen */}
             <Stack.Screen
                 name="VerificationScreen"
@@ -204,6 +207,19 @@ const Navigation = () => {
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('editProfile.verificationTitle')
+                }}
+            />
+
+            <Stack.Screen
+                name='signup/profile'
+                component={CreateProfile}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
                 }}
             />
         </Stack.Navigator>

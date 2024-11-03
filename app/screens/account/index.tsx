@@ -39,6 +39,10 @@ const MenuItem = ({ icon, text, onPress }) => (
     </View>
   </TouchableOpacity>
 );
+export default function AccountScreen({navigation}: any) {
+    const dirspatch = useDispatch();
+    const { user, authorize, error, clearSession } = useAuth0();
+    const { lang, changeLanguage } = useLanguage();
 
 const AccountScreen: React.FC = (props: any) => {
   const dispatch = useDispatch();
@@ -152,6 +156,9 @@ const AccountScreen: React.FC = (props: any) => {
             <Button mode="contained" onPress={signout} style={styles.button}>
               <AirCarerText variant="button">Log out</AirCarerText>
             </Button>
+            <Button mode="contained" onPress={() => navigation.navigate("signup/profile")}>
+                <AirCarerText variant="button">Test Create Profile</AirCarerText>
+                </Button>
           </View>
         </View>
       </View>

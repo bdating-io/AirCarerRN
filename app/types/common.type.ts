@@ -5,6 +5,7 @@ export type RootStackParamList = {
     index: undefined;
     signup: undefined;
     'signup/pricing': undefined;
+    'signup/profile': undefined;
     'signup/servicingHours': undefined;
     browsingTask: undefined;
     goBack: undefined;

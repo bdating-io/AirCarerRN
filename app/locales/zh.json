@@ -32,7 +32,18 @@
         "servicingHourExplain": "AirCarer将根据您的服务时间为您推送适合您的任务",
         "servicingHours": "服务时间",
         "manageRoutine": "管理您的日程",
-        "noRoutineWarning": "您还没有设置您的日程。设置您的日程以获取更多任务。"
+        "noRoutineWarning": "您还没有设置您的日程。设置您的日程以获取更多任务。",
+        "firstName":"名",
+        "lastName":"姓",
+        "homeSuburb":"住址",
+        "mainGoal":"您使用AirCarer的主要目的是?",
+        "getThingsDone":"招工",
+        "earnMoney":"赚钱",
+        "areYouIndiOrBiz":"您是个人还是商业用户",
+        "individual":"个人",
+        "business":"商业",
+        "abn":"ABN(如果有)",
+        "getStarted":"开始使用"
     },
     "publishTab": {
         "goodday": "早上好",

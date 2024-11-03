@@ -11,11 +11,219 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXConstants (16.0.2):
     - ExpoModulesCore
-  - EXImageLoader (4.7.0):
-    - ExpoModulesCore
-    - React-Core
   - EXJSONUtils (0.13.1)
   - EXManifests (0.14.3):
+    - ExpoModulesCore
+  - Expo (51.0.37):
+    - ExpoModulesCore
+  - expo-dev-client (4.0.28):
+    - EXManifests
+    - expo-dev-launcher
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - EXUpdatesInterface
+  - expo-dev-launcher (4.0.28):
+    - DoubleConversion
+    - EXManifests
+    - expo-dev-launcher/Main (= 4.0.28)
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - ExpoModulesCore
+    - EXUpdatesInterface
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-jsinspector
+    - React-NativeModulesApple
+    - React-RCTAppDelegate
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-launcher/Main (4.0.28):
+    - DoubleConversion
+    - EXManifests
+    - expo-dev-launcher/Unsafe
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - ExpoModulesCore
+    - EXUpdatesInterface
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-jsinspector
+    - React-NativeModulesApple
+    - React-RCTAppDelegate
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-launcher/Unsafe (4.0.28):
+    - DoubleConversion
+    - EXManifests
+    - expo-dev-menu
+    - expo-dev-menu-interface
+    - ExpoModulesCore
+    - EXUpdatesInterface
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-jsinspector
+    - React-NativeModulesApple
+    - React-RCTAppDelegate
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu (5.0.22):
+    - DoubleConversion
+    - expo-dev-menu/Main (= 5.0.22)
+    - expo-dev-menu/ReactNativeCompatibles (= 5.0.22)
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu-interface (1.8.3)
+  - expo-dev-menu/Main (5.0.22):
+    - DoubleConversion
+    - EXManifests
+    - expo-dev-menu-interface
+    - expo-dev-menu/Vendored
+    - ExpoModulesCore
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-jsinspector
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu/ReactNativeCompatibles (5.0.22):
+    - DoubleConversion
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu/SafeAreaView (5.0.22):
+    - DoubleConversion
+    - ExpoModulesCore
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - expo-dev-menu/Vendored (5.0.22):
+    - DoubleConversion
+    - expo-dev-menu/SafeAreaView
+    - glog
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - ExpoAsset (10.0.10):
     - ExpoModulesCore
   - Expo (51.0.38):
     - ExpoModulesCore
@@ -298,9 +506,6 @@ PODS:
   - FBLazyVector (0.74.5)
   - fmt (9.1.0)
   - glog (0.3.5)
-  - hermes-engine (0.74.5):
-    - hermes-engine/Pre-built (= 0.74.5)
-  - hermes-engine/Pre-built (0.74.5)
   - JWTDecode (3.1.0)
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1580,7 +1785,10 @@ DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+<<<<<<< HEAD
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+=======
+>>>>>>> 117a2ea (create profile)
   - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXManifests (from `../node_modules/expo-manifests/ios`)
   - Expo (from `../node_modules/expo`)
@@ -1681,8 +1889,11 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+<<<<<<< HEAD
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
+=======
+>>>>>>> 117a2ea (create profile)
   EXJSONUtils:
     :path: "../node_modules/expo-json-utils/ios"
   EXManifests:
@@ -1853,6 +2064,7 @@ SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
+<<<<<<< HEAD
   EXImageLoader: ab589d67d6c5f2c33572afea9917304418566334
   EXJSONUtils: 30c17fd9cc364d722c0946a550dfbf1be92ef6a4
   EXManifests: c1fab4c3237675e7b0299ea8df0bcb14baca4f42
@@ -1860,6 +2072,14 @@ SPEC CHECKSUMS:
   expo-dev-client: e25e1c63686cc097d9701354e475b2b60038b83b
   expo-dev-launcher: 8a308596a1a2fa9c4480eccdb8d0c1d1035bbfdf
   expo-dev-menu: 9c3004c35de890a799fd88f73b106c5e2c5b6d6d
+=======
+  EXJSONUtils: 30c17fd9cc364d722c0946a550dfbf1be92ef6a4
+  EXManifests: c1fab4c3237675e7b0299ea8df0bcb14baca4f42
+  Expo: 67b60b3b80a3c8e9f3bcaaa84d06d140229a246d
+  expo-dev-client: e25e1c63686cc097d9701354e475b2b60038b83b
+  expo-dev-launcher: 2adb5b7db90a6388def9c01558d6096685a7d4b5
+  expo-dev-menu: 8d464bf9c52b5d869f5cc9171d42ad4b531bf2f2
+>>>>>>> 117a2ea (create profile)
   expo-dev-menu-interface: be32c09f1e03833050f0ee290dcc86b3ad0e73e4
   ExpoAsset: 323700f291684f110fb55f0d4022a3362ea9f875
   ExpoDocumentPicker: a82eaccc62ecb62662d5a6ca7a8ef40b71daa521
@@ -1873,12 +2093,19 @@ SPEC CHECKSUMS:
   ExpoSecureStore: 060cebcb956b80ddae09821610ac1aa9e1ac74cd
   ExpoSystemUI: d4f065a016cae6721b324eb659cdee4d4cf0cb26
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e
+<<<<<<< HEAD
   EXSplashScreen: 17a656c08a0095be15b620c52e61dfdb665863d2
+=======
+  EXSplashScreen: 1420722e7e0a3f238a49bda1908a707ba14fe545
+>>>>>>> 117a2ea (create profile)
   EXUpdatesInterface: 996527fd7d1a5d271eb523258d603f8f92038f24
   FBLazyVector: ac12dc084d1c8ec4cc4d7b3cf1b0ebda6dab85af
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
+<<<<<<< HEAD
   hermes-engine: 8c1577f3fdb849cbe7729c2e7b5abc4b845e88f8
+=======
+>>>>>>> 117a2ea (create profile)
   JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: 3afceddffa65aee666dafd6f0116f1d975db1584
@@ -1925,6 +2152,7 @@ SPEC CHECKSUMS:
   React-RuntimeApple: 447844a2bdb0a03ffd24e5b4a4b96cfc50325b88
   React-RuntimeCore: 9b5bffdaccee9b707b1c2694c9044e13ff0bb087
   React-runtimeexecutor: 0e688aefc14c6bc8601f4968d8d01c3fb6446844
+<<<<<<< HEAD
   React-RuntimeHermes: 4d6ef6bb0f2b0b40d59143317f6b99c82764c959
   React-runtimescheduler: cfbe85c3510c541ec6dc815c7729b41304b67961
   React-utils: f242eb7e7889419d979ca0e1c02ccc0ea6e43b29
@@ -1935,9 +2163,18 @@ SPEC CHECKSUMS:
   RNScreens: b32a9ff15bea7fcdbe5dff6477bc503f792b1208
   RNSVG: 43b64ed39c14ce830d840903774154ca0c1f27ec
   RNVectorIcons: 845eda5c7819bd29699cafd0fc98c9d4afe28c96
+=======
+  React-runtimescheduler: 057a40b536cab47481d2a2b4f5e93d7eb0b285de
+  React-utils: b4b4a8bdd58632a9ec314071fbd4a642d984718e
+  ReactCommon: bfd464c8f774a0acb93cf2a45afa80b763431f1b
+  RNGestureHandler: 9508b860b3709d658dda7a701363a318e329d04b
+  RNReanimated: d6284e5ba8c4481cca1b2e1e60a9b8a58417869b
+  RNScreens: 4e9248a76e35421013de772f5fefa73d7b039d05
+  RNVectorIcons: a98ff1d74647e3de2eafd248466e7989bbac631c
+>>>>>>> 117a2ea (create profile)
   SimpleKeychain: f8707c8e97b38c6a6e687b17732afc9bcef06439
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  Yoga: 2246eea72aaf1b816a68a35e6e4b74563653ae09
+  Yoga: 950bbfd7e6f04790fdb51149ed51df41f329fcc8
 
 PODFILE CHECKSUM: e387c7a8aeb7d019017260cd39f7276b277b7cdd
 
