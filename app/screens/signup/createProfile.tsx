@@ -17,7 +17,7 @@ const CreateProfile = (props: any) => {
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.expectedPricingContainer}>
          
-            <AirCarerText variant="bold">{i18n.t('signupTab.firstName')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.firstName')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
@@ -25,7 +25,7 @@ const CreateProfile = (props: any) => {
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
-            <AirCarerText variant="bold">{i18n.t('signupTab.lastName')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.lastName')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
@@ -33,7 +33,7 @@ const CreateProfile = (props: any) => {
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
-            <AirCarerText variant="bold">{i18n.t('signupTab.homeSuburb')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.homeSuburb')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
@@ -41,7 +41,7 @@ const CreateProfile = (props: any) => {
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
-            <AirCarerText variant="bold">{i18n.t('signupTab.mainGoal')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.mainGoal')}</AirCarerText>
 
             <View style={styles.flexRow}>
      
@@ -51,7 +51,7 @@ const CreateProfile = (props: any) => {
                 style={[styles.buttonTile, "getThingsDone" === purpose && styles.buttonTilePressed]} 
                 labelStyle={[styles.fontStyles, theme.isV3 && styles.md3FontStyles]}
                 onPress={() => {setPurpose("getThingsDone")}}>
-                {i18n.t('signupTab.getThingsDone')}
+              {i18n.t('signupTab.getThingsDone')}
             </Button>
             <Button
                 contentStyle={styles.flexColumn}
@@ -62,7 +62,7 @@ const CreateProfile = (props: any) => {
                 {i18n.t('signupTab.earnMoney')}
             </Button>
             </View>
-            <AirCarerText variant="bold">{i18n.t('signupTab.areYouIndiOrBiz')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.areYouIndiOrBiz')}</AirCarerText>
 
 
             <View style={styles.flexRow}> 
@@ -83,14 +83,13 @@ const CreateProfile = (props: any) => {
                 {i18n.t('signupTab.business')}
             </Button>
             </View>
-            <AirCarerText variant="bold">{i18n.t('signupTab.abn')}</AirCarerText>
+            <AirCarerText>{i18n.t('signupTab.abn')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
                 placeholder={'ABN'}
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
-
             <Button mode='contained' style={styles.nextButton}  onPress={()=>{}}>
                 <AirCarerText variant='button'>{i18n.t('next')}</AirCarerText>
             </Button>
@@ -106,9 +105,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         padding: 10,
         paddingTop: 16
+        
       },
       buttonTile: {
+        flexGrow: 1,
         margin: 10,
+      },
+      wrappedViewText:{
+    
       },
       buttonTilePressed: {
         backgroundColor: theme.colors.secondaryContainer,
@@ -123,14 +127,12 @@ const styles = StyleSheet.create({
     flexRow: {
         flex: 1,  
         flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
       },
     largeChip:{
         borderColor: theme.colors.primaryContainer,
         borderWidth: 2,
         backgroundColor: theme.colors.paper,
-        // marginVertical: 30,
-        // marginHorizontal: 4
     },
     chipContainer:{
         justifyContent: 'flex-end',
@@ -161,8 +163,6 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        fontWeight: '900',
-        
     },
     nextButton: {
         height: 50,

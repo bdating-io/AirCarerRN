@@ -38,7 +38,6 @@ import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
 
-import AirCarerText from '@app/constants/AirCarerText';
 import Logo from '@assets/images/logo.png';
 
 const Tab = createBottomTabNavigator();
