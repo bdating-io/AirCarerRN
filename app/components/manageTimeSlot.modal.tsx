@@ -7,7 +7,7 @@ import DayOfWeek, { getNumericDayOfWeek, mapStringToDayOfWeek } from "@app/types
 import { TimeSlot, WeeklyRoutine } from "@app/types/timeSlot.type";
 import { compareTimesString } from "@app/utils/date.utils";
 import { useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Card, Icon, TextInput } from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
@@ -253,7 +253,16 @@ const RoutineItem = (props: any) => {
     return (
         <View style={styles.routineItem}>
             <View style={styles.dowPickerInput}>
-                <RNPickerSelect onDonePress={() => onChangeDate(day, localDay, id)} onValueChange={(v) => setDay(v)}
+                <RNPickerSelect 
+                    // for ios
+                    onDonePress={() => onChangeDate(day, localDay, id)} 
+                    // for android, the value is updated in onValueChange
+                    onValueChange={(v) => {
+                        setDay(v);
+                        if (Platform.OS === 'android') {
+                            onChangeDate(day, v, id);
+                        }
+                    }}
                     items={Object.values(DayOfWeek).map(dow => {
                         return {
                             label: dow,
