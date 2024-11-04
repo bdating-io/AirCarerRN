@@ -9,6 +9,11 @@ import { Icon } from 'react-native-paper';
 // Screens
 import BrowsingTaskScreen from '@app/screens/browsing-task';
 import PublishTaskScreen from '@app/screens/publish-task';
+import PublishTaskDateScreen from '@app/screens/publish-task/publishTaskDate';
+import PublishTaskPropertyDetailsScreen from '@app/screens/publish-task/publishTaskPropertyDetails';
+import PublishTaskPhotosScreen from '@app/screens/publish-task/publishTaskPhotos';
+import PublishTaskBudgetScreen from '@app/screens/publish-task/publishTaskBudget';
+import PublishTaskPostScreen from '@app/screens/publish-task/publishTaskPost'; // Added publishTaskPost screen import
 import MyTaskScreen from '@app/screens/my-task';
 import AccountScreen from '@app/screens/account';
 import LoginScreen from '@app/screens/login';
@@ -30,9 +35,8 @@ import LanguagesScreen from '@app/screens/skills/LanguagesScreen';
 import EducationScreen from '@app/screens/skills/EducationScreen';
 import WorkScreen from '@app/screens/skills/WorkScreen';
 import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
-import VerificationScreen from '@app/screens/account/VerificationScreen'; // Ensure this import is correct
+import VerificationScreen from '@app/screens/account/VerificationScreen';
 
-// Context and Constants
 import { SkillsProvider } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
@@ -197,6 +201,48 @@ const Navigation = () => {
                 name='my-task/detail'
                 component={TaskDetailScreen}
                 options={{ headerShown: true, headerTitle: 'My Task Detail' }}
+            />
+
+            {/* Publish Task Screens */}
+            <Stack.Screen
+                name="publishTaskDate"
+                component={PublishTaskDateScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTab.chooseTime')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskPropertyDetails"
+                component={PublishTaskPropertyDetailsScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTab.whatsPlaceLike')
+                }}
+            />
+            <Stack.Screen
+                name="PublishTaskPhotosScreen"
+                component={PublishTaskPhotosScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskPhotos.header')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskBudget"
+                component={PublishTaskBudgetScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskBudget.header')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskPost"
+                component={PublishTaskPostScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskPost.readyToPost')
+                }}
             />
 
             {/* Verification Screen */}
