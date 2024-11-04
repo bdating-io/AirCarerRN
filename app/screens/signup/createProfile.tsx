@@ -2,7 +2,7 @@ import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
 import { useCallback, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
 
@@ -17,27 +17,24 @@ const CreateProfile = (props: any) => {
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.expectedPricingContainer}>
          
-            <AirCarerText>{i18n.t('signupTab.firstName')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
-                placeholder={i18n.t('signupTab.firstName')}
+                label={i18n.t('signupTab.firstName')}
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
-            <AirCarerText>{i18n.t('signupTab.lastName')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
-                placeholder={i18n.t('signupTab.lastName')}
+                label={i18n.t('signupTab.lastName')}
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
-            <AirCarerText>{i18n.t('signupTab.homeSuburb')}</AirCarerText>
             <TextInput
                 mode='outlined'
                 style={styles.input}
-                placeholder={i18n.t('signupTab.homeSuburb')}
+                label={i18n.t('signupTab.homeSuburb')}
                 outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
             />
 
@@ -49,17 +46,29 @@ const CreateProfile = (props: any) => {
                 contentStyle={styles.flexColumn}
                 icon="checkbox-marked-circle-outline" mode="outlined" 
                 style={[styles.buttonTile, "getThingsDone" === purpose && styles.buttonTilePressed]} 
-                labelStyle={[styles.fontStyles, theme.isV3 && styles.md3FontStyles]}
+                labelStyle={[styles.fontStyles]}
                 onPress={() => {setPurpose("getThingsDone")}}>
-              {i18n.t('signupTab.getThingsDone')}
+         
+                    <View style={{}}>
+                        <AirCarerText style={{ textAlign: "center"}}>
+                        {i18n.t('signupTab.getThingsDone')}
+                        </AirCarerText>
+                    </View>
+            
             </Button>
+
             <Button
                 contentStyle={styles.flexColumn}
                 icon="currency-usd" mode="outlined" 
                 style={[styles.buttonTile, "earnMoney" === purpose && styles.buttonTilePressed]} 
-                labelStyle={[styles.fontStyles, theme.isV3 && styles.md3FontStyles]}
+                labelStyle={styles.fontStyles}
                 onPress={() => {setPurpose("earnMoney")}}>
-                {i18n.t('signupTab.earnMoney')}
+ 
+                    <View>
+                        <AirCarerText style={{height: 42}}>
+                        {i18n.t('signupTab.earnMoney')}
+                        </AirCarerText>
+                    </View> 
             </Button>
             </View>
             <AirCarerText>{i18n.t('signupTab.areYouIndiOrBiz')}</AirCarerText>
@@ -70,18 +79,27 @@ const CreateProfile = (props: any) => {
                 contentStyle={styles.flexColumn}
                 icon="account-outline" mode="outlined" 
                 style={[styles.buttonTile, "individual" === userType && styles.buttonTilePressed]} 
-                labelStyle={[styles.fontStyles, theme.isV3 && styles.md3FontStyles]}
+                labelStyle={[styles.fontStyles ]}
                 onPress={() => {setUserType('individual')}}>
-                {i18n.t('signupTab.individual')}
-            </Button>
+                     <View>
+                        <AirCarerText>
+                        {i18n.t('signupTab.individual')}
+                        </AirCarerText>
+                    </View>
+             </Button>
+        
             <Button
                 contentStyle={styles.flexColumn}
                 icon="account-tie-outline" mode="outlined" 
                 style={[styles.buttonTile, "business" === userType && styles.buttonTilePressed]} 
-                labelStyle={[styles.fontStyles, theme.isV3 && styles.md3FontStyles]}
+                labelStyle={[styles.fontStyles ]}
                 onPress={() => {setUserType('business')}}>
-                {i18n.t('signupTab.business')}
-            </Button>
+                     <View>
+                        <AirCarerText >
+                        {i18n.t('signupTab.business')}
+                        </AirCarerText>
+                    </View>
+             </Button>
             </View>
             <AirCarerText>{i18n.t('signupTab.abn')}</AirCarerText>
             <TextInput
@@ -103,13 +121,14 @@ const styles = StyleSheet.create({
     flexColumn: {
         flexDirection: 'column',
         flexWrap: 'wrap',
-        padding: 10,
-        paddingTop: 16
+        padding: 6,
+        paddingTop: 16,
         
       },
       buttonTile: {
         flexGrow: 1,
-        margin: 10,
+        margin: 6,
+        width: 1,
       },
       wrappedViewText:{
     
@@ -117,12 +136,9 @@ const styles = StyleSheet.create({
       buttonTilePressed: {
         backgroundColor: theme.colors.secondaryContainer,
       },
-      md3FontStyles: {
-        lineHeight: 22,
-      },
       fontStyles: {
         fontWeight: '500',
-        fontSize: 20,
+        fontSize: 24,
       },
     flexRow: {
         flex: 1,  
