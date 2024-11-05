@@ -9,6 +9,11 @@ import { Icon } from 'react-native-paper';
 // Screens
 import BrowsingTaskScreen from '@app/screens/browsing-task';
 import PublishTaskScreen from '@app/screens/publish-task';
+import PublishTaskDateScreen from '@app/screens/publish-task/publishTaskDate';
+import PublishTaskPropertyDetailsScreen from '@app/screens/publish-task/publishTaskPropertyDetails';
+import PublishTaskPhotosScreen from '@app/screens/publish-task/publishTaskPhotos';
+import PublishTaskBudgetScreen from '@app/screens/publish-task/publishTaskBudget';
+import PublishTaskPostScreen from '@app/screens/publish-task/publishTaskPost'; // Added publishTaskPost screen import
 import MyTaskScreen from '@app/screens/my-task';
 import AccountScreen from '@app/screens/account';
 import LoginScreen from '@app/screens/login';
@@ -16,6 +21,8 @@ import MyTaskDetailScreen from '@app/screens/my-task/myTaskDetail';
 import TaskDetailScreen from '@app/screens/browsing-task/taskDetail';
 import SignupPricing from '@app/screens/signup/signupPricing';
 import SignupServicingHours from '@app/screens/signup/signupServicingHours';
+import AirCarerText from '@app/constants/AirCarerText';
+import CreateProfile from '@app/screens/signup/createProfile';
 
 import PropertyList from '@app/screens/property/propertyList';
 import TaskList from '@app/screens/browsing-task/taskList';
@@ -29,16 +36,15 @@ import LanguagesScreen from '@app/screens/skills/LanguagesScreen';
 import EducationScreen from '@app/screens/skills/EducationScreen';
 import WorkScreen from '@app/screens/skills/WorkScreen';
 import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
-import VerificationScreen from '@app/screens/account/VerificationScreen'; // Ensure this import is correct
+import VerificationScreen from '@app/screens/account/VerificationScreen';
 
-// Context and Constants
-import { SkillsProvider } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
 
-import AirCarerText from '@app/constants/AirCarerText';
 import Logo from '@assets/images/logo.png';
+import AppSetting from '@app/screens/account/setting';
+import { useLanguage } from '@app/contexts/language.context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,6 +52,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Navigation = () => {
     const { user, isLoading } = useAuth0();
     const navigation = useNavigation();
+    const { lang } = useLanguage();
 
     useEffect(() => {
         if (!isLoading && !user) {
@@ -65,32 +72,34 @@ const Navigation = () => {
         return <Icon source={`${icon}`} color={focused ? theme.colors.secondary : theme.colors.primary} size={24} />;
     };
 
-    const RenderTabNavigation = useCallback(() => (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown: true,
-                tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
-                tabBarInactiveTintColor: theme.colors.primary,
-                tabBarActiveTintColor: theme.colors.secondary,
-                headerTitleAlign: 'center',
-                headerTitle: () => <Image source={Logo} style={{ width: 240, height: 45 }} />
-            })}
-        >
-            <Tab.Screen name='PublishTaskScreen' component={PublishTaskScreen} options={{ tabBarLabel: i18n.t('publishTask') }} />
-            <Tab.Screen name='BrowsingTaskScreen' component={BrowsingTaskScreen} options={{ tabBarLabel: i18n.t('browsingTasks') }} />
-            <Tab.Screen name='MyTaskScreen' component={MyTaskScreen} options={{ tabBarLabel: i18n.t('myTasks') }} />
-            <Tab.Screen name='Account' component={AccountScreen} options={{ tabBarLabel: i18n.t('account') }} />
-        </Tab.Navigator>
-    ), []);
+    const RenderTabNavigation = useCallback(() => {
+        return (
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    headerShown: true,
+                    tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
+                    tabBarInactiveTintColor: theme.colors.primary,
+                    tabBarActiveTintColor: theme.colors.secondary,
+                    headerTitleAlign: 'center',
+                    headerTitle: () => <Image source={Logo} style={{ width: 240, height: 45 }} />
+                })}
+            >
+                <Tab.Screen name='PublishTaskScreen' component={PublishTaskScreen} options={{ tabBarLabel: i18n.t('publishTask') }} />
+                <Tab.Screen name='BrowsingTaskScreen' component={BrowsingTaskScreen} options={{ tabBarLabel: i18n.t('browsingTasks') }} />
+                <Tab.Screen name='MyTaskScreen' component={MyTaskScreen} options={{ tabBarLabel: i18n.t('myTasks') }} />
+                <Tab.Screen name='Account' component={AccountScreen} options={{ tabBarLabel: i18n.t('account') }} />
+            </Tab.Navigator>
+        );
+    }, [lang]);
 
     return (
         <Stack.Navigator
             screenOptions={{
                 headerLeft: () => (
                     <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon source='chevron-left' size={24} color={theme.colors.primary} />
-                            <AirCarerText variant='default'>{i18n.t('back')}</AirCarerText>
+                            <AirCarerText>{i18n.t('back')}</AirCarerText>
                         </View>
                     </TouchableOpacity>
                 ),
@@ -98,7 +107,7 @@ const Navigation = () => {
             }}
         >
             <Stack.Screen
-                name='index'
+                name='/'
                 component={RenderTabNavigation}
                 options={{ headerShown: false }}
             />
@@ -122,6 +131,9 @@ const Navigation = () => {
             }} />
             <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{
                 headerShown: true, headerTitle: i18n.t('editProfile.specialties')
+            }} />
+            <Stack.Screen name='account/setting' component={AppSetting} options={{
+                headerShown: true, headerTitle: i18n.t('accountTab.settings')
             }} />
             <Stack.Screen
                 name='login'
@@ -176,7 +188,7 @@ const Navigation = () => {
                     }
                 }}
             />
-            <Stack.Screen 
+            <Stack.Screen
                 name='property/add'
                 component={AddProperty}
                 options={{
@@ -188,7 +200,7 @@ const Navigation = () => {
                     }
                 }}
             />
-            <Stack.Screen 
+            <Stack.Screen
                 name='property/addPhotos'
                 component={AddPropertyPhotos}
                 options={{
@@ -210,6 +222,49 @@ const Navigation = () => {
                 component={TaskDetailScreen}
                 options={{ headerShown: true, headerTitle: 'My Task Detail' }}
             />
+
+            {/* Publish Task Screens */}
+            <Stack.Screen
+                name="publishTaskDate"
+                component={PublishTaskDateScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTab.chooseTime')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskPropertyDetails"
+                component={PublishTaskPropertyDetailsScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTab.whatsPlaceLike')
+                }}
+            />
+            <Stack.Screen
+                name="PublishTaskPhotosScreen"
+                component={PublishTaskPhotosScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskPhotos.header')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskBudget"
+                component={PublishTaskBudgetScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskBudget.header')
+                }}
+            />
+            <Stack.Screen
+                name="publishTaskPost"
+                component={PublishTaskPostScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('publishTaskPost.readyToPost')
+                }}
+            />
+
             {/* Verification Screen */}
             <Stack.Screen
                 name="VerificationScreen"
@@ -219,14 +274,21 @@ const Navigation = () => {
                     headerTitle: i18n.t('editProfile.verificationTitle')
                 }}
             />
+
+            <Stack.Screen
+                name='signup/profile'
+                component={CreateProfile}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
         </Stack.Navigator>
     );
 };
 
-const AppNavigation = () => (
-    <SkillsProvider>
-        <Navigation />
-    </SkillsProvider>
-);
-
-export default AppNavigation;
+export default Navigation;

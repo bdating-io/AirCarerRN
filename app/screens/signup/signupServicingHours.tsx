@@ -1,9 +1,8 @@
+import Calendar from "@app/components/calendar.component";
 import ManageTimeSlotModal, { useManageTimeSlot } from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
-import { WeeklyRoutine } from "@app/types/timeSlot.type";
-import { useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { Button, Card } from "react-native-paper";
 
@@ -30,11 +29,9 @@ const SignupServicingHours = (props: any) => {
                     should be a calendar
                 </AirCarerText>
                 <Button mode="contained" onPress={() => setShowTimePicker(true)}>
-                    <AirCarerText variant="button">Add a timeslot</AirCarerText>
+                    <AirCarerText variant="button">Editing Timeslots</AirCarerText>
                 </Button>
-                <AirCarerText>
-                    {JSON.stringify(weeklyRoutine)}
-                </AirCarerText>
+                    <Calendar routine={weeklyRoutine} />
                 <Button mode='contained' style={styles.nextButton} onPress={handleNext}>
                     <AirCarerText variant='button'>{i18n.t('finish')}</AirCarerText>
                 </Button>

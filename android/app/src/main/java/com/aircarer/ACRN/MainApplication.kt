@@ -1,4 +1,4 @@
-package com.aircarer.ACRN
+package com.aircarer.acrn
 
 import android.app.Application
 import android.content.res.Configuration

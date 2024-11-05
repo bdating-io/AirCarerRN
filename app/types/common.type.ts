@@ -2,27 +2,36 @@ import { NavigationProp } from '@react-navigation/core';
 
 // Define the type for stack navigation prop
 export type RootStackParamList = {
-    index: undefined;
-    signup: undefined;
-    'signup/pricing': undefined;
-    'signup/servicingHours': undefined;
-    'property/list': undefined;
-    'property/add': undefined;
-    'property/addPhotos': undefined;
-    browsingTask: undefined;
-    "task/list": undefined;
-    goBack: undefined;
-    'login': undefined;
-    'my-task/detail': undefined;
-    'browsing-task/task-detail': undefined;
-    EditPublicProfile: undefined;
-    SkillsSettings: undefined;
-    Specialties: undefined;
-    Transportation: undefined;
-    Languages: undefined;
-    Education: undefined;
-    Work: undefined;
-
+    '/': any;
+    index: any;
+    signup: any;
+    'signup/pricing': any;
+    'signup/profile': any;
+    'signup/servicingHours': any;
+    browsingTask: any;
+    goBack: any;
+    'login': any;
+    'my-task/detail': any;
+    'browsing-task/task-detail': any;
+    "task/list": any;
+    EditPublicProfile: any;
+    SkillsSettings: any;
+    Specialties: any;
+    Transportation: any;
+    Languages: any;
+    Education: any;
+    Work: any;
+    VerificationScreen: any;
+    publishTaskPost: any;
+    publishTaskBudget: any;
+    PublishTaskPhotosScreen: any;
+    publishTaskPropertyDetails: any;
+    publishTaskDate: any;
+    'property/list': any;
+    'property/add': any;
+    'property/addPhotos': any;
+    Account: any;
+    'account/setting': any;
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;

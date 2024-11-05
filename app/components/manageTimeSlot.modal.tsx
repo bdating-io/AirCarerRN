@@ -2,12 +2,15 @@ import HalfScreenModal from "@app/components/halfScreen.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
+import { aircarerSlice } from "@app/slices/aircarer.slice";
 import DayOfWeek, { getNumericDayOfWeek, mapStringToDayOfWeek } from "@app/types/DayOfWeek.enum";
 import { TimeSlot, WeeklyRoutine } from "@app/types/timeSlot.type";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { compareTimesString } from "@app/utils/date.utils";
+import { useCallback, useEffect, useState } from "react";
+import { Platform, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Card, Icon, TextInput } from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export interface ManageTimeSlotModalProps {
@@ -19,13 +22,20 @@ export interface ManageTimeSlotModalProps {
 
 const emptySlot: TimeSlot = {
     id: '',
-    start: '00:00',
-    end: '24:00'
+    start: '',
+    end: ''
 }
 
 export const useManageTimeSlot = () => {
+    const dispatch = useDispatch();
+    const { myRoutine } = useSelector((state: any) => state.aircarer);
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
-    const [weeklyRoutine, setWeeklyRoutine] = useState<WeeklyRoutine>({});
+    const [weeklyRoutine, setWeeklyRoutine] = useState<WeeklyRoutine>(myRoutine ?? {});
+
+    useEffect(() => {
+        dispatch(aircarerSlice.actions.setMyRoutine(weeklyRoutine));
+        console.log(weeklyRoutine)
+    }, [weeklyRoutine]);
 
     return {
         showTimePicker,
@@ -181,15 +191,78 @@ const RoutineItem = (props: any) => {
     const [localStart, setStart] = useState(start);
     const [localEnd, setEnd] = useState(end);
 
-
     useEffect(() => {
-        onUpdate(day, id, { start: localStart, end: localEnd });
+        if (localStart?.length === 5 && localEnd.length === 5 
+            && compareTimesString(localStart, localEnd) > 0) {
+            const end = localEnd;
+            setEnd(localStart);
+            setStart(end);
+        }
     }, [localStart, localEnd]);
+
+    const handleChangeText = (text: string, type: string) => {
+        const numericText = text.replace(/[^0-9]/g, '');
+
+        const setInputValue = type === 'start' ? setStart : setEnd;
+
+        let formattedText = undefined;
+
+        if (numericText.length === 4) {
+            let hours = numericText.slice(0, 2);
+            let minutes = numericText.slice(2, 4);
+
+            if (parseInt(hours) === 24 && parseInt(minutes) > 0) {
+                minutes = '00';
+            }
+            if (parseInt(hours) >= 24) {
+                hours = '24';
+            }
+            if (parseInt(minutes) > 59) {
+                minutes = '59';
+            }
+            formattedText = `${hours}:${minutes}`;
+            setInputValue(`${hours}:${minutes}`);
+        } else if (numericText.length >= 3) {
+            let hours = numericText.slice(0, 2);
+            let minutes = numericText.slice(2, 4);
+            if (parseInt(hours) >= 24) {
+                hours = '24';
+            }
+            if (parseInt(minutes) > 59) {
+                minutes = '59';
+            }
+            formattedText = `${hours}:${minutes}`;
+            setInputValue(`${hours}:${minutes}`);
+        } else {
+            setInputValue(numericText);
+        }
+
+        if (!formattedText) return;
+
+        const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        if (timePattern.test(formattedText)) {
+            if (type === 'start') {
+                onUpdate(day, id, { start: formattedText, end: localEnd });
+            }
+            if (type === 'end') {
+                onUpdate(day, id, { start: localStart, end: formattedText });
+            }
+        }
+    };
 
     return (
         <View style={styles.routineItem}>
             <View style={styles.dowPickerInput}>
-                <RNPickerSelect onDonePress={() => onChangeDate(day, localDay, id)} onValueChange={(v) => setDay(v)}
+                <RNPickerSelect 
+                    // for ios
+                    onDonePress={() => onChangeDate(day, localDay, id)} 
+                    // for android, the value is updated in onValueChange
+                    onValueChange={(v) => {
+                        setDay(v);
+                        if (Platform.OS === 'android') {
+                            onChangeDate(day, v, id);
+                        }
+                    }}
                     items={Object.values(DayOfWeek).map(dow => {
                         return {
                             label: dow,
@@ -204,14 +277,36 @@ const RoutineItem = (props: any) => {
                         mode="outlined" value={localDay.substring(0, 3)} />
                 </RNPickerSelect>
             </View>
-            <TextInput label="Start" style={styles.dowPickerInput} outlineStyle={{
-                borderRadius: theme.rouded.small, borderWidth: 2, borderColor: theme.colors.primary
-            }} placeholder="00:00"
-                mode="outlined" value={localStart} onChangeText={(v) => setStart(v)} />
-            <TextInput label="End" style={styles.dowPickerInput} outlineStyle={{
-                borderRadius: theme.rouded.small, borderWidth: 2, borderColor: theme.colors.primary
-            }} placeholder="24:00"
-                mode="outlined" value={localEnd} onChangeText={(v) => setEnd(v)} />
+            <TextInput
+                label="Start"
+                style={styles.dowPickerInput}
+                outlineStyle={{
+                    borderRadius: theme.rouded.small,
+                    borderWidth: 2,
+                    borderColor: theme.colors.primary
+                }}
+                placeholder="00:00"
+                mode="outlined"
+                value={localStart}
+                keyboardType="numeric"
+                maxLength={5}
+                onChangeText={(v) => handleChangeText(v, 'start')}
+            />
+            <TextInput
+                label="End"
+                style={styles.dowPickerInput}
+                outlineStyle={{
+                    borderRadius: theme.rouded.small,
+                    borderWidth: 2,
+                    borderColor: theme.colors.primary
+                }}
+                placeholder="24:00"
+                mode="outlined"
+                value={localEnd}
+                keyboardType="numeric"
+                maxLength={5}
+                onChangeText={v => handleChangeText(v, 'end')}
+            />
             <TouchableOpacity onPressOut={() => onDelete(day, id)}>
                 <Icon color={theme.colors.primary} source="delete-outline" size={30} />
             </TouchableOpacity>

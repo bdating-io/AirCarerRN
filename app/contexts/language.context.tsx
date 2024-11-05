@@ -32,6 +32,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
             if (savedLan) {
                 console.log('savedLan:', savedLan);
                 i18n.locale = savedLan;
+                dispatch(aircarerSlice.actions.setLang(savedLan));
             } else {
                 // If there's no saved language, use the device's default language
                 const defaultLan = getLocales()[0].languageCode;

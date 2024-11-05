@@ -1,9 +1,10 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSkills } from '@app/contexts/SkillsContext';
 import { i18n } from '@app/locales/i18n';
+import { RootStackParamList } from '@app/types/common.type';
 
 const transportationOptions = [
   { label: 'Bicycle', key: 'bicycle' },
@@ -15,7 +16,7 @@ const transportationOptions = [
 ];
 
 const TransportationScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { skills, updateSkills } = useSkills();
 
   const [selectedTransport, setSelectedTransport] = useState<string[]>(skills.transportation || []);

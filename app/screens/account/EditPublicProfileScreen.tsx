@@ -3,24 +3,26 @@ import { View, Text, TextInput, StyleSheet, Image, ScrollView, TouchableOpacity,
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { i18n } from '@app/locales/i18n';
 import theme from '@app/constants/theme';
 import { useSkills } from '@app/contexts/SkillsContext';
+import { RootStackParamList } from '@app/types/common.type';
 
 const { width, height } = Dimensions.get('window');
 
 const EditPublicProfileScreen: React.FC = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { skills, updateSkills } = useSkills();
 
-    const [profileImage, setProfileImage] = useState<string | null>(null);
-    const [portfolioImages, setPortfolioImages] = useState<string[]>([]);
+    const [profileImage, setProfileImage] = useState<string | null>(skills.profilePicture || null);
+    const [portfolioImages, setPortfolioImages] = useState<string[]>(skills.portfolioImages || []);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [location, setLocation] = useState('');
+    const [bio, setBio] = useState(skills.bio || '');
+    const [firstName, setFirstName] = useState(skills.firstName || '');
+    const [lastName, setLastName] = useState(skills.lastName || '');
+    const [location, setLocation] = useState(skills.location || '');
 
     const maxPortfolioImages = 30;
 
@@ -123,6 +125,28 @@ const EditPublicProfileScreen: React.FC = () => {
         </TouchableOpacity>
     );
 
+    const handleSaveChanges = () => {
+        // Save profile changes
+        updateSkills("profilePicture", profileImage);
+        updateSkills("portfolioImages", portfolioImages);
+        updateSkills("bio", bio);
+        updateSkills("firstName", firstName);
+        updateSkills("lastName", lastName);
+        updateSkills("location", location);
+
+        // Show alert and then navigate
+        Alert.alert(
+            "Success",
+            "Your changes have been updated successfully.",
+            [
+                {
+                    text: "OK",
+                    onPress: () => navigation.navigate("Account")
+                }
+            ]
+        );
+    };
+
     const skillCategories = [
         { label: i18n.t("editProfile.transportation"), value: skills.transportation },
         { label: i18n.t("editProfile.languages"), value: skills.languages },
@@ -143,11 +167,10 @@ const EditPublicProfileScreen: React.FC = () => {
                     </Text>
                 </View>
 
+                {/* Profile Picture Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.profilePicture")}</Text>
-                    <Text style={styles.descriptionText}>
-                        {i18n.t("editProfile.profilePictureDescription")}
-                    </Text>
+                    <Text style={styles.descriptionText}>{i18n.t("editProfile.profilePictureDescription")}</Text>
                     <TouchableOpacity style={styles.imageContainer} onPress={handleChangePhoto}>
                         <Image
                             style={styles.image}
@@ -157,18 +180,20 @@ const EditPublicProfileScreen: React.FC = () => {
                     </TouchableOpacity>
                 </View>
 
+                {/* Bio Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.bio")}</Text>
-                    <Text style={styles.descriptionText}>
-                        {i18n.t("editProfile.bioDescription")}
-                    </Text>
+                    <Text style={styles.descriptionText}>{i18n.t("editProfile.bioDescription")}</Text>
                     <TextInput
                         style={styles.bioInput}
                         placeholder={i18n.t("editProfile.bioPlaceholder")}
+                        value={bio}
+                        onChangeText={setBio}
                         multiline
                     />
                 </View>
 
+                {/* Portfolio Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.portfolio")}</Text>
                     <Text style={styles.descriptionText}>{i18n.t("editProfile.portfolioDescription")}</Text>
@@ -189,14 +214,16 @@ const EditPublicProfileScreen: React.FC = () => {
                     )}
                 </View>
 
-                {isFullScreenVisible && selectedImage && (
-                    <Modal visible={isFullScreenVisible} transparent={true}>
-                        <TouchableOpacity style={styles.fullScreenContainer} onPress={closeFullScreenImage}>
+                {/* Full-Screen Image Modal */}
+                <Modal visible={isFullScreenVisible} transparent={true} onRequestClose={closeFullScreenImage}>
+                    <TouchableOpacity style={styles.fullScreenContainer} onPress={closeFullScreenImage}>
+                        {selectedImage && (
                             <Image source={{ uri: selectedImage }} style={styles.fullScreenImage} resizeMode="contain" />
-                        </TouchableOpacity>
-                    </Modal>
-                )}
+                        )}
+                    </TouchableOpacity>
+                </Modal>
 
+                {/* Verification Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.verificationTitle")}</Text>
                     <Text style={styles.descriptionText}>{i18n.t("editProfile.verificationDescription")}</Text>
@@ -213,6 +240,7 @@ const EditPublicProfileScreen: React.FC = () => {
                     </View>
                 </View>
 
+                {/* Skills Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.skills")}</Text>
                     <Text style={styles.descriptionText}>{i18n.t("editProfile.skillsDescription")}</Text>
@@ -227,22 +255,22 @@ const EditPublicProfileScreen: React.FC = () => {
                     ))}
                 </View>
 
+                {/* Personal Information Section */}
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.firstName")}</Text>
                     <TextInput style={styles.input} placeholder={i18n.t("editProfile.firstNamePlaceholder")} value={firstName} onChangeText={setFirstName} />
                 </View>
-
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.lastName")}</Text>
                     <TextInput style={styles.input} placeholder={i18n.t("editProfile.lastNamePlaceholder")} value={lastName} onChangeText={setLastName} />
                 </View>
-
                 <View style={styles.section}>
                     <Text style={styles.label}>{i18n.t("editProfile.location")}</Text>
                     <TextInput style={styles.input} placeholder={i18n.t("editProfile.locationPlaceholder")} value={location} onChangeText={setLocation} />
                 </View>
 
-                <TouchableOpacity style={styles.saveButton}>
+                {/* Save Button */}
+                <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
                     <Text style={styles.saveButtonText}>{i18n.t("editProfile.saveChanges")}</Text>
                 </TouchableOpacity>
             </ScrollView>
@@ -254,7 +282,6 @@ const styles = StyleSheet.create({
     container: { flex: 1, paddingHorizontal: 20, backgroundColor: '#fff' },
     infoBox: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#F3F7FF', padding: 15, borderRadius: 8, marginBottom: 20, marginTop: 10 },
     infoBoxText: { flex: 1, fontSize: 16, color: theme.colors.primary, marginLeft: 10 },
-    subInfoBoxText: { color: '#4F6C92', fontSize: 14 },
     section: { marginBottom: 25 },
     label: { fontSize: 16, fontWeight: 'bold', color: '#2F2F2F', marginBottom: 5 },
     descriptionText: { fontSize: 14, color: '#666', marginBottom: 5 },
@@ -262,8 +289,6 @@ const styles = StyleSheet.create({
     image: { width: 80, height: 80, borderRadius: 40, marginRight: 15 },
     changePhotoText: { color: theme.colors.primary, fontSize: 16 },
     bioInput: { height: 100, borderColor: '#ccc', borderWidth: 1, borderRadius: 8, padding: 12, fontSize: 14, textAlignVertical: 'top' },
-    portfolioContainer: { flexDirection: 'row', alignItems: 'center' },
-    addIcon: { width: 50, height: 50, backgroundColor: '#E6E9EF', justifyContent: 'center', alignItems: 'center', borderRadius: 5, marginRight: 12 },
     portfolioGrid: { marginTop: 10 },
     portfolioImage: { width: 100, height: 100, margin: 5, borderRadius: 5 },
     fullScreenContainer: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
@@ -273,7 +298,7 @@ const styles = StyleSheet.create({
     getVerifiedText: { color: theme.colors.primary, marginLeft: 10 },
     addSkillContainer: { borderColor: theme.colors.primary, borderWidth: 1, borderRadius: 5, padding: 12, alignItems: 'center', flexDirection: 'row', marginTop: 10 },
     addSkillText: { color: theme.colors.primary, fontWeight: 'bold', marginLeft: 5 },
-    input: { height: 40, borderColor: '#ccc', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, fontSize: 14, color: '#333', backgroundColor: '#fff' },
+    input: { height: 40, borderColor: '#ccc', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, fontSize: 14 },
     saveButton: { backgroundColor: theme.colors.primary, padding: 18, borderRadius: 8, alignItems: 'center', marginTop: 20 },
     saveButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
     skillText: { fontSize: 14, color: '#666', marginTop: 5 },
