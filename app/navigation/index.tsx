@@ -37,12 +37,13 @@ import WorkScreen from '@app/screens/skills/WorkScreen';
 import SpecialtiesScreen from '@app/screens/skills/SpecialtiesScreen';
 import VerificationScreen from '@app/screens/account/VerificationScreen';
 
-import { SkillsProvider } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
 import theme from '@app/constants/theme';
 import { i18n } from '@app/locales/i18n';
 
 import Logo from '@assets/images/logo.png';
+import AppSetting from '@app/screens/account/setting';
+import { useLanguage } from '@app/contexts/language.context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -50,6 +51,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Navigation = () => {
     const { user, isLoading } = useAuth0();
     const navigation = useNavigation();
+    const { lang } = useLanguage();
 
     useEffect(() => {
         if (!isLoading && !user) {
@@ -69,32 +71,34 @@ const Navigation = () => {
         return <Icon source={`${icon}`} color={focused ? theme.colors.secondary : theme.colors.primary} size={24} />;
     };
 
-    const RenderTabNavigation = useCallback(() => (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown: true,
-                tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
-                tabBarInactiveTintColor: theme.colors.primary,
-                tabBarActiveTintColor: theme.colors.secondary,
-                headerTitleAlign: 'center',
-                headerTitle: () => <Image source={Logo} style={{ width: 240, height: 45 }} />
-            })}
-        >
-            <Tab.Screen name='PublishTaskScreen' component={PublishTaskScreen} options={{ tabBarLabel: i18n.t('publishTask') }} />
-            <Tab.Screen name='BrowsingTaskScreen' component={BrowsingTaskScreen} options={{ tabBarLabel: i18n.t('browsingTasks') }} />
-            <Tab.Screen name='MyTaskScreen' component={MyTaskScreen} options={{ tabBarLabel: i18n.t('myTasks') }} />
-            <Tab.Screen name='Account' component={AccountScreen} options={{ tabBarLabel: i18n.t('account') }} />
-        </Tab.Navigator>
-    ), []);
+    const RenderTabNavigation = useCallback(() => {
+        return (
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    headerShown: true,
+                    tabBarIcon: ({ focused }) => renderTabIcon(route, focused),
+                    tabBarInactiveTintColor: theme.colors.primary,
+                    tabBarActiveTintColor: theme.colors.secondary,
+                    headerTitleAlign: 'center',
+                    headerTitle: () => <Image source={Logo} style={{ width: 240, height: 45 }} />
+                })}
+            >
+                <Tab.Screen name='PublishTaskScreen' component={PublishTaskScreen} options={{ tabBarLabel: i18n.t('publishTask') }} />
+                <Tab.Screen name='BrowsingTaskScreen' component={BrowsingTaskScreen} options={{ tabBarLabel: i18n.t('browsingTasks') }} />
+                <Tab.Screen name='MyTaskScreen' component={MyTaskScreen} options={{ tabBarLabel: i18n.t('myTasks') }} />
+                <Tab.Screen name='Account' component={AccountScreen} options={{ tabBarLabel: i18n.t('account') }} />
+            </Tab.Navigator>
+        );
+    }, [lang]);
 
     return (
         <Stack.Navigator
             screenOptions={{
                 headerLeft: () => (
                     <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon source='chevron-left' size={24} color={theme.colors.primary} />
-                            <AirCarerText variant='default'>{i18n.t('back')}</AirCarerText>
+                            <AirCarerText>{i18n.t('back')}</AirCarerText>
                         </View>
                     </TouchableOpacity>
                 ),
@@ -102,7 +106,7 @@ const Navigation = () => {
             }}
         >
             <Stack.Screen
-                name='index'
+                name='/'
                 component={RenderTabNavigation}
                 options={{ headerShown: false }}
             />
@@ -126,6 +130,9 @@ const Navigation = () => {
             }} />
             <Stack.Screen name='Specialties' component={SpecialtiesScreen} options={{
                 headerShown: true, headerTitle: i18n.t('editProfile.specialties')
+            }} />
+            <Stack.Screen name='account/setting' component={AppSetting} options={{
+                headerShown: true, headerTitle: i18n.t('accountTab.settings')
             }} />
             <Stack.Screen
                 name='login'
@@ -168,7 +175,7 @@ const Navigation = () => {
                     }
                 }}
             />
-            <Stack.Screen 
+            <Stack.Screen
                 name='property/add'
                 component={AddProperty}
                 options={{
@@ -180,7 +187,7 @@ const Navigation = () => {
                     }
                 }}
             />
-            <Stack.Screen 
+            <Stack.Screen
                 name='property/addPhotos'
                 component={AddPropertyPhotos}
                 options={{
@@ -271,10 +278,4 @@ const Navigation = () => {
     );
 };
 
-const AppNavigation = () => (
-    <SkillsProvider>
-        <Navigation />
-    </SkillsProvider>
-);
-
-export default AppNavigation;
+export default Navigation;

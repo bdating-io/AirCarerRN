@@ -21,9 +21,14 @@
   "accountTab": {
     "publicProfile": "查看您的公共资料",
     "language": "语言",
+    "fontSize": "字号",
     "currentFont": "目前字体大小",
     "loginLogout": "登录登出",
-    "accountSettings": "账户设置"
+    "accountSettings": "账户设置",
+    "paymentOptions": "支付设置",
+    "notifications": "通知",
+    "settings": "设置",
+    "earningMoney": "我的钱包"
   },
   "signupTab": {
     "createProfile": "创建个人资料",

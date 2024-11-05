@@ -23,7 +23,12 @@
         "language": "Language",
         "currentFont": "Current font size",
         "loginLogout": "Log In/Log Out",
-        "accountSettings": "ACCOUNT SETTINGS"
+        "fontSize": "Font size",
+        "accountSettings": "ACCOUNT SETTINGS",
+        "paymentOptions": "Payment Options",
+        "notifications": "Notifications",
+        "settings": "Settings",
+        "earningMoney": "EARNING MONEY"
     },
     "signupTab": {
         "createProfile": "Create your profile",

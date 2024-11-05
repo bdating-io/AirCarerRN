@@ -9,7 +9,7 @@ const H2_OFFSET = 4;
 
 interface AircarerTextProps extends TextProps {
     children: React.ReactNode;
-    variant?: 'h1' | 'h2' | 'button' | 'bold' | 'default';
+    variant?: 'h1' | 'h2' | 'subtitle' | 'button' | 'bold' | 'default';
 }
 
 const AirCarerText: React.FC<AircarerTextProps> = ({ style, variant = 'default', children, ...props }) => {
@@ -25,6 +25,12 @@ const AirCarerText: React.FC<AircarerTextProps> = ({ style, variant = 'default',
         case 'h2':
             return (
                 <Text style={[{ fontSize: fontSize + H2_OFFSET, fontWeight: '700', color: theme.colors.primary }, style]} {...props}>
+                    {children}
+                </Text>
+            );
+        case 'subtitle':
+            return (
+                <Text style={[{ fontSize: fontSize + H2_OFFSET, fontWeight: '900', color: theme.colors.primary }, style]} {...props}>
                     {children}
                 </Text>
             );

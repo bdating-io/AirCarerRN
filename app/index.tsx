@@ -1,4 +1,3 @@
-import { Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as ReduxProvider } from 'react-redux';
 import { PaperProvider } from 'react-native-paper';
@@ -10,6 +9,7 @@ import { FontSizeProvider } from "./contexts/font.context";
 import { LanguageProvider } from "./contexts/language.context";
 import config from "./config/config";
 import { Auth0Provider } from 'react-native-auth0';
+import { SkillsProvider } from "./contexts/SkillsContext";
 
 
 export default function Index() {
@@ -20,7 +20,9 @@ export default function Index() {
                     <LanguageProvider>
                         <FontSizeProvider>
                             <PaperProvider theme={theme}>
-                                <Navigation />
+                                <SkillsProvider>
+                                    <Navigation />
+                                </SkillsProvider>
                             </PaperProvider>
                         </FontSizeProvider>
                     </LanguageProvider>

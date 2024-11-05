@@ -7,13 +7,15 @@ interface AirCarerState {
     lang: string;
     fontSize: number;
     myRoutine: WeeklyRoutine;
+    registration: any;
 }
 
 const initialState: AirCarerState = {
     logged_user: null,
     lang: 'en',
     fontSize: 20,
-    myRoutine: {}
+    myRoutine: {},
+    registration: {}
 }
 
 export const aircarerSlice = createSlice({
@@ -33,6 +35,9 @@ export const aircarerSlice = createSlice({
         },
         setMyRoutine: (state, action) => {
             state.myRoutine = action.payload;
+        },
+        setRegistration: (state, action) => {
+            state.registration = action.payload;
         }
     }
 });
