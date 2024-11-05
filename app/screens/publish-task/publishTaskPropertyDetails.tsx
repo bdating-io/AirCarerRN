@@ -233,5 +233,3 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.disabled,
     },
 });
-
-export default PublishTaskPropertyDetailsScreen;

@@ -3,10 +3,7 @@ import ManageTimeSlotModal, { useManageTimeSlot } from "@app/components/manageTi
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
-import { WeeklyRoutine } from "@app/types/timeSlot.type";
-import { useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Card } from "react-native-paper";
 
 

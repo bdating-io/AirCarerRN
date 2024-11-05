@@ -3,15 +3,16 @@ import { View, Text, TextInput, StyleSheet, Image, ScrollView, TouchableOpacity,
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { i18n } from '@app/locales/i18n';
 import theme from '@app/constants/theme';
 import { useSkills } from '@app/contexts/SkillsContext';
+import { RootStackParamList } from '@app/types/common.type';
 
 const { width, height } = Dimensions.get('window');
 
 const EditPublicProfileScreen: React.FC = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { skills, updateSkills } = useSkills();
 
     const [profileImage, setProfileImage] = useState<string | null>(skills.profilePicture || null);

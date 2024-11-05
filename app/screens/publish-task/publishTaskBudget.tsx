@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
 import theme from '@app/constants/theme';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { i18n } from '@app/locales/i18n';
+import { RootStackParamList } from '@app/types/common.type';
 
 const PublishTaskBudgetScreen = () => {
     const [budget, setBudget] = useState('0');
-    const navigation = useNavigation();
-    const route = useRoute();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();    const route = useRoute();
 
     // Collect other task details from the previous screen's route parameters
     const { taskDetails } = route.params || {};
