@@ -12,6 +12,7 @@ export type RootStackParamList = {
     'login': any;
     'my-task/detail': any;
     'browsing-task/task-detail': any;
+    'browsing-task/task-conclusion': any;
     EditPublicProfile: any;
     SkillsSettings: any;
     Specialties: any;

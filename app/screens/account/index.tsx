@@ -153,11 +153,13 @@ const AccountScreen: React.FC = (props: any) => {
               <AirCarerText variant="button">Log out</AirCarerText>
             </Button>
           </View>
-          <View style={styles.authControls}>
+          
+          <View style={styles.buttonGroup}>
                 <Button mode="contained" onPress={() => navigation.navigate("signup/profile")}>
                 <AirCarerText variant="button">Test Create Profile</AirCarerText>
                 </Button>
           </View>
+          
         </View>
       </View>
 
