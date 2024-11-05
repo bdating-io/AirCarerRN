@@ -1,6 +1,7 @@
 import AirCarerText from "@app/constants/AirCarerText";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
+import { i18n } from "@app/locales/i18n";
 
 export default function BrowsingTaskScreen({navigation}: any) {
     return (

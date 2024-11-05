@@ -2,6 +2,7 @@ import { NavigationProp } from '@react-navigation/core';
 
 // Define the type for stack navigation prop
 export type RootStackParamList = {
+    '/': any;
     index: any;
     signup: any;
     'signup/pricing': any;
@@ -30,6 +31,7 @@ export type RootStackParamList = {
     'property/add': any;
     'property/addPhotos': any;
     Account: any;
+    'account/setting': any;
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;

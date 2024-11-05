@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import AirCarerText from '@app/constants/AirCarerText';
 import theme from "@app/constants/theme";
 import * as ImagePicker from 'expo-image-picker';
+import { i18n } from "@app/locales/i18n";
 
 const AddPropertyPhotos = () => {
   const [photo, setPhoto] = useState([]);
@@ -70,13 +71,13 @@ const AddPropertyPhotos = () => {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <AirCarerText variant='h1'>Snap a Photo</AirCarerText>
-        <AirCarerText variant='default'>Help yourself remeber your property!</AirCarerText>
+        <AirCarerText variant='h1'>{i18n.t("addPropertyPhoto.title")}</AirCarerText>
+        <AirCarerText variant='default'>{i18n.t("addPropertyPhoto.subTitle")}</AirCarerText>
       </View>
       
       {/* <Button title="Pick an Image" onPress={pickImage} /> */}
       <Button mode="contained" onPress={pickImage} style={styles.button}>
-        <AirCarerText variant='button'>Upload photo</AirCarerText>
+        <AirCarerText variant='button'>{i18n.t("addPropertyPhoto.upload")}</AirCarerText>
       </Button>
 
       <FlatList
@@ -88,7 +89,7 @@ const AddPropertyPhotos = () => {
       />
 
       <Button mode="contained" onPress={handleAddPhoto} style={styles.button}>
-        <AirCarerText variant='button'>Submit</AirCarerText>
+        <AirCarerText variant='button'>{i18n.t("addPropertyPhoto.submit")}</AirCarerText>
       </Button>
 
       

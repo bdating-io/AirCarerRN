@@ -23,7 +23,12 @@
         "language": "Language",
         "currentFont": "Current font size",
         "loginLogout": "Log In/Log Out",
-        "accountSettings": "ACCOUNT SETTINGS"
+        "fontSize": "Font size",
+        "accountSettings": "ACCOUNT SETTINGS",
+        "paymentOptions": "Payment Options",
+        "notifications": "Notifications",
+        "settings": "Settings",
+        "earningMoney": "EARNING MONEY"
     },
     "signupTab": {
         "createProfile": "Create your profile",
@@ -223,5 +228,33 @@
         "continue": "Continue",
         "insufficientDetails": "Please complete your date information",
         "ok": "OK"
+        
+    },
+    "propertyList": {
+        "addProperty": "Add Property",
+        "noProperty": "No property added yet!",
+        "bedrooms": "bedrooms",
+        "bedroom": "bedroom",
+        "bathrooms": "bathrooms",
+        "bathroom": "bathroom"
+    },
+    "addProperty": {
+        "title": "What's the place like?",
+        "subTitle": "Provide more details",
+        "askBedroom": "How many bedrooms do you have?",
+        "askBathroom": "How many bathrooms do you have?",
+        "askAddress": "What is your address?",
+        "address": "Address",
+        "suburb": "Suburb",
+        "state": "State",
+        "postcode": "Postcode",
+        "addPhoto": "Add Photos",
+        "submit": "Submit"
+    },
+    "addPropertyPhoto": {
+        "title": "Snap a photo",
+        "subTitle": "Help yourself remember your property!",
+        "upload": "Upload Photos",
+        "submit": "Submit"
     }
 }

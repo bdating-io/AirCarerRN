@@ -49,7 +49,7 @@ const PropertyList = (props: any) => {
         onPress={() => navigation.navigate("property/add", {setProperties})}
         style={styles.addButton}
       >
-        <AirCarerText variant="button">Add Property</AirCarerText>
+        <AirCarerText variant="button">{i18n.t("propertyList.addProperty")}</AirCarerText>
       </Button>
       {properties.length > 0 ? (
         properties.map((property, index) => (
@@ -78,7 +78,7 @@ const PropertyList = (props: any) => {
           </Card>
         ))
       ) : (
-        <AirCarerText>No properties added yet</AirCarerText>
+        <AirCarerText>{i18n.t("propertyList.noProperty")}</AirCarerText>
       )}           
     </View>
   );
