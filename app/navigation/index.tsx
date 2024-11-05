@@ -25,6 +25,7 @@ import AirCarerText from '@app/constants/AirCarerText';
 import CreateProfile from '@app/screens/signup/createProfile';
 
 import PropertyList from '@app/screens/property/propertyList';
+import TaskList from '@app/screens/browsing-task/taskList';
 import AddProperty from '@app/screens/property/addProperty';
 import AddPropertyPhotos from '@app/screens/property/addPropertyPhotos';
 
@@ -154,6 +155,18 @@ const Navigation = () => {
             <Stack.Screen
                 name="signup/pricing"
                 component={SignupPricing}
+                options={{
+                    headerShown: true,
+                    headerTitle: i18n.t('signupTab.createProfile'),
+                    headerTitleStyle: {
+                        fontWeight: "800",
+                        color: theme.colors.primary
+                    }
+                }}
+            />
+             <Stack.Screen
+                name="task/list"
+                component={TaskList}
                 options={{
                     headerShown: true,
                     headerTitle: i18n.t('signupTab.createProfile'),
