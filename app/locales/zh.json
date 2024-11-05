@@ -101,6 +101,14 @@
     "header": "输入您的预算",
     "subHeader": "别担心，您可以在稍后协商最终价格"
   },
+  "taskConclusion": {
+    "completionRate": "任务完成度",
+    "viewOnMap": " 在地图上查看",
+    "budget": "预算",
+    "taskDescription": "任务描述",
+    "propertyPhotos": "房产照片",
+    "acceptTask":"接受任务"
+  },
   "publishTaskPost": {
     "readyToPost": "准备好发布任务了吗？",
     "postWhenReady": "当您准备好时发布任务",

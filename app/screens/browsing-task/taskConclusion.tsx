@@ -1,76 +1,135 @@
-import { View, StyleSheet, Text } from "react-native";
-import { Button } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { Button, Avatar } from "react-native-paper";
 import theme from "@app/constants/theme";
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from "@app/locales/i18n";
 import HalfScreenModal from "../../components/halfScreen.modal";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function TaskConclusionScreen(props: any) {
   const { navigation } = props;
 
   const makeOffer = () => {
-    // Handle make offer logic
     console.log("Make offer pressed");
+    navigation.navigate("property/list")
+  };
+
+  const viewOnMap = () => {
+    console.log("View on map pressed");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          <AirCarerText style={styles.taskHeader}>Task Title</AirCarerText>
+          <View style={styles.posterInfo}>
+            <Avatar.Text
+              size={48}
+              label="PA"
+              color="white"
+              style={styles.avatar}
+            />
+            <View style={styles.posterDetails}>
+              <View style={styles.nameRow} >
+                <AirCarerText style={styles.posterName} >
+                  Provider A
+                </AirCarerText>
+              </View>
+              <View style={styles.ratingRow}>
+                <AirCarerText style={styles.rating}>5.0</AirCarerText>
+                <MaterialIcons
+                  name="star"
+                  size={16}
+                  color="#FFB800"
+                  style={styles.starIcon}
+                />
+                <AirCarerText style={styles.reviewCount}>(999)</AirCarerText>
+              </View>
+              <View style={styles.completionRow}>
+                <AirCarerText style={styles.completionRate}>99%</AirCarerText>
+                <AirCarerText style={styles.completionText}>
+                  {i18n.t("taskConclusion.completionRate")}
+                </AirCarerText>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.locationTimeContainer}>
+            <View style={styles.locationContainer}>
+              <MaterialIcons
+                name="location-on"
+                size={24}
+                color={theme.colors.primary}
+              />
+              <View style={styles.locationTextContainer}>
+                <AirCarerText style={styles.locationText}>
+                  Some Location
+                </AirCarerText>
+                <AirCarerText style={styles.locationSubText}>
+                  3000, Australia
+                </AirCarerText>
+              </View>
+              <Button
+                mode="text"
+                textColor={theme.colors.primary}
+                onPress={viewOnMap}
+              >
+                {i18n.t("taskConclusion.viewOnMap")}
+              </Button>
+            </View>
+
+            <View style={styles.timeContainer}>
+              <MaterialIcons
+                name="calendar-today"
+                size={24}
+                color={theme.colors.primary}
+              />
+              <AirCarerText style={styles.timeText}>
+                Before Sun, 10 Nov
+              </AirCarerText>
+            </View>
+          </View>
+        </View>
+
         {/* Budget Section */}
         <View style={styles.budgetSection}>
-          <Text style={styles.currencySymbol}>$</Text>
+          <AirCarerText style={styles.currencySymbol}>$</AirCarerText>
           <View style={styles.budgetTextContainer}>
-            <Text style={styles.budgetAmount}>150 AUD</Text>
-            <Text style={styles.budgetLabel}>Budget</Text>
+            <AirCarerText style={styles.budgetAmount}>150 AUD</AirCarerText>
+            <AirCarerText style={styles.budgetLabel}>
+              {i18n.t("taskConclusion.budget")}
+            </AirCarerText>
           </View>
         </View>
 
         {/* Task Details Section */}
         <View style={styles.detailsSection}>
-          <Text style={styles.detailsTitle}>An old bed frame consisting of:</Text>
-          <Text style={styles.detailsText}>- 2 x 1.8m metal poles</Text>
-          <Text style={styles.detailsText}>- 2 x metal bed ends</Text>
-          <Text style={styles.detailsText}>- 1 x set of single-bed Ikea bed slats</Text>
+          <AirCarerText style={styles.detailsTitle}>
+            {i18n.t("taskConclusion.taskDescription")}
+          </AirCarerText>
+          <AirCarerText style={styles.detailsText}>
+            Information Line 1
+          </AirCarerText>
+          <AirCarerText style={styles.detailsText}>
+            Information Line 2
+          </AirCarerText>
+          <AirCarerText style={styles.detailsText}>
+            Information Line 3
+          </AirCarerText>
         </View>
 
         {/* Location Details */}
         <View style={styles.locationSection}>
           <View style={styles.locationItem}>
-            <Text style={styles.locationLabel}>Pickup location:</Text>
-            <Text style={styles.locationText}>Thornbury VIC, Australia</Text>
+            <AirCarerText style={styles.locationLabel}>
+              {i18n.t("taskConclusion.propertyPhotos")}
+            </AirCarerText>
+            <AirCarerText style={styles.locationText}>
+              Sample Photos
+            </AirCarerText>
           </View>
-          <View style={styles.locationItem}>
-            <Text style={styles.locationLabel}>Drop-off location:</Text>
-            <Text style={styles.locationText}>Parkdale VIC, Australia</Text>
-          </View>
-          <View style={styles.locationItem}>
-            <Text style={styles.locationLabel}>Removals size:</Text>
-            <Text style={styles.locationText}>A few items</Text>
-          </View>
-          <View style={styles.locationItem}>
-            <Text style={styles.locationLabel}>Stairs:</Text>
-            <Text style={styles.locationText}>No</Text>
-          </View>
-        </View>
-
-        {/* Tab Section */}
-        <View style={styles.tabSection}>
-          <View style={styles.tabContainer}>
-            <View style={[styles.tab, styles.activeTab]}>
-              <Text style={[styles.tabText, styles.activeTabText]}>Offers 2</Text>
-            </View>
-            <View style={styles.tab}>
-              <Text style={styles.tabText}>Questions</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Task Description */}
-        <View style={styles.taskDescription}>
-          <Text style={styles.taskTitle}>Move a bed frame and drive it to another location</Text>
-          <Text style={styles.taskDate}>Before Sun, 20 Oct·Thornbury VIC, Australia</Text>
-          <Text style={styles.taskBudget}>Task budget</Text>
-          <Text style={styles.taskAmount}>$150.00</Text>
         </View>
 
         {/* Bottom Button Section */}
@@ -84,7 +143,9 @@ export default function TaskConclusionScreen(props: any) {
               contentStyle={styles.buttonContent}
               onPress={makeOffer}
             >
-              <AirCarerText variant="button">Make offer</AirCarerText>
+              <AirCarerText variant="button">
+                {i18n.t("taskConclusion.acceptTask")}
+              </AirCarerText>
             </Button>
           </View>
         </HalfScreenModal>
@@ -94,6 +155,65 @@ export default function TaskConclusionScreen(props: any) {
 }
 
 const styles = StyleSheet.create({
+  posterInfo: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: 16,
+    gap: 12,
+  },
+  avatar: {
+    backgroundColor: theme.colors.primary,
+  },
+  avatarImage: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  posterDetails: {
+    flex: 1,
+  },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  posterName: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: theme.colors.primary,
+  },
+  ratingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 4,
+    gap: 4,
+  },
+  rating: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: theme.colors.warning,
+  },
+  starIcon: {
+    marginRight: 4,
+  },
+  reviewCount: {
+    fontSize: 16,
+    color: theme.colors.secondary,
+  },
+  completionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  completionRate: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: theme.colors.primary,
+  },
+  completionText: {
+    fontSize: 16,
+    color: theme.colors.secondary,
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -102,9 +222,50 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  headerSection: {
+    marginBottom: 24,
+  },
+  taskHeader: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: theme.colors.primary,
+    marginBottom: 16,
+  },
+  wTag: {
+    fontSize: 16,
+    color: theme.colors.warning,
+  },
+  locationTimeContainer: {
+    gap: 12,
+  },
+  locationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  locationTextContainer: {
+    flex: 1,
+  },
+  locationText: {
+    fontSize: 16,
+    color: theme.colors.text,
+  },
+  locationSubText: {
+    fontSize: 14,
+    color: theme.colors.secondary,
+  },
+  timeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  timeText: {
+    fontSize: 16,
+    color: theme.colors.text,
+  },
   budgetSection: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginBottom: 20,
   },
   currencySymbol: {
@@ -113,11 +274,11 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   budgetTextContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   budgetAmount: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: theme.colors.primary,
   },
   budgetLabel: {
@@ -129,7 +290,7 @@ const styles = StyleSheet.create({
   },
   detailsTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   detailsText: {
@@ -145,44 +306,15 @@ const styles = StyleSheet.create({
   },
   locationLabel: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
     color: theme.colors.primary,
-  },
-  locationText: {
-    fontSize: 16,
-    color: theme.colors.text,
-  },
-  tabSection: {
-    marginBottom: 20,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    borderRadius: theme.rouded.medium,
-    backgroundColor: theme.colors.surface,
-    padding: 4,
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  activeTab: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.rouded.small,
-  },
-  tabText: {
-    fontSize: 16,
-    color: theme.colors.text,
-  },
-  activeTabText: {
-    color: 'white',
   },
   taskDescription: {
     marginBottom: 20,
   },
   taskTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   taskDate: {
@@ -196,19 +328,19 @@ const styles = StyleSheet.create({
   },
   taskAmount: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: theme.colors.primary,
   },
   buttonContainer: {
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   button: {
     borderRadius: theme.rouded.large,
   },
   buttonContent: {
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

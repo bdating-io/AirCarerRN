@@ -185,6 +185,14 @@
         "saveButton": "Save settings",
         "notSpecified": "Not specified"
     },
+    "taskConclusion": {
+        "completionRate": "Completion rate",
+        "viewOnMap": " View on map",
+        "budget": "Budget",
+        "taskDescription": "Task Description",
+        "propertyPhotos": "Property Photos",
+        "acceptTask":"Accept Task"
+    },
     "educationScreen": {
         "title": "Education",
         "placeholder": "Enter your educational background",
