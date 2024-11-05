@@ -6,7 +6,11 @@ export type RootStackParamList = {
     signup: undefined;
     'signup/pricing': undefined;
     'signup/servicingHours': undefined;
+    'property/list': undefined;
+    'property/add': undefined;
+    'property/addPhotos': undefined;
     browsingTask: undefined;
+    "task/list": undefined;
     goBack: undefined;
     'login': undefined;
     'my-task/detail': undefined;
@@ -18,6 +22,7 @@ export type RootStackParamList = {
     Languages: undefined;
     Education: undefined;
     Work: undefined;
+
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;

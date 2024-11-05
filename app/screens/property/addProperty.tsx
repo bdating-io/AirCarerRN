@@ -5,9 +5,9 @@ import { TextInput, Button, Card, SegmentedButtons} from 'react-native-paper';
 import { Dropdown } from 'react-native-paper-dropdown';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AirCarerText from '@app/constants/AirCarerText';
-import DropDownPicker from 'react-native-dropdown-picker';
 import theme from "@app/constants/theme";
 import { Colors } from '@app/constants/Colors';
+import { i18n } from "@app/locales/i18n";
 
 const AddProperty = () => {
   const [bedrooms, setBedrooms] = useState('');
@@ -69,12 +69,12 @@ const AddProperty = () => {
 
   return (
     <View style={styles.container}>
-      <AirCarerText variant="h1">What's the place like?</AirCarerText>
+      <AirCarerText variant="h1">{i18n.t("addProperty.title")}</AirCarerText>
       <View style={styles.subTitle}>
-        <AirCarerText variant="default">Provide more details</AirCarerText>
+        <AirCarerText variant="default">{i18n.t("addProperty.subTitle")}</AirCarerText>
       </View>
       <View style={styles.questionTitle}>
-        <AirCarerText variant="bold">How many bedrooms do you have?</AirCarerText>
+        <AirCarerText variant="bold">{i18n.t("addProperty.askBedroom")}</AirCarerText>
       </View>
       <View>
         <SegmentedButtons
@@ -91,7 +91,7 @@ const AddProperty = () => {
         />
       </View>
       <View style={styles.questionTitle}>
-        <AirCarerText variant="bold">How many bathrooms do you have?</AirCarerText>
+        <AirCarerText variant="bold">{i18n.t("addProperty.askBathroom")}</AirCarerText>
       </View>
       <View>
         <SegmentedButtons
@@ -109,13 +109,13 @@ const AddProperty = () => {
       </View>
       <View>
         <View style={styles.questionTitle}>
-          <AirCarerText variant="bold">What is your address?</AirCarerText>
+          <AirCarerText variant="bold">{i18n.t("addProperty.askAddress")}</AirCarerText>
         </View>
           
           <View style={styles.input}>
             {/* <AirCarerText>Address</AirCarerText> */}
             <TextInput
-              label="Address"
+              label={i18n.t("addProperty.address")}
               value={address}
               onChangeText={setAddress}
               mode='outlined'
@@ -125,7 +125,7 @@ const AddProperty = () => {
           <View style={styles.input}>
             {/* <AirCarerText variant="default">Suburb</AirCarerText> */}
             <TextInput
-              label="Suburb"
+              label={i18n.t("addProperty.suburb")}
               value={suburb}
               onChangeText={setSuburb}
               mode="outlined"
@@ -136,7 +136,7 @@ const AddProperty = () => {
           <View style={styles.input}>
             {/* <AirCarerText variant="default">State</AirCarerText> */}
             <Dropdown
-              label="State"
+              label={i18n.t("addProperty.state")}
               placeholder="Select Select"
               options={states}
               value={state}
@@ -149,7 +149,7 @@ const AddProperty = () => {
           <View style={styles.input}>
             {/* <AirCarerText variant="default">Postcode</AirCarerText> */}
             <TextInput
-              label="Postcode"
+              label={i18n.t("addProperty.postcode")}
               value={postcode}
               onChangeText={setPostcode}
               mode="outlined"
@@ -163,14 +163,14 @@ const AddProperty = () => {
         onPress={() => navigation.navigate('property/addPhotos', { setPhotos })}
         style={styles.button}
       >
-        <AirCarerText variant="button">Add Photos</AirCarerText>
+        <AirCarerText variant="button">{i18n.t("addProperty.addPhoto")}</AirCarerText>
       </Button>
       <Button
         mode="contained"
         onPress={handleSubmit}
         style={styles.button}
       >
-        <AirCarerText variant="button">Submit</AirCarerText>
+        <AirCarerText variant="button">{i18n.t("addProperty.submit")}</AirCarerText>
       </Button>
     </View>
   );

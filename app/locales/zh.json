@@ -132,5 +132,32 @@
         "permissionRequired": "需要权限",
         "notSpecified": "未添加",
         "back": "返回"
+    },
+    "propertyList": {
+        "addProperty": "添加房源",
+        "noProperty": "目前还没有房源信息！",
+        "bedrooms": "室",
+        "bedroom": "室",
+        "bathrooms": "卫",
+        "bathroom": "卫"
+    },
+    "addProperty": {
+        "title": "请形容一下你的房子",
+        "subTitle": "提供更多的细节吧！",
+        "askBedroom": "一共有有多少间卧室？",
+        "askBathroom": "一共有多少间卫生间？",
+        "askAddress": "请问地址在哪里？",
+        "address": "地址",
+        "suburb": "地区",
+        "state": "省份",
+        "postcode": "邮编",
+        "addPhoto": "添加照片",
+        "submit": "提交"
+    },
+    "addPropertyPhoto": {
+        "title": "房源照片",
+        "subTitle": "帮助你记住你的房源！",
+        "upload": "上传照片",
+        "submit": "提交"
     }
 }
