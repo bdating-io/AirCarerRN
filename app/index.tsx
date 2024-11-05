@@ -20,9 +20,7 @@ export default function Index() {
                     <LanguageProvider>
                         <FontSizeProvider>
                             <PaperProvider theme={theme}>
-                                <SkillsProvider>
-                                    <Navigation />
-                                </SkillsProvider>
+                                <Navigation />
                             </PaperProvider>
                         </FontSizeProvider>
                     </LanguageProvider>

@@ -2,29 +2,20 @@ import React, { useCallback } from 'react';
 import { Alert, ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useAuth0 } from 'react-native-auth0';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import theme from '@app/constants/theme';
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
+import { RootStackParamList } from '@app/types/common.type';
 
-export default function PublishTaskScreen() {
+export default function PublishTaskScreen(props: any) {
     const { user } = useAuth0();
-    const navigation = useNavigation();
+    const { navigation } = props;
 
     // Navigate to the screen for selecting a cleaning service date
     const handleNavigateToNewTask = () => {
         navigation.navigate('publishTaskDate'); // Updated to match the navigation stack name
     };
-
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <TouchableOpacity onPress={handleNavigateToNewTask} style={styles.addButton}>
-                    <AirCarerText variant='button' style={styles.addButtonText}>+</AirCarerText>
-                </TouchableOpacity>
-            ),
-        });
-    }, [navigation]);
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -46,7 +37,7 @@ export default function PublishTaskScreen() {
                 <Button mode='contained' buttonColor={theme.colors.secondary}
                     textColor='white'
                     style={styles.newTaskButton} contentStyle={styles.newTaskButtonContent}
-                    onPress={() => Alert.alert('Task submitted')}>
+                    onPress={handleNavigateToNewTask}>
                     <AirCarerText variant='button'>{i18n.t('publishTab.getItDone')}</AirCarerText>
                 </Button>
             </View>

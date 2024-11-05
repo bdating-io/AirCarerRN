@@ -12,8 +12,7 @@ interface HalfScreenModalProps {
 }
 
 const HalfScreenModal = (props: HalfScreenModalProps) => {
-  const { heightPerc = "30%", backdropColor = "none", children, persist = false, visibility, setVisibility } = props;
-
+  const { heightPerc = "30%", backdropColor = "none", children, persist = false, visibility=true, setVisibility } = props;
 
   const styles = StyleSheet.create({
     container: {

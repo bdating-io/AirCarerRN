@@ -1,21 +1,15 @@
 import AirCarerText from "@app/constants/AirCarerText";
-import { useFontSize } from "@app/contexts/font.context";
-import { aircarerSlice } from "@app/slices/aircarer.slice";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-paper";
-import { useDispatch } from "react-redux";
 import { i18n } from "@app/locales/i18n";
-import { useLanguage } from "@app/contexts/language.context";
 import { useAuth0 } from "react-native-auth0";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import theme from "@app/constants/theme";
 import Welcome from "@assets/images/welcome.png";
 import HalfScreenModal from "../../components/halfScreen.modal";
 
 export default function LoginScreen(props: any) {
-  const dirspatch = useDispatch();
-  const { user, authorize, error, clearSession } = useAuth0();
-  const { lang, changeLanguage } = useLanguage();
+  const { authorize, error } = useAuth0();
   const { navigation } = props;
 
   useEffect(() => {
@@ -26,7 +20,10 @@ export default function LoginScreen(props: any) {
     authorize()
     .then((user) => {
       if (user?.accessToken !== undefined) {
-        navigation.navigate("index");
+        // if user has registered, navigate to index
+        // navigation.navigate("/");
+        // if user has not registered, navigate to signup
+        navigation.navigate("signup/profile")
       }
     })
     .catch((error: any) => {
@@ -36,7 +33,7 @@ export default function LoginScreen(props: any) {
 
   //test only，to index
   const testSignIN = () => {
-    navigation.navigate("index");
+    navigation.navigate("/");
   };
 
   return (
@@ -50,7 +47,7 @@ export default function LoginScreen(props: any) {
           />
         </View>
 
-        <HalfScreenModal heightPerc={"20%"} persist>
+        <HalfScreenModal heightPerc="20%" persist>
           <View style={styles.bottomContainer}>
             <View style={styles.buttonContainer}>
               <Button

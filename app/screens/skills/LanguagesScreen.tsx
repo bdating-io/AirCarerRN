@@ -1,12 +1,11 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSkills } from '@app/contexts/SkillsContext';
 import { i18n } from '@app/locales/i18n';
 
-const LanguagesScreen = () => {
-  const navigation = useNavigation();
+const LanguagesScreen = (props: any) => {
+  const { navigation } = props;
   const { skills, updateSkills } = useSkills();
   const [languages, setLanguages] = useState<string[]>(skills.languages || []);
   const [languageInput, setLanguageInput] = useState('');
