@@ -11,7 +11,7 @@ export default function TaskConclusionScreen(props: any) {
 
   const makeOffer = () => {
     console.log("Make offer pressed");
-    navigation.navigate("index")
+    navigation.navigate("index");
   };
 
   const viewOnMap = () => {
@@ -32,8 +32,8 @@ export default function TaskConclusionScreen(props: any) {
               style={styles.avatar}
             />
             <View style={styles.posterDetails}>
-              <View style={styles.nameRow} >
-                <AirCarerText style={styles.posterName} >
+              <View style={styles.nameRow}>
+                <AirCarerText style={styles.posterName}>
                   Provider A
                 </AirCarerText>
               </View>
@@ -131,30 +131,55 @@ export default function TaskConclusionScreen(props: any) {
             </AirCarerText>
           </View>
         </View>
-
-        {/* Bottom Button Section */}
-        <HalfScreenModal heightPerc="15%" persist>
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              buttonColor={theme.colors.primary}
-              textColor="white"
-              style={styles.button}
-              contentStyle={styles.buttonContent}
-              onPress={makeOffer}
-            >
-              <AirCarerText variant="button">
-                {i18n.t("taskConclusion.acceptTask")}
-              </AirCarerText>
-            </Button>
-          </View>
-        </HalfScreenModal>
+      </View>
+      <View style={styles.bottomContainer}>
+        <Button
+          mode="contained"
+          buttonColor={theme.colors.primary}
+          textColor="white"
+          style={styles.button}
+          contentStyle={styles.buttonContent}
+          onPress={makeOffer}
+        >
+          <AirCarerText variant="button">Accept Task</AirCarerText>
+        </Button>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  modalWrapper: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    pointerEvents: "box-none",
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "white",
+    padding: 16,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: theme.colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  mainContent: {
+    flex: 1,
+    padding: 20,
+    paddingBottom: 80,
+  },
   posterInfo: {
     flexDirection: "row",
     alignItems: "flex-start",
