@@ -49,8 +49,8 @@ const CreateProfile = (props: any) => {
                 labelStyle={[styles.fontStyles]}
                 onPress={() => {setPurpose("getThingsDone")}}>
          
-                    <View style={{}}>
-                        <AirCarerText style={{ textAlign: "center"}}>
+                    <View  style={{width: 140}}>
+                        <AirCarerText style={{marginLeft: -14}}>
                         {i18n.t('signupTab.getThingsDone')}
                         </AirCarerText>
                     </View>
@@ -64,8 +64,8 @@ const CreateProfile = (props: any) => {
                 labelStyle={styles.fontStyles}
                 onPress={() => {setPurpose("earnMoney")}}>
  
-                    <View>
-                        <AirCarerText style={{height: 42}}>
+                    <View style={{width: 140}}>
+                        <AirCarerText style={{marginLeft: 4}}>
                         {i18n.t('signupTab.earnMoney')}
                         </AirCarerText>
                     </View> 
@@ -81,8 +81,9 @@ const CreateProfile = (props: any) => {
                 style={[styles.buttonTile, "individual" === userType && styles.buttonTilePressed]} 
                 labelStyle={[styles.fontStyles ]}
                 onPress={() => {setUserType('individual')}}>
-                     <View>
-                        <AirCarerText>
+                      
+                            <View  style={{width: 140}}>
+                        <AirCarerText style={{marginLeft: 10}}>
                         {i18n.t('signupTab.individual')}
                         </AirCarerText>
                     </View>
@@ -94,9 +95,9 @@ const CreateProfile = (props: any) => {
                 style={[styles.buttonTile, "business" === userType && styles.buttonTilePressed]} 
                 labelStyle={[styles.fontStyles ]}
                 onPress={() => {setUserType('business')}}>
-                     <View>
-                        <AirCarerText >
-                        {i18n.t('signupTab.business')}
+                     <View  style={{width: 140}}>
+                        <AirCarerText style={{marginLeft: 12}}>
+                         {i18n.t('signupTab.business')}
                         </AirCarerText>
                     </View>
              </Button>
@@ -122,13 +123,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flexWrap: 'wrap',
         padding: 6,
-        paddingTop: 16,
+        paddingTop: 16
         
       },
       buttonTile: {
         flexGrow: 1,
-        margin: 6,
-        width: 1,
+        margin: 4,
+        width: 1
       },
       wrappedViewText:{
     
@@ -137,7 +138,6 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.secondaryContainer,
       },
       fontStyles: {
-        fontWeight: '500',
         fontSize: 24,
       },
     flexRow: {
