@@ -108,38 +108,6 @@ const AccountScreen: React.FC = (props: any) => {
           </View>
         </View>
       </View>
-
-      <View style={styles.controlsSection}>
-        <FontSizeControls />
-        <AirCarerText style={styles.languageTitle}>{i18n.t("accountTab.language")}</AirCarerText>
-        <View style={styles.languageControls}>
-          <Button mode="contained" onPress={() => changeLanguage("zh")} style={styles.button}>
-            <AirCarerText variant="button">ZH</AirCarerText>
-          </Button>
-          <Button mode="contained" onPress={() => changeLanguage("en")} style={styles.button}>
-            <AirCarerText variant="button">EN</AirCarerText>
-          </Button>
-        </View>
-        <AirCarerText>{i18n.t("accountTab.loginLogout")}</AirCarerText>
-        <View style={styles.authControls}>
-          <View style={styles.buttonGroup}>
-            <Button mode="contained" onPress={signin} style={styles.button}>
-              <AirCarerText variant="button">Login</AirCarerText>
-            </Button>
-            <Button mode="contained" onPress={signout} style={styles.button}>
-              <AirCarerText variant="button">Log out</AirCarerText>
-            </Button>
-          </View>
-          
-          <View style={styles.buttonGroup}>
-                <Button mode="contained" onPress={() => navigation.navigate("signup/profile")}>
-                <AirCarerText variant="button">Test Create Profile</AirCarerText>
-                </Button>
-          </View>
-          
-        </View>
-      </View>
-
       <View style={styles.settingsSection}>
         <AirCarerText variant="bold" style={styles.sectionTitle}>{i18n.t("accountTab.accountSettings")}</AirCarerText>
         <MenuItem icon="credit-card" text={i18n.t('accountTab.paymentOptions')} onPress={() => console.log('Payment options')} />

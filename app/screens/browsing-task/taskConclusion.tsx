@@ -11,7 +11,7 @@ export default function TaskConclusionScreen(props: any) {
 
   const makeOffer = () => {
     console.log("Make offer pressed");
-    navigation.navigate("property/list")
+    navigation.navigate("index")
   };
 
   const viewOnMap = () => {
