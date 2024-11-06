@@ -30,6 +30,7 @@ export type RootStackParamList = {
     'property/list': any;
     'property/add': any;
     'property/addPhotos': any;
+    'browsing-task/task-list': any;
     Account: any;
     'account/setting': any;
 };
