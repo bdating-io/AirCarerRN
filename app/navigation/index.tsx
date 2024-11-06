@@ -19,6 +19,7 @@ import AccountScreen from "@app/screens/account";
 import LoginScreen from "@app/screens/login";
 import MyTaskDetailScreen from "@app/screens/my-task/myTaskDetail";
 import TaskConclusionScreen from "@app/screens/browsing-task/taskConclusion";
+import TaskList from '@app/screens/browsing-task/taskList';
 import TaskDetailScreen from "@app/screens/browsing-task/taskDetail";
 import SignupPricing from "@app/screens/signup/signupPricing";
 import SignupServicingHours from "@app/screens/signup/signupServicingHours";
@@ -294,6 +295,11 @@ const Navigation = () => {
                     name='browsing-task/task-conclusion'
                     component={TaskConclusionScreen}
                     options={{ headerShown: true, headerTitle: 'Task Conclusion' }}
+                />
+                <Stack.Screen
+                    name='browsing-task/task-list'
+                    component={TaskList}
+                    options={{ headerShown: true, headerTitle: 'Task List' }}
                 />
             </Stack.Navigator>
         )
