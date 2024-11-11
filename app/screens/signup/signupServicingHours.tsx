@@ -24,10 +24,6 @@ const SignupServicingHours = (props: any) => {
                         <AirCarerText variant="default">{i18n.t('signupTab.expectedPricingExplain')}</AirCarerText>
                     </Card.Content>
                 </Card>
-
-                <AirCarerText variant="h1">
-                    should be a calendar
-                </AirCarerText>
                 <Button mode="contained" onPress={() => setShowTimePicker(true)}>
                     <AirCarerText variant="button">Editing Timeslots</AirCarerText>
                 </Button>

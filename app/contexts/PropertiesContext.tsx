@@ -1,6 +1,6 @@
 // PropertiesContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStorage from 'expo-secure-store';
 
 // Define the shape of a property
 interface Property {
@@ -23,7 +23,7 @@ interface PropertiesContextData {
 const PropertiesContext = createContext<PropertiesContextData | undefined>(undefined);
 
 // Storage key for AsyncStorage
-const PROPERTIES_STORAGE_KEY = '@app_properties';
+const PROPERTIES_STORAGE_KEY = 'app_properties';
 
 export const PropertiesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -32,7 +32,7 @@ export const PropertiesProvider: React.FC<{ children: ReactNode }> = ({ children
     useEffect(() => {
         const loadProperties = async () => {
             try {
-                const storedProperties = await AsyncStorage.getItem(PROPERTIES_STORAGE_KEY);
+                const storedProperties = SecureStorage.getItem(PROPERTIES_STORAGE_KEY);
                 if (storedProperties) {
                     const parsedProperties = JSON.parse(storedProperties);
                     console.log("Loaded properties from storage:", parsedProperties);
@@ -48,10 +48,10 @@ export const PropertiesProvider: React.FC<{ children: ReactNode }> = ({ children
 
     // Save properties to AsyncStorage whenever they change
     useEffect(() => {
-        const saveProperties = async () => {
+        const saveProperties = () => {
             try {
                 console.log("Saving properties to storage:", properties);
-                await AsyncStorage.setItem(PROPERTIES_STORAGE_KEY, JSON.stringify(properties));
+                SecureStorage.setItem(PROPERTIES_STORAGE_KEY, JSON.stringify(properties));
             } catch (error) {
                 console.error("Failed to save properties to storage:", error);
             }
