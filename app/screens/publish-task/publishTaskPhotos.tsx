@@ -12,9 +12,8 @@ const { width, height } = Dimensions.get('window');
 const PublishTaskPhotosScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-
     const { taskDetails } = route.params || {};
-
+    
     const [photos, setPhotos] = useState<string[]>([]);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -101,7 +100,7 @@ const PublishTaskPhotosScreen = () => {
     const handleContinue = () => {
         const updatedTaskDetails = {
             ...taskDetails,
-            photos
+            photos,
         };
 
         navigation.navigate("publishTaskBudget", { taskDetails: updatedTaskDetails });
@@ -141,10 +140,11 @@ const PublishTaskPhotosScreen = () => {
 
             <Button
                 mode="contained"
-                style={styles.continueButton}
+                style={[styles.continueButton, photos.length === 0 && styles.disabledButton]}
                 onPress={handleContinue}
+                disabled={photos.length === 0}
             >
-                {photos.length > 0 ? i18n.t("common.continue") : i18n.t("publishTaskPhotos.skipForNow")}
+                {i18n.t("common.continue")}
             </Button>
         </View>
     );
@@ -193,6 +193,9 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderRadius: 8,
         backgroundColor: theme.colors.primary,
+    },
+    disabledButton: {
+        backgroundColor: theme.colors.disabled,
     },
     fullScreenContainer: {
         flex: 1,

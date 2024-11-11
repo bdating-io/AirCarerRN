@@ -16,8 +16,7 @@ export default function PublishTaskPostScreen() {
     const {
         date,
         cleanType,
-        bedrooms,
-        bathrooms,
+        property,
         equipment,
         cleaningDetails,
         budget,
@@ -34,13 +33,17 @@ export default function PublishTaskPostScreen() {
             ? `${date.type === 'on' ? i18n.t("publishTaskPost.onDate") : i18n.t("publishTaskPost.beforeDate")} ${date.value}`
             : i18n.t("publishTaskPost.dateNotSpecified");
 
-    const formattedBedrooms = bedrooms
-        ? `${bedrooms} ${bedrooms === '1' ? i18n.t("publishTaskPost.bedroom") : i18n.t("publishTaskPost.bedrooms")}`
+    const formattedBedrooms = property?.bedrooms
+        ? `${property.bedrooms} ${property.bedrooms === '1' ? i18n.t("publishTaskPost.bedroom") : i18n.t("publishTaskPost.bedrooms")}`
         : i18n.t("publishTaskPost.bedroomsNotSpecified");
 
-    const formattedBathrooms = bathrooms
-        ? `${bathrooms} ${bathrooms === '1' ? i18n.t("publishTaskPost.bathroom") : i18n.t("publishTaskPost.bathrooms")}`
+    const formattedBathrooms = property?.bathrooms
+        ? `${property.bathrooms} ${property.bathrooms === '1' ? i18n.t("publishTaskPost.bathroom") : i18n.t("publishTaskPost.bathrooms")}`
         : i18n.t("publishTaskPost.bathroomsNotSpecified");
+
+    const locationText = property
+        ? `${property.address}, ${property.suburb}, ${property.state} ${property.postcode}`
+        : i18n.t("publishTaskPost.locationNotSpecified");
 
     const equipmentText =
         equipment === 'Yes'
@@ -100,6 +103,7 @@ export default function PublishTaskPostScreen() {
                                 <Text style={styles.detailText}>
                                     {`${formattedBedrooms}, ${formattedBathrooms}`}
                                 </Text>
+                                <Text style={styles.detailText}>{locationText}</Text>
                                 <Text style={styles.detailText}>{equipmentText}</Text>
                                 <Text style={styles.detailText}>
                                     {cleaningDetails || i18n.t("publishTaskPost.noAdditionalDetails")}
@@ -214,5 +218,3 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
 });
-
-export default PublishTaskPostScreen;

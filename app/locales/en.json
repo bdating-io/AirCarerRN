@@ -68,6 +68,8 @@
         "whatsPlaceLike": "What's the place like?",
         "provideDetails": "Provide more details",
         "cleanTypeQuestion": "What kind of clean is this?",
+        "selectProperty": "Select a property",
+        "selectPropertyPlaceholder": "Select a property",
         "regularCleaning": "Regular Cleaning",
         "endOfLeaseCleaning": "End of Lease Cleaning",
         "bedroomsQuestion": "How many bedrooms?",

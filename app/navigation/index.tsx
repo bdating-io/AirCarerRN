@@ -13,7 +13,7 @@ import PublishTaskDateScreen from "@app/screens/publish-task/publishTaskDate";
 import PublishTaskPropertyDetailsScreen from "@app/screens/publish-task/publishTaskPropertyDetails";
 import PublishTaskPhotosScreen from "@app/screens/publish-task/publishTaskPhotos";
 import PublishTaskBudgetScreen from "@app/screens/publish-task/publishTaskBudget";
-import PublishTaskPostScreen from "@app/screens/publish-task/publishTaskPost"; // Added publishTaskPost screen import
+import PublishTaskPostScreen from "@app/screens/publish-task/publishTaskPost";
 import MyTaskScreen from "@app/screens/my-task";
 import AccountScreen from "@app/screens/account";
 import LoginScreen from "@app/screens/login";
@@ -39,7 +39,10 @@ import WorkScreen from "@app/screens/skills/WorkScreen";
 import SpecialtiesScreen from "@app/screens/skills/SpecialtiesScreen";
 import VerificationScreen from "@app/screens/account/VerificationScreen";
 
+// Context Providers
 import { SkillsProvider } from "@app/contexts/SkillsContext";
+import { PropertiesProvider } from "@app/contexts/PropertiesContext"; // Added PropertiesProvider
+
 import { RootStackParamList } from "@app/types/common.type";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
@@ -185,7 +188,7 @@ const Navigation = () => {
                     component={PropertyList}
                     options={{
                         headerShown: true,
-                        headerTitle: i18n.t('signupTab.createProfile'),
+                        headerTitle: i18n.t('propertyList.header'),
                         headerTitleStyle: {
                             fontWeight: "800",
                             color: theme.colors.primary
@@ -197,7 +200,7 @@ const Navigation = () => {
                     component={AddProperty}
                     options={{
                         headerShown: true,
-                        headerTitle: i18n.t('signupTab.createProfile'),
+                        headerTitle: i18n.t('addProperty.title'),
                         headerTitleStyle: {
                             fontWeight: "800",
                             color: theme.colors.primary
@@ -209,7 +212,7 @@ const Navigation = () => {
                     component={AddPropertyPhotos}
                     options={{
                         headerShown: true,
-                        headerTitle: i18n.t('signupTab.createProfile'),
+                        headerTitle: i18n.t('addPropertyPhoto.title'),
                         headerTitleStyle: {
                             fontWeight: "800",
                             color: theme.colors.primary
@@ -311,14 +314,15 @@ const Navigation = () => {
         return <UnAuthNavigator />;
     }
 
-
     return renderNavigator();
 };
 
 const AppNavigation = () => (
-    <SkillsProvider>
-        <Navigation />
-    </SkillsProvider>
+    <PropertiesProvider>
+        <SkillsProvider>
+            <Navigation />
+        </SkillsProvider>
+    </PropertiesProvider>
 );
 
 export default AppNavigation;

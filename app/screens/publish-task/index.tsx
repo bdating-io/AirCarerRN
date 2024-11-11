@@ -12,9 +12,9 @@ export default function PublishTaskScreen(props: any) {
     const { user } = useAuth0();
     const { navigation } = props;
 
-    // Navigate to the screen for selecting a cleaning service date
+    // Navigate to the task details screen
     const handleNavigateToNewTask = () => {
-        navigation.navigate('publishTaskDate'); // Updated to match the navigation stack name
+        navigation.navigate('publishTaskPropertyDetails'); // Start with task details screen
     };
 
     return (

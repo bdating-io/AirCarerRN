@@ -1,41 +1,38 @@
+import React from 'react';
 import AirCarerText from "@app/constants/AirCarerText";
-import { View, StyleSheet, Image, FlatList, Alert, Text} from "react-native";
-import { Button, Card, Icon} from "react-native-paper";
+import { View, StyleSheet, Image, FlatList, Text } from "react-native";
+import { Button, Card, Icon } from "react-native-paper";
 import { i18n } from "@app/locales/i18n";
-import { useState } from "react";
 import theme from "@app/constants/theme";
+import { useNavigation } from '@react-navigation/native';
+import { useProperties } from "@app/contexts/PropertiesContext";
 
-import { useNavigation } from 'expo-router';
-
-const PropertyList = (props: any) => {
-  const [properties, setProperties] = useState([]);
+const PropertyList = () => {
+  const { properties } = useProperties();
   const navigation = useNavigation();
 
   const bedroomNumber = (value: string) => {
     if (Number(value) === 0) {
       return;
-    } else if (Number(value) >1 ) {
-      return value +" bedrooms";
+    } else if (Number(value) > 1) {
+      return value + " bedrooms";
     } else {
-      return "1 bedroom"
+      return "1 bedroom";
     }
-  }
+  };
+
   const bathroomNumber = (value: string) => {
     if (Number(value) === 0) {
       return;
-    } else if (Number(value) >1) {
+    } else if (Number(value) > 1) {
       return value + " bathrooms";
     } else {
       return "1 bathroom";
     }
-  }
+  };
 
-  const showInfo = (props:any) => {
-    console.log(props);
-  }
-  const renderPhoto = (item) => (
+  const renderPhoto = (item: string[]) => (
     <View style={styles.photoContainer}>
-      {/* <Image source={item} style={styles.photo} /> */}
       {item.map((url, index) => (
         <Image key={index} source={{ uri: url }} style={styles.photo} />
       ))}
@@ -46,31 +43,28 @@ const PropertyList = (props: any) => {
     <View style={styles.container}>
       <Button 
         mode="contained" 
-        onPress={() => navigation.navigate("property/add", {setProperties})}
+        onPress={() => navigation.navigate("property/add")}
         style={styles.addButton}
       >
         <AirCarerText variant="button">{i18n.t("propertyList.addProperty")}</AirCarerText>
       </Button>
       {properties.length > 0 ? (
         properties.map((property, index) => (
-          
           <Card key={index} style={styles.card}>
-            {showInfo(property)}
-            {/* <Card.Title title={`Property ${index + 1}`} /> */}
             <Card.Content>
               <AirCarerText variant="bold" style={styles.title}>{property.address}</AirCarerText>
               <AirCarerText variant="default">{property.suburb}, {property.state}, {property.postcode}</AirCarerText>
-              
               <View style={styles.address}>
                 <Icon source="home" color={theme.colors.primary} size={20}/>
-                <AirCarerText variant="default">{bedroomNumber(property.bedrooms)} {bathroomNumber(property.bathrooms)}</AirCarerText>
+                <AirCarerText variant="default">
+                  {bedroomNumber(property.bedrooms)} {bathroomNumber(property.bathrooms)}
+                </AirCarerText>
               </View>
               <FlatList
                 data={property.photos}
                 horizontal
                 showsHorizontalScrollIndicator={true}
-                //renderItem={renderPhoto}
-                renderItem={({ item }) => renderPhoto(item)}
+                renderItem={({ item }) => renderPhoto([item])}
                 keyExtractor={(item, index) => index.toString()}
                 pagingEnabled
              />
@@ -86,20 +80,17 @@ const PropertyList = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: theme.colors.paper,
     justifyContent: 'flex-start',
     paddingHorizontal: 20,
-    //gap: 15,
     paddingTop: 20,
-    //paddingBottom: 40,
   },
   addButton: {
     marginBottom: 20,
   },
   card: {
     marginBottom: 15,
-    //paddingTop: 10,
   },
   title: {
     marginTop: 10,
@@ -107,13 +98,12 @@ const styles = StyleSheet.create({
   },
   address: {
     flexDirection: 'row',
-    marginTop: 5
+    marginTop: 5,
   },
   photoContainer: {
     marginTop: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    //marginBottom: 5,
     marginRight: 5,
   },
   photo: {

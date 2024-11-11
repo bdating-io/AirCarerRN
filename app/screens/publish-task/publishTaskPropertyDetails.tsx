@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Button, SegmentedButtons, TextInput } from 'react-native-paper';
+import { Button, Menu, SegmentedButtons, TextInput } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import theme from '@app/constants/theme';
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
+import { useProperties } from '@app/contexts/PropertiesContext';
 
 export default function PublishTaskPropertyDetailsScreen() {
     const navigation = useNavigation();
     const route = useRoute();
+    const { properties } = useProperties();
 
-    // State variables
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [menuVisible, setMenuVisible] = useState(false);
     const [cleanType, setCleanType] = useState('');
-    const [bedrooms, setBedrooms] = useState('');
-    const [bathrooms, setBathrooms] = useState('');
     const [equipment, setEquipment] = useState('');
     const [cleaningDetails, setCleaningDetails] = useState('');
 
-    // Retrieve task details from previous screen
     const taskDetails = route.params?.taskDetails || {};
-
-    const isContinueEnabled = cleanType && bedrooms !== '' && bathrooms !== '' && equipment && cleaningDetails.length >= 25;
+    const isContinueEnabled = selectedProperty && cleanType && equipment && cleaningDetails.length >= 25;
 
     const handleContinue = () => {
         if (cleaningDetails.length < 25) {
@@ -28,17 +27,23 @@ export default function PublishTaskPropertyDetailsScreen() {
             return;
         }
 
-        // Pass all task details to the next screen, including previous and current screen data
-        navigation.navigate('PublishTaskPhotosScreen', {
+        navigation.navigate('publishTaskDate', { // Updated to navigate to PublishTaskDateScreen
             taskDetails: {
                 ...taskDetails,
                 cleanType,
-                bedrooms,
-                bathrooms,
                 equipment,
-                cleaningDetails
+                cleaningDetails,
+                property: selectedProperty,
             }
         });
+    };
+
+    const handleDropdownPress = () => {
+        if (properties.length === 0) {
+            Alert.alert(i18n.t("publishTab.noPropertiesTitle"), i18n.t("publishTab.noPropertiesMessage"));
+        } else {
+            setMenuVisible(true);
+        }
     };
 
     const getButtonStyle = (value, selectedValue) => ({
@@ -59,59 +64,50 @@ export default function PublishTaskPropertyDetailsScreen() {
                     <AirCarerText variant="default">{i18n.t("publishTab.provideDetails")}</AirCarerText>
                 </View>
 
+                {/* Property Selection Custom Dropdown */}
+                <View style={styles.questionTitle}>
+                    <AirCarerText variant="bold">{i18n.t("publishTab.selectProperty")}</AirCarerText>
+                </View>
+                <Menu
+                    visible={menuVisible}
+                    onDismiss={() => setMenuVisible(false)}
+                    anchor={
+                        <Button
+                            mode="outlined"
+                            onPress={handleDropdownPress}
+                            style={styles.dropdownButton}
+                        >
+                            {selectedProperty
+                                ? `${selectedProperty.address}, ${selectedProperty.suburb}, ${selectedProperty.state}`
+                                : i18n.t("publishTab.selectPropertyPlaceholder")}
+                        </Button>
+                    }
+                >
+                    {properties.map((property, index) => (
+                        <Menu.Item
+                            key={index}
+                            title={`${property.address}, ${property.suburb}, ${property.state} - ${property.bedrooms} bedrooms, ${property.bathrooms} bathrooms`}
+                            onPress={() => {
+                                setSelectedProperty(property);
+                                setMenuVisible(false);
+                            }}
+                        />
+                    ))}
+                </Menu>
+
                 {/* Clean Type Section */}
                 <View style={styles.questionTitle}>
                     <AirCarerText variant="bold">{i18n.t("publishTab.cleanTypeQuestion")}</AirCarerText>
                 </View>
-                <View>
-                    <SegmentedButtons
-                        value={cleanType}
-                        onValueChange={setCleanType}
-                        buttons={[
-                            { value: 'Regular', label: i18n.t("publishTab.regularCleaning"), style: getButtonStyle('Regular', cleanType), labelStyle: getLabelStyle('Regular', cleanType) },
-                            { value: 'End of lease', label: i18n.t("publishTab.endOfLeaseCleaning"), style: getButtonStyle('End of lease', cleanType), labelStyle: getLabelStyle('End of lease', cleanType) },
-                        ]}
-                        style={styles.segmentedButtons}
-                    />
-                </View>
-
-                {/* Bedrooms Section */}
-                <View style={styles.questionTitle}>
-                    <AirCarerText variant="bold">{i18n.t("publishTab.bedroomsQuestion")}</AirCarerText>
-                </View>
-                <View>
-                    <SegmentedButtons
-                        value={bedrooms}
-                        onValueChange={setBedrooms}
-                        buttons={[
-                            { value: '0', label: '0', style: getButtonStyle('0', bedrooms), labelStyle: getLabelStyle('0', bedrooms) },
-                            { value: '1', label: '1', style: getButtonStyle('1', bedrooms), labelStyle: getLabelStyle('1', bedrooms) },
-                            { value: '2', label: '2', style: getButtonStyle('2', bedrooms), labelStyle: getLabelStyle('2', bedrooms) },
-                            { value: '3', label: '3', style: getButtonStyle('3', bedrooms), labelStyle: getLabelStyle('3', bedrooms) },
-                            { value: '4+', label: '4+', style: getButtonStyle('4+', bedrooms), labelStyle: getLabelStyle('4+', bedrooms) },
-                        ]}
-                        style={styles.segmentedButtons}
-                    />
-                </View>
-
-                {/* Bathrooms Section */}
-                <View style={styles.questionTitle}>
-                    <AirCarerText variant="bold">{i18n.t("publishTab.bathroomsQuestion")}</AirCarerText>
-                </View>
-                <View>
-                    <SegmentedButtons
-                        value={bathrooms}
-                        onValueChange={setBathrooms}
-                        buttons={[
-                            { value: '0', label: '0', style: getButtonStyle('0', bathrooms), labelStyle: getLabelStyle('0', bathrooms) },
-                            { value: '1', label: '1', style: getButtonStyle('1', bathrooms), labelStyle: getLabelStyle('1', bathrooms) },
-                            { value: '2', label: '2', style: getButtonStyle('2', bathrooms), labelStyle: getLabelStyle('2', bathrooms) },
-                            { value: '3', label: '3', style: getButtonStyle('3', bathrooms), labelStyle: getLabelStyle('3', bathrooms) },
-                            { value: '4+', label: '4+', style: getButtonStyle('4+', bathrooms), labelStyle: getLabelStyle('4+', bathrooms) },
-                        ]}
-                        style={styles.segmentedButtons}
-                    />
-                </View>
+                <SegmentedButtons
+                    value={cleanType}
+                    onValueChange={setCleanType}
+                    buttons={[
+                        { value: 'Regular', label: i18n.t("publishTab.regularCleaning"), style: getButtonStyle('Regular', cleanType), labelStyle: getLabelStyle('Regular', cleanType) },
+                        { value: 'End of lease', label: i18n.t("publishTab.endOfLeaseCleaning"), style: getButtonStyle('End of lease', cleanType), labelStyle: getLabelStyle('End of lease', cleanType) },
+                    ]}
+                    style={styles.segmentedButtons}
+                />
 
                 {/* Equipment Section */}
                 <View style={styles.questionTitle}>
@@ -180,6 +176,11 @@ const styles = StyleSheet.create({
     },
     questionTitle: {
         marginBottom: 10,
+    },
+    dropdownButton: {
+        marginBottom: 20,
+        width: '100%',
+        justifyContent: 'center',
     },
     segmentedButtons: {
         marginBottom: 20,
