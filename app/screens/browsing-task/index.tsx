@@ -1,11 +1,24 @@
 import AirCarerText from "@app/constants/AirCarerText";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { i18n } from "@app/locales/i18n";
+import { useAxios } from "@app/hooks/useAxios";
 
-export default function BrowsingTaskScreen({navigation}: any) {
+export default function BrowsingTaskScreen({ navigation }: any) {
+    const { get } = useAxios();       
+
+    const testApi = async () => {
+        get('/profile')
+        .then((response) => {
+            console.log("===", response)
+        })
+        .catch((error) => {
+            console.error("+++", error);
+        }
+        );
+    }
+
     return (
-        <View>
+        <View style={{ gap: 10, padding: 20 }}>
             <AirCarerText>Browsing Task.</AirCarerText>
             <Button mode="contained" onPress={() => navigation.navigate("signup/pricing")}>
                 <AirCarerText variant="button">Test signup</AirCarerText>
@@ -18,6 +31,8 @@ export default function BrowsingTaskScreen({navigation}: any) {
             </Button>
             <Button mode="contained" onPress={() => navigation.navigate("browsing-task/task-list")}>
                 <AirCarerText variant="button">Test browse list</AirCarerText>
+            </Button><Button mode="contained" onPress={testApi}>
+                <AirCarerText variant="button">Test get profile</AirCarerText>
             </Button>
         </View>
     )

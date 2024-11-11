@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import Constants from 'expo-constants';
+import { useSelector } from 'react-redux';
+import { RootState } from '@app/store';
 
-export const useAxios = (jwtToken?: string) => {
-  const baseUrl = Constants.expoConfig.extra.apiBaseUrl;
+export const useAxios = () => {
+  // const baseUrl = Constants.expoConfig.extra.apiBaseUrl;
+  // const baseUrl = 'http://dev.bdating.io:8000';
+  const baseUrl = 'http://localhost:8000';
+  const { access_token } = useSelector((state: RootState) => state.aircarer);
 
   const http = useRef<AxiosInstance>(
     axios.create({
@@ -11,7 +15,7 @@ export const useAxios = (jwtToken?: string) => {
       headers: {
         'Content-Type': 'application/json',
         // 'X-API-KEY': apiKey,
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${access_token}`,
       },
     }),
   );

@@ -50,14 +50,18 @@ import { i18n } from "@app/locales/i18n";
 import Logo from "@assets/images/logo.png";
 import { useLanguage } from "@app/contexts/language.context";
 import AppSetting from '@app/screens/account/setting';
+import { useDispatch } from 'react-redux';
+import { aircarerSlice } from "@app/slices/aircarer.slice";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
-    const { user, isLoading } = useAuth0();
+    const { user, isLoading, getCredentials } = useAuth0();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { lang } = useLanguage();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         console.log('isLoading', isLoading);
@@ -65,6 +69,15 @@ const Navigation = () => {
             // navigation.navigate('login');
             // console.log('Not logged in, redirect to login');
         }
+        getCredentials()
+        .then((credential) => {
+
+            dispatch(aircarerSlice.actions.setAccessToken(credential?.accessToken));
+            console.log('credential', credential);
+        })
+        .catch((error) => {
+            console.error('Error getting credentials:', error);
+        });
     }, [isLoading, user]);
 
     const renderTabIcon = (route: any, focused: boolean) => {

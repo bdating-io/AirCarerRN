@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 interface AirCarerState {
     logged_user: any;
     lang: string;
+    access_token: string | null;
     fontSize: number;
     myRoutine: WeeklyRoutine;
     registration: any;
@@ -12,6 +13,7 @@ interface AirCarerState {
 
 const initialState: AirCarerState = {
     logged_user: null,
+    access_token: null,
     lang: 'en',
     fontSize: 20,
     myRoutine: {},
@@ -38,6 +40,9 @@ export const aircarerSlice = createSlice({
         },
         setRegistration: (state, action) => {
             state.registration = action.payload;
+        },
+        setAccessToken: (state, action) => {
+            state.access_token = action.payload;
         }
     }
 });

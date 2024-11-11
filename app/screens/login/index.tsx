@@ -17,7 +17,9 @@ export default function LoginScreen(props: any) {
   }, [error]);
 
   const signin = async () => {
-    authorize()
+    authorize({
+      audience: "https://aircarer.au.auth0.com/api/v2/",
+    })
     .then((user) => {
       if (user?.accessToken !== undefined) {
         // if user has registered, navigate to index
