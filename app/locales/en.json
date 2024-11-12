@@ -78,7 +78,9 @@
         "cleaningDetailsQuestion": "What needs cleaning?",
         "cleaningDetailsPlaceholder": "E.g., vacuum carpets, clean oven",
         "minimumCharacters": "Minimum 25 characters",
-        "insufficientDetailsMessage": "Please provide at least 25 characters in the cleaning details."
+        "insufficientDetailsMessage": "Please provide at least 25 characters in the cleaning details.",
+        "inprogress": "In progress",
+        "complete": "Complete"
     },
     "publishTaskPhotos": {
         "addPhotoTitle": "Add Photo",
