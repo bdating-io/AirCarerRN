@@ -1,6 +1,6 @@
 import React from 'react';
 import AirCarerText from "@app/constants/AirCarerText";
-import { View, StyleSheet, Image, FlatList, Text } from "react-native";
+import { ScrollView, View, StyleSheet, Image, FlatList, Text } from "react-native";
 import { Button, Card, Icon } from "react-native-paper";
 import { i18n } from "@app/locales/i18n";
 import theme from "@app/constants/theme";
@@ -40,7 +40,9 @@ const PropertyList = () => {
   );
 
   return (
+    <ScrollView style={styles.scrollContainer}>
     <View style={styles.container}>
+      
       <Button 
         mode="contained" 
         onPress={() => navigation.navigate("property/add")}
@@ -73,12 +75,18 @@ const PropertyList = () => {
         ))
       ) : (
         <AirCarerText>{i18n.t("propertyList.noProperty")}</AirCarerText>
-      )}           
+      )}   
+           
     </View>
+    </ScrollView>   
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: theme.colors.paper,
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.paper,

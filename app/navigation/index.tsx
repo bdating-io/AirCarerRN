@@ -213,7 +213,7 @@ const Navigation = () => {
                     component={AddProperty}
                     options={{
                         headerShown: true,
-                        headerTitle: i18n.t('addProperty.title'),
+                        headerTitle: i18n.t('addProperty.header'),
                         headerTitleStyle: {
                             fontWeight: "800",
                             color: theme.colors.primary
@@ -225,7 +225,7 @@ const Navigation = () => {
                     component={AddPropertyPhotos}
                     options={{
                         headerShown: true,
-                        headerTitle: i18n.t('addPropertyPhoto.title'),
+                        headerTitle: i18n.t('addPropertyPhoto.header'),
                         headerTitleStyle: {
                             fontWeight: "800",
                             color: theme.colors.primary
