@@ -88,7 +88,9 @@
     "readyToGetOffers": "准备好接受报价了吗？",
     "postTask": "发布任务",
     "taskPostedMessage": "任务已发布！",
-    "uploadedPhotos": "已上传的照片"
+    "uploadedPhotos": "已上传的照片",
+    "inprogress": "进行中",
+    "complete": "完成"
   },
   "publishTaskPhotos": {
     "addPhotoTitle": "添加照片",

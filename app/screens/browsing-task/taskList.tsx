@@ -1,5 +1,5 @@
 import AirCarerText from "@app/constants/AirCarerText";
-import { View, StyleSheet, Image, FlatList, Alert} from "react-native";
+import { View, StyleSheet, Image, FlatList, Alert, TouchableOpacity} from "react-native";
 import { i18n } from "@app/locales/i18n";
 import theme from "@app/constants/theme";
 import React, { useState } from 'react';
@@ -7,6 +7,9 @@ import { Appbar, Card, IconButton, Text, Icon, Button } from 'react-native-paper
 import { useNavigation } from 'expo-router';
 
 const TaskList = (props: any) => {
+  
+  const { navigation } = props
+
   // Example data
   const [taskData] = useState([
     {
@@ -14,7 +17,6 @@ const TaskList = (props: any) => {
       title: '1 Bedroom 2 Bathrooms',
       address: '123 Main St, Melbourne VIC',
       availableTime: 'Before Sun, 20 Oct 13PM',
-      offers: 8,
       price: 70,
     },
     {
@@ -22,7 +24,6 @@ const TaskList = (props: any) => {
       title: '2 Bedrooms 1 Bathroom',
       address: '456 Maple Ave, Sydney NSW',
       availableTime: 'Before Mon, 21 Oct 10AM',
-      offers: 5,
       price: 85,
     },
     {
@@ -30,7 +31,6 @@ const TaskList = (props: any) => {
       title: '3 Bedrooms 2 Bathrooms',
       address: '789 Oak Rd, Brisbane QLD',
       availableTime: 'Before Wed, 23 Oct 9AM',
-      offers: 10,
       price: 95,
     },
     {
@@ -38,7 +38,6 @@ const TaskList = (props: any) => {
       title: '1 Bedroom 1 Bathroom',
       address: '101 Pine St, Adelaide SA',
       availableTime: 'Before Fri, 25 Oct 12PM',
-      offers: 3,
       price: 60,
     },
     {
@@ -46,7 +45,6 @@ const TaskList = (props: any) => {
       title: '1 Bedroom 1 Bathroom',
       address: '101 Pine St, Adelaide SA',
       availableTime: 'Before Fri, 25 Oct 12PM',
-      offers: 3,
       price: 60,
     },
     {
@@ -54,7 +52,6 @@ const TaskList = (props: any) => {
       title: '1 Bedroom 1 Bathroom',
       address: '101 Pine St, Adelaide SA',
       availableTime: 'Before Fri, 25 Oct 12PM',
-      offers: 3,
       price: 60,
     },
   ]);
@@ -63,18 +60,21 @@ const TaskList = (props: any) => {
     <Card style={styles.card}>
       <Card.Content>
         <View style={styles.cardHeader}>
-          <AirCarerText variant="h2">{item.title}</AirCarerText>
-          <AirCarerText variant="h1">${item.price}</AirCarerText>
+          <AirCarerText variant="bold">{item.title}</AirCarerText>
+          <AirCarerText variant="bold">${item.price}</AirCarerText>
         </View>
         <View style={styles.address}>
           <Icon source="map-marker-outline" color={theme.colors.primary} size={20}/>
           <AirCarerText>{item.address}</AirCarerText>
         </View>
-        <View style={styles.address}>
+        <View style={styles.time}>
           <Icon source="calendar-month-outline" color={theme.colors.primary} size={18}/>
           <AirCarerText>{item.availableTime}</AirCarerText>
         </View>
-        <AirCarerText>{item.offers} offers</AirCarerText>
+        {/* <AirCarerText>{item.offers} offers</AirCarerText> */}
+        <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion")}>
+          <AirCarerText style={styles.link}>See Detail</AirCarerText>
+        </TouchableOpacity>
       </Card.Content>
     </Card>
   );
@@ -82,7 +82,7 @@ const TaskList = (props: any) => {
   return (
     <View style={styles.container}>
       {/* Top Bar with Filter and Sort Buttons */}
-      <Appbar.Header style={styles.appbar}>
+      {/* <Appbar.Header style={styles.appbar}>
         <Button
           mode="text" 
           onPress={() => console.log('Filter pressed')}
@@ -100,7 +100,7 @@ const TaskList = (props: any) => {
           <Icon source="sort" color={theme.colors.primary} size={20}/>
           <AirCarerText>Sort</AirCarerText>
         </Button>
-      </Appbar.Header>
+      </Appbar.Header> */}
 
       {/* Main Content: Task List */}
       <FlatList
@@ -149,10 +149,15 @@ const styles = StyleSheet.create({
     marginLeft: -3,
     marginBottom: 8,
   },
-  emptyText: {
-    textAlign: 'center',
-    marginTop: 20,
+  time: {
+    flexDirection: 'row',
+    marginLeft: -1,
+    marginBottom: 5,
   },
+  link: {
+    textDecorationLine: "underline",
+    
+  }
 });
 
 export default TaskList;
