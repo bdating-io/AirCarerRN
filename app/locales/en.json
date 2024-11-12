@@ -40,7 +40,7 @@
         "noRoutineWarning": "You haven't set up your routine yet. Set up your routine to get more tasks.",
         "firstName": "First name",
         "lastName": "Last name",
-        "homeSuburb": "Home suburb",
+        "servicingSuburb": "Servicing suburb",
         "mainGoal": "What is your main goal on AirCarer?",
         "getThingsDone": "Get things done",
         "earnMoney": "Earn money",
@@ -48,7 +48,9 @@
         "individual": "Individual",
         "business": "Business",
         "abn": "ABN (if applicable)",
-        "getStarted": "Get started"
+        "getStarted": "Get started",
+        "noService": "Sorry, we don't provide service in your area.",
+        "welcome": "Welcome to AirCarer!"
     },
     "publishTab": {
         "goodday": "Good day",

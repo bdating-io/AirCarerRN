@@ -2,15 +2,18 @@ import Calendar from "@app/components/calendar.component";
 import ManageTimeSlotModal, { useManageTimeSlot } from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
+import { useSnackbar } from "@app/contexts/snackbar.context";
 import { i18n } from "@app/locales/i18n";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Card } from "react-native-paper";
 
 
 const SignupServicingHours = (props: any) => {
     const { navigation } = props;
+    const { info } = useSnackbar();
     const handleNext = () => {
-        navigation.navigate('index');
+        info(i18n.t('signupTab.welcome'));
+        navigation.navigate('/');
     }
 
     const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
@@ -24,10 +27,12 @@ const SignupServicingHours = (props: any) => {
                         <AirCarerText variant="default">{i18n.t('signupTab.expectedPricingExplain')}</AirCarerText>
                     </Card.Content>
                 </Card>
-                <Button mode="contained" onPress={() => setShowTimePicker(true)}>
+                {/* <Button mode="contained" onPress={() => setShowTimePicker(true)}>
                     <AirCarerText variant="button">Editing Timeslots</AirCarerText>
-                </Button>
+                </Button> */}
+                <TouchableOpacity onPress={() => setShowTimePicker(true)}>
                     <Calendar routine={weeklyRoutine} />
+                </TouchableOpacity>
                 <Button mode='contained' style={styles.nextButton} onPress={handleNext}>
                     <AirCarerText variant='button'>{i18n.t('finish')}</AirCarerText>
                 </Button>

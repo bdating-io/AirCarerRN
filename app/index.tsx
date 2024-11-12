@@ -10,6 +10,7 @@ import { LanguageProvider } from "./contexts/language.context";
 import config from "./config/config";
 import { Auth0Provider } from 'react-native-auth0';
 import { SkillsProvider } from "./contexts/SkillsContext";
+import { SnackbarProvider } from "./contexts/snackbar.context";
 
 
 export default function Index() {
@@ -20,7 +21,9 @@ export default function Index() {
                     <LanguageProvider>
                         <FontSizeProvider>
                             <PaperProvider theme={theme}>
-                                <Navigation />
+                                <SnackbarProvider>
+                                    <Navigation />
+                                </SnackbarProvider>
                             </PaperProvider>
                         </FontSizeProvider>
                     </LanguageProvider>
