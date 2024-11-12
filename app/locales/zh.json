@@ -237,5 +237,35 @@
     "continue": "继续",
     "insufficientDetails": "请完善您的日期信息",
     "ok": "确定"
-  }
+  },
+  "propertyList": {
+        "header": "房源列表",
+        "addProperty": "添加房源",
+        "noProperty": "暂时还没有任何房源信息！",
+        "bedrooms": "室",
+        "bedroom": "室",
+        "bathrooms": "卫",
+        "bathroom": "卫"
+    },
+    "addProperty": {
+        "header": "添加房源",
+        "title": "这套房子是什么样子的？",
+        "subTitle": "请提供更多具体细节",
+        "askBedroom": "一共有多少卧室？",
+        "askBathroom": "一共有多少卫生间",
+        "askAddress": "房子位于哪里？",
+        "address": "地址",
+        "suburb": "地区",
+        "state": "省份",
+        "postcode": "邮编",
+        "addPhoto": "添加照片",
+        "submit": "提交"
+    },
+    "addPropertyPhoto": {
+        "header": "添加照片",
+        "title": "添加照片",
+        "subTitle": "帮助您记住您的房屋信息",
+        "upload": "上传照片",
+        "submit": "提交"
+    }
 }

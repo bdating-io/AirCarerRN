@@ -60,8 +60,8 @@ const AddProperty = () => {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
+        <ScrollView>
         <AirCarerText variant="h1">{i18n.t("addProperty.title")}</AirCarerText>
         <View style={styles.subTitle}>
           <AirCarerText variant="default">{i18n.t("addProperty.subTitle")}</AirCarerText>
@@ -160,8 +160,9 @@ const AddProperty = () => {
         >
           <AirCarerText variant="button">{i18n.t("addProperty.submit")}</AirCarerText>
         </Button>
+        </ScrollView>
       </View>
-    </ScrollView>
+
   );
 };
 
