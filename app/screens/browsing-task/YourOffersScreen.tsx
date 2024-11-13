@@ -4,6 +4,7 @@ import theme from "@app/constants/theme";
 import AirCarerText from "@app/constants/AirCarerText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
+import { i18n } from "@app/locales/i18n";
 
 interface OfferData {
   id: string;
@@ -83,7 +84,7 @@ const OfferItem = ({ data }: OfferItemProps) => {
       <View style={styles.toggleButtonContainer}>
         <TouchableOpacity onPress={toggleExpanded} style={styles.toggleButton}>
           <AirCarerText style={styles.toggleText}>
-            {expanded ? "Show less" : "Show more"}
+            {expanded ? i18n.t("taskConclusion.ShowLess") : i18n.t("taskConclusion.ShowMore")}
           </AirCarerText>
           <MaterialIcons
             name={expanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}

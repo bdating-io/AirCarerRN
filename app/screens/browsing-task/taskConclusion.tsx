@@ -33,8 +33,8 @@ export default function TaskConclusionScreen(props: any) {
   const BottomSection = () => (
     <View style={styles.bottomSection}>
       <View style={styles.taskPreviewContainer}>
-        <View style={styles.previewLeftSection}>
-          <AirCarerText style={styles.previewTaskTitle}>Task Title</AirCarerText>
+        <View >
+          <AirCarerText >Task Title</AirCarerText>
           <AirCarerText style={styles.previewLocation}>Before Sun, 10 Nov・3000 VIC, Australia</AirCarerText>
         </View>
         <View style={styles.previewRightSection}>
@@ -67,10 +67,10 @@ export default function TaskConclusionScreen(props: any) {
         style={styles.offersHeader}
         onPress={toggleOffersExpansion}
       >
-        <AirCarerText style={styles.offersTitle}>Offers(3)</AirCarerText>
+        <AirCarerText >{i18n.t("taskConclusion.Offers")}(3)</AirCarerText>
         <View style={styles.offersExpandButton}>
           <AirCarerText style={styles.expandButtonText}>
-            {isOffersExpanded ? "Less" : "More"}
+            {isOffersExpanded ? i18n.t("taskConclusion.Collapse") : i18n.t("taskConclusion.Expend")}
           </AirCarerText>
           <MaterialIcons
             name={

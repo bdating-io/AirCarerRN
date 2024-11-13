@@ -202,7 +202,14 @@
         "propertyPhotos": "Property Photos",
         "acceptTask":"Accept Task",
         "makeOffer":"Make Offer",
-        "Offers":"Offers"
+        "Offers":"Offers",
+        "Expend":"Expend",
+        "Collapse" : "Collapse",
+        "ShowMore" : "Show more",
+        "ShowLess" : "Show less",
+        "YourPrice" : "Your Price",
+        "YourDescription":"Your Description",
+        "Confirm":"Confirm"
     },
     "educationScreen": {
         "title": "Education",

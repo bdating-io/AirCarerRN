@@ -4,6 +4,8 @@ import { useSnackbar } from "@app/contexts/snackbar.context";
 import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, TextInput, Modal } from "react-native-paper";
+import { i18n } from "@app/locales/i18n";
+
 
 interface MakeOfferScreenProps {
   visible: boolean;
@@ -44,7 +46,7 @@ const MakeOfferScreen = ({ visible, onDismiss }: MakeOfferScreenProps) => {
           <TextInput
             mode="outlined"
             style={styles.input}
-            label="Your Price"
+            label={i18n.t("taskConclusion.YourPrice")}
             value={price}
             onChangeText={handlePriceChange}
             keyboardType="decimal-pad"
@@ -60,7 +62,7 @@ const MakeOfferScreen = ({ visible, onDismiss }: MakeOfferScreenProps) => {
           <TextInput
             mode="outlined"
             style={[styles.input, styles.textArea]}
-            label="Your Description"
+            label={i18n.t("taskConclusion.YourDescription")}
             value={description}
             onChangeText={setDescription}
             multiline
