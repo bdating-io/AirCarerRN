@@ -7,7 +7,8 @@ import HalfScreenModal from "../../components/halfScreen.modal";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function TaskConclusionScreen(props: any) {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const isProvider = route.name.includes("/provider");
 
   const makeOffer = () => {
     console.log("Make offer pressed");
@@ -132,23 +133,113 @@ export default function TaskConclusionScreen(props: any) {
           </View>
         </View>
       </View>
-      <View style={styles.bottomContainer}>
-        <Button
-          mode="contained"
-          buttonColor={theme.colors.primary}
-          textColor="white"
-          style={styles.button}
-          contentStyle={styles.buttonContent}
-          onPress={makeOffer}
-        >
-          <AirCarerText variant="button">Accept Task</AirCarerText>
-        </Button>
-      </View>
+
+      {isProvider && (
+        <View style={styles.bottomSection}>
+          <View style={styles.taskPreviewContainer}>
+            <View style={styles.previewLeftSection}>
+              <AirCarerText style={styles.previewTaskTitle}>
+                Task Title
+              </AirCarerText>
+              <AirCarerText style={styles.previewLocation}>
+                Before Sun, 10 Nov・3000 VIC, Australia
+              </AirCarerText>
+            </View>
+            <View style={styles.previewRightSection}>
+              <AirCarerText style={styles.previewBudgetAmount}>
+                $150.00
+              </AirCarerText>
+              <AirCarerText style={styles.previewBudgetLabel}>
+                Task budget
+              </AirCarerText>
+            </View>
+          </View>
+          <Button
+            mode="contained"
+            buttonColor={theme.colors.primary}
+            textColor="white"
+            style={styles.button}
+            contentStyle={styles.buttonContent}
+            onPress={makeOffer}
+          >
+            <AirCarerText variant="button">
+              {i18n.t("taskConclusion.makeOffer")}
+            </AirCarerText>
+          </Button>
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  taskPreviewContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    paddingVertical: 16,
+    marginBottom: 5,
+  },
+  previewLeftSection: {
+    flex: 1,
+    marginRight: 16,
+    width: 240,
+  },
+  previewTaskTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: theme.colors.text,
+    marginBottom: 4,
+  },
+  previewLocation: {
+    fontSize: 14,
+    color: theme.colors.secondary,
+  },
+  previewRightSection: {
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    paddingTop: 2,
+  },
+  previewBudgetLabel: {
+    fontSize: 14,
+    color: theme.colors.secondary,
+    marginBottom: 4,
+  },
+  bottomSection: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "white",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -3,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    elevation: 8,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  previewLocationTime: {
+    marginBottom: 8,
+  },
+  previewText: {
+    fontSize: 14,
+    color: theme.colors.secondary,
+  },
+  previewBudgetContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  previewBudgetAmount: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: theme.colors.text,
+  },
   modalWrapper: {
     position: "absolute",
     bottom: 0,

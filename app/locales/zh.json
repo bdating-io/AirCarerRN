@@ -118,7 +118,8 @@
     "budget": "预算",
     "taskDescription": "任务描述",
     "propertyPhotos": "房产照片",
-    "acceptTask":"接受任务"
+    "acceptTask":"接受任务",
+    "makeOffer":"提交报价"
   },
   "publishTaskPost": {
     "readyToPost": "准备好发布任务了吗？",

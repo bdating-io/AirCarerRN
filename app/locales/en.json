@@ -200,7 +200,8 @@
         "budget": "Budget",
         "taskDescription": "Task Description",
         "propertyPhotos": "Property Photos",
-        "acceptTask":"Accept Task"
+        "acceptTask":"Accept Task",
+        "makeOffer":"Make Offer"
     },
     "educationScreen": {
         "title": "Education",

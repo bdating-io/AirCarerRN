@@ -72,7 +72,7 @@ const TaskList = (props: any) => {
           <AirCarerText>{item.availableTime}</AirCarerText>
         </View>
         {/* <AirCarerText>{item.offers} offers</AirCarerText> */}
-        <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion")}>
+        <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion/customer")}>
           <AirCarerText style={styles.link}>See Detail</AirCarerText>
         </TouchableOpacity>
       </Card.Content>

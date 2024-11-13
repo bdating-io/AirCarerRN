@@ -89,7 +89,7 @@ export default function MyTaskScreen(props: any) {
           <AirCarerText>{taskStatus(item.status)}</AirCarerText>
         </View>
         {/* <AirCarerText>{item.offers} offers</AirCarerText> */}
-        <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion")}>
+        <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion/provider")}>
           <AirCarerText style={styles.link}>See Detail</AirCarerText>
         </TouchableOpacity>
       </Card.Content>

@@ -26,8 +26,11 @@ export default function BrowsingTaskScreen({ navigation }: any) {
             <Button mode="contained" onPress={() => navigation.navigate("property/list")}>
                 <AirCarerText variant="button">Test Property List</AirCarerText>
             </Button>
-            <Button mode="contained" onPress={() => navigation.navigate("browsing-task/task-conclusion")}>
-                <AirCarerText variant="button">Test Tasks Conclusion</AirCarerText>
+            <Button mode="contained" onPress={() => navigation.navigate("browsing-task/task-conclusion/customer")}>
+                <AirCarerText variant="button">Test Tasks Conclusion Customer</AirCarerText>
+            </Button>
+            <Button mode="contained" onPress={() => navigation.navigate("browsing-task/task-conclusion/provider")}>
+                <AirCarerText variant="button">Test Tasks Conclusion Provider</AirCarerText>
             </Button>
             <Button mode="contained" onPress={() => navigation.navigate("browsing-task/task-list")}>
                 <AirCarerText variant="button">Test browse list</AirCarerText>
