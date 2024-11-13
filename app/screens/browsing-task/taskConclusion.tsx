@@ -1,19 +1,19 @@
 import { View, StyleSheet } from "react-native";
-import { Button, Avatar } from "react-native-paper";
+import { Button, Avatar, Portal, Modal } from "react-native-paper";
 import theme from "@app/constants/theme";
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from "@app/locales/i18n";
-import HalfScreenModal from "../../components/halfScreen.modal";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
+import MakeOfferScreen from "./makeOfferScreen";
 
 export default function TaskConclusionScreen(props: any) {
   const { navigation, route } = props;
   const isProvider = route.name.includes("/provider");
+  const [visible, setVisible] = useState(false);
 
-  const makeOffer = () => {
-    console.log("Make offer pressed");
-    navigation.navigate("index");
-  };
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   const viewOnMap = () => {
     console.log("View on map pressed");
@@ -22,7 +22,6 @@ export default function TaskConclusionScreen(props: any) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {/* Header Section */}
         <View style={styles.headerSection}>
           <AirCarerText style={styles.taskHeader}>Task Title</AirCarerText>
           <View style={styles.posterInfo}>
@@ -94,7 +93,6 @@ export default function TaskConclusionScreen(props: any) {
           </View>
         </View>
 
-        {/* Budget Section */}
         <View style={styles.budgetSection}>
           <AirCarerText style={styles.currencySymbol}>$</AirCarerText>
           <View style={styles.budgetTextContainer}>
@@ -105,7 +103,6 @@ export default function TaskConclusionScreen(props: any) {
           </View>
         </View>
 
-        {/* Task Details Section */}
         <View style={styles.detailsSection}>
           <AirCarerText style={styles.detailsTitle}>
             {i18n.t("taskConclusion.taskDescription")}
@@ -121,7 +118,6 @@ export default function TaskConclusionScreen(props: any) {
           </AirCarerText>
         </View>
 
-        {/* Location Details */}
         <View style={styles.locationSection}>
           <View style={styles.locationItem}>
             <AirCarerText style={styles.locationLabel}>
@@ -160,7 +156,7 @@ export default function TaskConclusionScreen(props: any) {
             textColor="white"
             style={styles.button}
             contentStyle={styles.buttonContent}
-            onPress={makeOffer}
+            onPress={showModal}
           >
             <AirCarerText variant="button">
               {i18n.t("taskConclusion.makeOffer")}
@@ -168,6 +164,9 @@ export default function TaskConclusionScreen(props: any) {
           </Button>
         </View>
       )}
+      <Portal>
+        <MakeOfferScreen visible={visible} onDismiss={hideModal} />
+      </Portal>
     </View>
   );
 }
@@ -223,53 +222,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
-  previewLocationTime: {
-    marginBottom: 8,
-  },
-  previewText: {
-    fontSize: 14,
-    color: theme.colors.secondary,
-  },
-  previewBudgetContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   previewBudgetAmount: {
     fontSize: 18,
     fontWeight: "600",
     color: theme.colors.text,
-  },
-  modalWrapper: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    pointerEvents: "box-none",
-  },
-  bottomContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "white",
-    padding: 16,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: theme.colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  mainContent: {
-    flex: 1,
-    padding: 20,
-    paddingBottom: 80,
   },
   posterInfo: {
     flexDirection: "row",
@@ -279,11 +235,6 @@ const styles = StyleSheet.create({
   },
   avatar: {
     backgroundColor: theme.colors.primary,
-  },
-  avatarImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
   },
   posterDetails: {
     flex: 1,
@@ -346,10 +297,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: theme.colors.primary,
     marginBottom: 16,
-  },
-  wTag: {
-    fontSize: 16,
-    color: theme.colors.warning,
   },
   locationTimeContainer: {
     gap: 12,
@@ -424,32 +371,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: theme.colors.primary,
-  },
-  taskDescription: {
-    marginBottom: 20,
-  },
-  taskTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  taskDate: {
-    fontSize: 14,
-    color: theme.colors.secondary,
-    marginBottom: 8,
-  },
-  taskBudget: {
-    fontSize: 14,
-    color: theme.colors.secondary,
-  },
-  taskAmount: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: theme.colors.primary,
-  },
-  buttonContainer: {
-    padding: 16,
-    backgroundColor: "white",
   },
   button: {
     borderRadius: theme.rouded.large,
