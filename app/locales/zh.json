@@ -119,7 +119,8 @@
     "taskDescription": "任务描述",
     "propertyPhotos": "房产照片",
     "acceptTask":"接受任务",
-    "makeOffer":"提交报价"
+    "makeOffer":"提交报价",
+    "Offers":"报价"
   },
   "publishTaskPost": {
     "readyToPost": "准备好发布任务了吗？",

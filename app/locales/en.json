@@ -201,7 +201,8 @@
         "taskDescription": "Task Description",
         "propertyPhotos": "Property Photos",
         "acceptTask":"Accept Task",
-        "makeOffer":"Make Offer"
+        "makeOffer":"Make Offer",
+        "Offers":"Offers"
     },
     "educationScreen": {
         "title": "Education",
