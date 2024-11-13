@@ -2,55 +2,66 @@ import useManageTimeSlot from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
+import { aircarerSlice } from "@app/slices/aircarer.slice";
+import { RootState, useSelector } from "@app/store";
 import { useCallback, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Card, TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
 
 interface Pricing {
     id: number;
     type: string;
+    key: string;
     pricing: number;
 }
 
 const SignupPricing = (props: any) => {
     const { navigation } = props;
     const getDefaultPricing = useCallback(() => {
-       return [
-        {
-            id: 1,
-            type: i18n.t('studio'),
-            pricing: 30,
-        },
-        {
-            id: 2,
-            type: i18n.t('1b1b'),
-            pricing: 40
-        },
-        {
-            id: 3,
-            type: i18n.t('2b1b'),
-            pricing: 60
-        },
-        {
-            id: 4,
-            type: i18n.t('2b2b'),
-            pricing: 80
-        },
-        {
-            id: 5,
-            type: i18n.t('3b2b'),
-            pricing: 100
-        }
-    ];
+        return [
+            {
+                id: 1,
+                key: 'studioPricing',
+                type: i18n.t('studio'),
+                pricing: 30,
+            },
+            {
+                id: 2,
+                key: '1b1bPricing',
+                type: i18n.t('1b1b'),
+                pricing: 40
+            },
+            {
+                id: 3,
+                key: '2b1bPricing',
+                type: i18n.t('2b1b'),
+                pricing: 60
+            },
+            {
+                id: 4,
+                key: '2b2bPricing',
+                type: i18n.t('2b2b'),
+                pricing: 80
+            },
+            {
+                id: 5,
+                key: '3b2bPricing',
+                type: i18n.t('3b2b'),
+                pricing: 100
+            }
+        ];
     }, [i18n]);
 
     const [expectedPricing, setExpectedPricing] = useState<Pricing[]>(getDefaultPricing());
+    const { logged_user } = useSelector((state: RootState) => state.aircarer);
+    const dispatch = useDispatch();
 
     const updatePricing = (id: number, pricing: number) => {
         const newPricing = expectedPricing.map((item: Pricing) => {
             if (item.id === id) {
                 if (pricing < 0 || isNaN(pricing)) {
-                    pricing = 0; 
+                    pricing = 0;
                 }
                 return {
                     ...item,
@@ -64,11 +75,13 @@ const SignupPricing = (props: any) => {
     }
 
     const handleNext = () => {
-        console.log(expectedPricing);
+        const updatedUser = { ...logged_user };
+        for (const item of expectedPricing) {
+            updatedUser[item.key] = item.pricing;
+        }
+        dispatch(aircarerSlice.actions.setLoggedUser(updatedUser));
         navigation.navigate('signup/servicingHours');
     }
-
-
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -97,12 +110,12 @@ const SignupPricing = (props: any) => {
                             placeholder={i18n.t('publishTab.taskTitle')}
                             outlineStyle={{ borderRadius: theme.rouded.small, borderWidth: 2.5 }}
                             left={<TextInput.Affix text="$" textStyle={{ fontWeight: '900', color: theme.colors.primary }} />}
-                            // right={<TextInput.Affix text="/Hour" textStyle={{ fontWeight: '900', color: theme.colors.primary }} />}
+                        // right={<TextInput.Affix text="/Hour" textStyle={{ fontWeight: '900', color: theme.colors.primary }} />}
                         />
                     </View>
                 ))}
 
-                <Button mode='contained' style={styles.nextButton}  onPress={handleNext}>
+                <Button mode='contained' style={styles.nextButton} onPress={handleNext}>
                     <AirCarerText variant='button'>{i18n.t('next')}</AirCarerText>
                 </Button>
             </View>
@@ -140,7 +153,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         fontWeight: '900',
-        
+
     },
     nextButton: {
         height: 50,

@@ -11,7 +11,7 @@ import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from "@app/locales/i18n";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import MakeOfferScreen from "./MakeOfferScreen";
+import MakeOfferScreen from "./makeOfferScreen";
 import YourOffersScreen from "./YourOffersScreen";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;

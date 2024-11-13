@@ -4,6 +4,9 @@ import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { useSnackbar } from "@app/contexts/snackbar.context";
 import { i18n } from "@app/locales/i18n";
+import { aircarerSlice } from "@app/slices/aircarer.slice";
+import { RootState, useDispatch, useSelector } from "@app/store";
+import { useState } from "react";
 import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Card } from "react-native-paper";
 
@@ -11,12 +14,31 @@ import { Button, Card } from "react-native-paper";
 const SignupServicingHours = (props: any) => {
     const { navigation } = props;
     const { info } = useSnackbar();
+    const { logged_user } = useSelector((state: RootState) => state.aircarer);
+    const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
+    const dispatch = useDispatch();
+
     const handleNext = () => {
+        const result: any[] = [];
+
+        for (const [dayOfWeek, times] of Object.entries(weeklyRoutine)) {
+            times.forEach(time => {
+                result.push({
+                    dayOfWeek,
+                    start: time.start,
+                    end: time.end,
+                });
+            });
+        }
+
+        dispatch(aircarerSlice.actions.setLoggedUser({
+            ...logged_user,
+            availability: result,
+        }));
+
         info(i18n.t('signupTab.welcome'));
         navigation.navigate('/');
     }
-
-    const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
 
     return (
         <ScrollView contentContainerStyle={styles.container}>

@@ -32,9 +32,9 @@ export const useManageTimeSlot = () => {
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
     const [weeklyRoutine, setWeeklyRoutine] = useState<WeeklyRoutine>(myRoutine ?? {});
 
+    // save the routine to redux store, for sake of when user go back to previous screen and come back, the routine is still there
     useEffect(() => {
         dispatch(aircarerSlice.actions.setMyRoutine(weeklyRoutine));
-        console.log(weeklyRoutine)
     }, [weeklyRoutine]);
 
     return {
@@ -47,7 +47,7 @@ export const useManageTimeSlot = () => {
 
 const ManageTimeSlotModal = (props: ManageTimeSlotModalProps) => {
     const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = props;
-    const [localRoutine, setLocalRoutine] = useState<WeeklyRoutine>(props.weeklyRoutine ?? {});
+    const [localRoutine, setLocalRoutine] = useState<WeeklyRoutine>(weeklyRoutine ?? {});
 
     const addEmptySlot = () => {
         const newSlot = { ...emptySlot, id: `${Date.now()}` };
@@ -197,6 +197,7 @@ const RoutineItem = (props: any) => {
             const end = localEnd;
             setEnd(localStart);
             setStart(end);
+            onUpdate(day, id, { start: end, end: localStart });
         }
     }, [localStart, localEnd]);
 

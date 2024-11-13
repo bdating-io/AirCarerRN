@@ -40,6 +40,7 @@
         "noRoutineWarning": "You haven't set up your routine yet. Set up your routine to get more tasks.",
         "firstName": "First name",
         "lastName": "Last name",
+        "email": "Email",
         "servicingSuburb": "Servicing suburb",
         "mainGoal": "What is your main goal on AirCarer?",
         "getThingsDone": "Get things done",
@@ -50,7 +51,8 @@
         "abn": "ABN (if applicable)",
         "getStarted": "Get started",
         "noService": "Sorry, we don't provide service in your area.",
-        "welcome": "Welcome to AirCarer!"
+        "welcome": "Welcome to AirCarer!",
+        "invalidEmail": "Invalid email"
     },
     "publishTab": {
         "goodday": "Good day",
