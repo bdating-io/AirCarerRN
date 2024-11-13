@@ -422,11 +422,9 @@ const Navigation = () => {
   }, [lang]);
 
   const renderNavigator = () => {
-    //test only
-    // if (isLoading) return <></>;
-    // if (user) return <AuthNavigator />;
-    // return <UnAuthNavigator />;
-    return <AuthNavigator />;
+    if (isLoading) return <></>;
+    if (user) return <AuthNavigator />;
+    return <UnAuthNavigator />;
   };
 
   return renderNavigator();
