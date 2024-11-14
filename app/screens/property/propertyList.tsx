@@ -1,15 +1,14 @@
 import React from 'react';
 import AirCarerText from "@app/constants/AirCarerText";
-import { ScrollView, View, StyleSheet, Image, FlatList, Text } from "react-native";
+import { ScrollView, View, StyleSheet, Image, FlatList, Text, TouchableOpacity } from "react-native";
 import { Button, Card, Icon } from "react-native-paper";
 import { i18n } from "@app/locales/i18n";
 import theme from "@app/constants/theme";
-import { useNavigation } from '@react-navigation/native';
 import { useProperties } from "@app/contexts/PropertiesContext";
 
-const PropertyList = () => {
-  const { properties } = useProperties();
-  const navigation = useNavigation();
+const PropertyList = (props: any) => {
+  const { navigation } = props;
+  const { properties, deleteProperty } = useProperties();
 
   const bedroomNumber = (value: string) => {
     if (Number(value) === 0) {
@@ -39,46 +38,63 @@ const PropertyList = () => {
     </View>
   );
 
+  const handleSubmit = () => {
+    console.log(properties);
+    // navigation.navigate("/");
+  }
+
   return (
     <ScrollView style={styles.scrollContainer}>
-    <View style={styles.container}>
-      
-      <Button 
-        mode="contained" 
-        onPress={() => navigation.navigate("property/add")}
-        style={styles.addButton}
-      >
-        <AirCarerText variant="button">{i18n.t("propertyList.addProperty")}</AirCarerText>
-      </Button>
-      {properties.length > 0 ? (
-        properties.map((property, index) => (
-          <Card key={index} style={styles.card}>
-            <Card.Content>
-              <AirCarerText variant="bold" style={styles.title}>{property.address}</AirCarerText>
-              <AirCarerText variant="default">{property.suburb}, {property.state}, {property.postcode}</AirCarerText>
-              <View style={styles.address}>
-                <Icon source="home" color={theme.colors.primary} size={20}/>
-                <AirCarerText variant="default">
-                  {bedroomNumber(property.bedrooms)} {bathroomNumber(property.bathrooms)}
-                </AirCarerText>
-              </View>
-              <FlatList
-                data={property.photos}
-                horizontal
-                showsHorizontalScrollIndicator={true}
-                renderItem={({ item }) => renderPhoto([item])}
-                keyExtractor={(item, index) => index.toString()}
-                pagingEnabled
-             />
-            </Card.Content>
-          </Card>
-        ))
-      ) : (
-        <AirCarerText>{i18n.t("propertyList.noProperty")}</AirCarerText>
-      )}   
-           
-    </View>
-    </ScrollView>   
+      <View style={styles.container}>
+        {
+          properties.map((property, index) => (
+            <TouchableOpacity key={index} onPress={() => navigation.navigate("property/add", { property: property })}>
+              <Card style={styles.card}>
+                <Card.Content>
+                  <View >
+                    <AirCarerText variant="bold" style={styles.title}>{property.address}</AirCarerText>
+                    <AirCarerText variant="default">{property.suburb}, {property.state}, {property.postcode}</AirCarerText>
+                    <View style={styles.address}>
+                      <Icon source="home" color={theme.colors.primary} size={20} />
+                      <AirCarerText variant="default">
+                        {bedroomNumber(property.bedrooms)} {bathroomNumber(property.bathrooms)}
+                      </AirCarerText>
+                    </View>
+                    <FlatList
+                      data={property.photos}
+                      horizontal
+                      showsHorizontalScrollIndicator={true}
+                      renderItem={({ item }) => renderPhoto([item])}
+                      keyExtractor={(item, index) => index.toString()}
+                      pagingEnabled
+                    />
+                    <Button onPress={() => deleteProperty(property.id)}>delete</Button>
+                  </View>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
+          )
+          )}
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate("property/add")}
+          style={[styles.addButton, { backgroundColor: theme.colors.secondary }]}
+        >
+          <AirCarerText variant="button">{i18n.t("propertyList.addProperty")}</AirCarerText>
+        </Button>
+        {
+          properties.length > 0 && (
+            <Button
+              mode="contained"
+              onPress={handleSubmit}
+              style={styles.addButton}
+            >
+              <AirCarerText variant="button">{i18n.t("propertyList.save")}</AirCarerText>
+            </Button>
+          )
+        }
+      </View>
+    </ScrollView>
   );
 };
 

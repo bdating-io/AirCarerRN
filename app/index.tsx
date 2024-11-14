@@ -11,6 +11,7 @@ import config from "./config/config";
 import { Auth0Provider } from 'react-native-auth0';
 import { SkillsProvider } from "./contexts/SkillsContext";
 import { SnackbarProvider } from "./contexts/snackbar.context";
+import 'react-native-get-random-values';
 
 
 export default function Index() {

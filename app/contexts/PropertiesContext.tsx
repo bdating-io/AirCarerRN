@@ -1,22 +1,15 @@
 // PropertiesContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import * as SecureStorage from 'expo-secure-store';
+import { Property } from '@app/types/property.type';
 
-// Define the shape of a property
-interface Property {
-    bedrooms: string;
-    bathrooms: string;
-    address: string;
-    suburb: string;
-    postcode: string;
-    state: string;
-    photos: string[];
-}
 
 // Define the context data types
 interface PropertiesContextData {
     properties: Property[];
     addProperty: (property: Property) => void;
+    editProperty: (id: string, property: Property) => void;
+    deleteProperty: (id: string) => void;
 }
 
 // Create the context
@@ -65,8 +58,16 @@ export const PropertiesProvider: React.FC<{ children: ReactNode }> = ({ children
         setProperties((prevProperties) => [...prevProperties, property]);
     };
 
+    const editProperty = (id: string, property: Property) => {
+        setProperties((prevProperties) => prevProperties.map((p) => p.id === id ? property : p));
+    }
+
+    const deleteProperty = (id: string) => {
+        setProperties((prevProperties) => prevProperties.filter((p) => p.id !== id));
+    }
+
     return (
-        <PropertiesContext.Provider value={{ properties, addProperty }}>
+        <PropertiesContext.Provider value={{ properties, addProperty, editProperty, deleteProperty }}>
             {children}
         </PropertiesContext.Provider>
     );

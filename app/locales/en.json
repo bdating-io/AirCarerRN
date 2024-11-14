@@ -252,11 +252,13 @@
         "bedrooms": "bedrooms",
         "bedroom": "bedroom",
         "bathrooms": "bathrooms",
-        "bathroom": "bathroom"
+        "bathroom": "bathroom",
+        "save": "Save"
     },
     "addProperty": {
         "header": "Add Property",
         "title": "What's the place like?",
+        "type": "Type",
         "subTitle": "Provide more details",
         "askBedroom": "How many bedrooms do you have?",
         "askBathroom": "How many bathrooms do you have?",

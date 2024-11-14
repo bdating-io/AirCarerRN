@@ -260,10 +260,12 @@
     "bedrooms": "室",
     "bedroom": "室",
     "bathrooms": "卫",
-    "bathroom": "卫"
+    "bathroom": "卫",
+    "save": "保存"
   },
   "addProperty": {
     "header": "添加房源",
+    "type": "房屋类型",
     "title": "这套房子是什么样子的？",
     "subTitle": "请提供更多具体细节",
     "askBedroom": "一共有多少卧室？",
