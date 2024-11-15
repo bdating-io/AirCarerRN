@@ -1,6 +1,7 @@
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { useSnackbar } from "@app/contexts/snackbar.context";
+import { useAxios } from "@app/hooks/useAxios";
 import { i18n } from "@app/locales/i18n";
 import { aircarerSlice } from "@app/slices/aircarer.slice";
 import { RootState } from "@app/store";
@@ -25,6 +26,7 @@ const CreateProfile = (props: any) => {
     const { info, error, success } = useSnackbar();
     const dispatch = useDispatch();
     const { logged_user } = useSelector((state: RootState) => state.aircarer);
+    const { put } = useAxios();
     
     const validate = useCallback(() => {
         const postCode = parseInt(suburb ?? '0');
@@ -62,19 +64,27 @@ const CreateProfile = (props: any) => {
     }, []);
 
     const next = () => {
-        dispatch(aircarerSlice.actions.setLoggedUser({
+        const registeredUser = {
             ...logged_user,
             firstName: firstName,
             lastName: lastName,
             suburb: suburb,
             email: email,
             purpose: purpose,
-        }))
+            abn: abn,
+        };
+        dispatch(aircarerSlice.actions.setLoggedUser(registeredUser));
 
         if (purpose === 'earnMoney') {
             navigation.navigate('signup/pricing');
         } else {
-            navigation.navigate('property/add');
+            put('/profile', registeredUser)
+            .then(data => {
+                navigation.navigate('property/list');
+            })
+            .catch((error) => {
+                error(i18n.t('signupTab.error'));
+            });
         }
     }
 

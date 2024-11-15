@@ -52,7 +52,8 @@
     "getStarted": "开始使用",
     "noService": "我们暂未在您所在的区域提供服务",
     "welcome": "欢迎使用AirCarer!",
-    "invalidEmail": "无效邮箱"
+    "invalidEmail": "无效邮箱",
+    "error": "出问题啦, 请稍后重试"
   },
   "publishTab": {
     "goodday": "早上好",

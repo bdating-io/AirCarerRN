@@ -20,7 +20,7 @@ export default function BrowsingTaskScreen({ navigation }: any) {
     return (
         <View style={{ gap: 10, padding: 20 }}>
             <AirCarerText>Browsing Task.</AirCarerText>
-            <Button mode="contained" onPress={() => navigation.navigate("property/add")}>
+            <Button mode="contained" onPress={() => navigation.navigate("signup/profile")}>
                 <AirCarerText variant="button">Test signup</AirCarerText>
             </Button>
             <Button mode="contained" onPress={() => navigation.navigate("property/list")}>

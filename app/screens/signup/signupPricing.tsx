@@ -22,31 +22,31 @@ const SignupPricing = (props: any) => {
         return [
             {
                 id: 1,
-                key: 'studioPricing',
+                key: 'pricingStudio',
                 type: i18n.t('studio'),
                 pricing: 30,
             },
             {
                 id: 2,
-                key: '1b1bPricing',
+                key: 'pricing1b1b',
                 type: i18n.t('1b1b'),
                 pricing: 40
             },
             {
                 id: 3,
-                key: '2b1bPricing',
+                key: 'pricing2b1b',
                 type: i18n.t('2b1b'),
                 pricing: 60
             },
             {
                 id: 4,
-                key: '2b2bPricing',
+                key: 'pricing2b2b',
                 type: i18n.t('2b2b'),
                 pricing: 80
             },
             {
                 id: 5,
-                key: '3b2bPricing',
+                key: 'pricing3b2b',
                 type: i18n.t('3b2b'),
                 pricing: 100
             }

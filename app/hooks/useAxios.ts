@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@app/store';
 
 export const useAxios = () => {
   // const baseUrl = Constants.expoConfig.extra.apiBaseUrl;
-  // const baseUrl = 'http://dev.bdating.io:8000';
-  const baseUrl = 'http://localhost:8000';
+  const baseUrl = 'https://dev.bdating.io/api';
+  // const baseUrl = 'http://localhost:8000';
   const { access_token } = useSelector((state: RootState) => state.aircarer);
 
   const http = useRef<AxiosInstance>(
@@ -16,14 +16,37 @@ export const useAxios = () => {
         'Content-Type': 'application/json',
         // 'X-API-KEY': apiKey,
         Authorization: `Bearer ${access_token}`,
+        Accept: '*/*',
       },
     }),
   );
 
   useEffect(() => {
+    http.current.defaults.headers.Authorization = `Bearer ${access_token}`;
+  }, [access_token]);
+
+  useEffect(() => {
+    const requestInterceptor = http.current.interceptors.request.use(
+      (request: InternalAxiosRequestConfig) => {
+        return request;
+      },
+      (error) => {
+        console.error('Axios error:', JSON.stringify(error, null, 2));
+        return Promise.reject(error);
+      },
+    );
+
     const responseInterceptor = http.current.interceptors.response.use(
       (response: AxiosResponse) => {
         return response;
+      },
+      (error) => {
+        if (error.response?.status === 401) {
+          console.log('Unauthorized');
+          // dispatch(aircarerSlice.actions.logout());
+        }
+        console.error('Axios error:', JSON.stringify(error, null, 2));
+        return Promise.reject(error);
       },
     );
 

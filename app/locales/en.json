@@ -52,7 +52,8 @@
         "getStarted": "Get started",
         "noService": "Sorry, we don't provide service in your area.",
         "welcome": "Welcome to AirCarer!",
-        "invalidEmail": "Invalid email"
+        "invalidEmail": "Invalid email",
+        "error": "Oops! Something went wrong. Please try again."
     },
     "publishTab": {
         "goodday": "Good day",

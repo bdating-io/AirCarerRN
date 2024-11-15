@@ -3,6 +3,7 @@ import ManageTimeSlotModal, { useManageTimeSlot } from "@app/components/manageTi
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
 import { useSnackbar } from "@app/contexts/snackbar.context";
+import { useAxios } from "@app/hooks/useAxios";
 import { i18n } from "@app/locales/i18n";
 import { aircarerSlice } from "@app/slices/aircarer.slice";
 import { RootState, useDispatch, useSelector } from "@app/store";
@@ -17,6 +18,7 @@ const SignupServicingHours = (props: any) => {
     const { logged_user } = useSelector((state: RootState) => state.aircarer);
     const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
     const dispatch = useDispatch();
+    const { put } = useAxios();
 
     const handleNext = () => {
         const result: any[] = [];
@@ -31,13 +33,23 @@ const SignupServicingHours = (props: any) => {
             });
         }
 
-        dispatch(aircarerSlice.actions.setLoggedUser({
+        const registeredUser = {
             ...logged_user,
             availability: result,
-        }));
+        };
 
-        info(i18n.t('signupTab.welcome'));
-        navigation.navigate('/');
+        dispatch(aircarerSlice.actions.setLoggedUser(registeredUser));
+
+        console.log(registeredUser)
+
+        put('/profile', registeredUser)
+            .then(() => {
+                info(i18n.t('signupTab.welcome'));
+                navigation.navigate('/');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     return (
