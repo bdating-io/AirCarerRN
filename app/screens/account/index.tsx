@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Platform } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from "react-native";
 import { Button, IconButton } from "react-native-paper";
 import AirCarerText from "@app/constants/AirCarerText";
 import { useAuth0 } from "react-native-auth0";
@@ -8,7 +8,6 @@ import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
 import { useNavigation, useIsFocused, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@app/types/common.type";
-
 
 interface MenuItemProps {
   icon: string;
@@ -26,7 +25,6 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, text, onPress }) => (
   </View>
 );
 
-
 const AccountScreen: React.FC = (props: any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
@@ -40,15 +38,9 @@ const AccountScreen: React.FC = (props: any) => {
   const [bio, setBio] = useState("");
 
   const signin = async () => {
-    authorize()
-      .then((user) => {
-        // if (user?.accessToken !== undefined) {
-        //   navigation.navigate("index");
-        // }
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
+    authorize().catch((error: any) => {
+      console.log(error);
+    });
   };
 
   const signout = async () => {
@@ -56,21 +48,22 @@ const AccountScreen: React.FC = (props: any) => {
   };
 
   const Edit = () => {
-    navigation.navigate('EditPublicProfile');
+    navigation.navigate("EditPublicProfile");
   };
 
   useEffect(() => {
     if (isFocused) {
       const updateListener = navigation.addListener("focus", () => {
         if (props.route?.params) {
-          const { profileImage, firstName, lastName, location, portfolioImages, bio } = props.route.params;
+          const { profileImage, location, portfolioImages, bio } = props.route.params;
           setProfileImage(profileImage);
-          // setFirstName(firstName || "No user");
-          // setLastName(lastName || "");
           setLocation(location || "Melbourne VIC, Australia");
           setPortfolioImages(portfolioImages || []);
           setBio(bio || "");
-          Alert.alert("Profile Updated", "Your profile changes have been saved successfully.");
+          Alert.alert(
+            i18n.t("accountTab.profileUpdated"),
+            i18n.t("accountTab.profileUpdatedMessage")
+          );
         }
       });
 
@@ -80,6 +73,7 @@ const AccountScreen: React.FC = (props: any) => {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Profile Section */}
       <View style={styles.profileSection}>
         <View style={styles.avatarContainer}>
           {profileImage ? (
@@ -89,59 +83,75 @@ const AccountScreen: React.FC = (props: any) => {
           )}
         </View>
         <View style={styles.profileInfo}>
-          <AirCarerText variant="bold" style={{ color: theme.colors.contrastText }}>Hi, {user?.nickname}</AirCarerText>
+          <AirCarerText variant="bold" style={{ color: theme.colors.contrastText }}>
+            {i18n.t("accountTab.greeting")}, {user?.nickname}
+          </AirCarerText>
           <AirCarerText style={{ color: theme.colors.contrastText }}>{location}</AirCarerText>
           <View style={styles.editContainer}>
-            {/* <TouchableOpacity onPress={() => navigation.navigate("PublicProfile")}>
-              <AirCarerText style={styles.publicProfile}>{i18n.t("accountTab.publicProfile")}</AirCarerText>
-            </TouchableOpacity> */}
             <Button
               mode="contained"
-              buttonColor={theme.colors.primary}
-              textColor="white"
               style={styles.button}
-              icon="pencil"
               onPress={Edit}
+              contentStyle={styles.editButtonContent}
             >
               <AirCarerText variant="button">{i18n.t("edit")}</AirCarerText>
             </Button>
           </View>
         </View>
       </View>
+
+      {/* Settings Section */}
       <View style={styles.settingsSection}>
-        <AirCarerText variant="bold" style={styles.sectionTitle}>{i18n.t("accountTab.accountSettings")}</AirCarerText>
-        <MenuItem icon="credit-card" text={i18n.t('accountTab.paymentOptions')} onPress={() => console.log('Payment options')} />
-        <MenuItem icon="bell" text={i18n.t('accountTab.notifications')} onPress={() => console.log('Notifications')} />
-        <MenuItem icon="cog" text={i18n.t('accountTab.settings')} onPress={() => navigation.navigate("account/setting")} />
+        <AirCarerText variant="bold" style={styles.sectionTitle}>
+          {i18n.t("accountTab.accountSettings")}
+        </AirCarerText>
+        <MenuItem
+          icon="credit-card"
+          text={i18n.t("accountTab.paymentOptions")}
+          onPress={() => console.log("Payment options")}
+        />
+        <MenuItem
+          icon="bell"
+          text={i18n.t("accountTab.notifications")}
+          onPress={() => console.log("Notifications")}
+        />
+        <MenuItem
+          icon="cog"
+          text={i18n.t("accountTab.settings")}
+          onPress={() => navigation.navigate("account/setting")}
+        />
 
-        <AirCarerText variant="bold" style={[styles.sectionTitle, styles.earningMoneyTitle]}>{i18n.t('accountTab.earningMoney')}</AirCarerText>
-        <MenuItem icon="view-dashboard" text="My dashboard" onPress={() => navigation.navigate('browsing-task/task-detail')} />
+        <AirCarerText variant="bold" style={[styles.sectionTitle, styles.earningMoneyTitle]}>
+          {i18n.t("accountTab.earningMoney")}
+        </AirCarerText>
+        <MenuItem
+          icon="view-dashboard"
+          text={i18n.t("accountTab.myDashboard")}
+          onPress={() => navigation.navigate("browsing-task/task-detail")}
+        />
 
-        {
-          user ? (
-            <Button
-              mode="contained"
-              style={styles.loginoutButtonBody}
-              contentStyle={styles.logoutButton}
-              onPress={signout}
-              icon="logout"
-            >
-              <AirCarerText variant="button">{i18n.t("logout")}</AirCarerText>
-            </Button>
-          ) : (
-            <Button
-              mode="contained"
-              onPress={signin}
-              style={styles.loginoutButtonBody}
-              contentStyle={styles.loginButton}
-              icon="login"
-            >
-              <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
-            </Button>
-          )
-
-        }
-
+        {/* Login/Logout Button */}
+        {user ? (
+          <Button
+            mode="contained"
+            style={styles.loginoutButtonBody}
+            onPress={signout}
+            contentStyle={styles.logoutButtonContent}
+            icon="logout"
+          >
+            <AirCarerText variant="button">{i18n.t("logout")}</AirCarerText>
+          </Button>
+        ) : (
+          <Button
+            mode="contained"
+            style={styles.loginoutButtonBody}
+            onPress={signin}
+            contentStyle={styles.loginButtonContent}
+            icon="login"
+          >
+            <AirCarerText variant="button">{i18n.t("login")}</AirCarerText>
+          </Button>
+        )}
       </View>
     </ScrollView>
   );
@@ -152,18 +162,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.contrastText,
   },
-  userContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
   profileSection: {
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 80,
     flexDirection: "row",
     alignItems: "flex-start",
-    paddingRight: 15,
     backgroundColor: theme.colors.scrim,
   },
   avatarContainer: {
@@ -185,11 +189,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  publicProfile: {
-    color: theme.colors.contrastText,
-    flex: 1,
-    fontWeight: "bold",
-  },
   settingsSection: {
     marginTop: -40,
     padding: 20,
@@ -200,22 +199,21 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginVertical: 15,
     paddingHorizontal: 5,
-    fontWeight: "600",
   },
   earningMoneyTitle: {
     marginTop: 30,
   },
   menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5E5',
+    borderBottomColor: "#E5E5E5",
   },
   menuItemContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
   },
   menuIcon: {
@@ -224,23 +222,24 @@ const styles = StyleSheet.create({
   },
   menuText: {
     flex: 1,
-    fontSize: 16,
   },
   button: {
     borderRadius: theme.rouded.large,
+  },
+  editButtonContent: {
+    justifyContent: "center",
   },
   loginoutButtonBody: {
     marginVertical: 20,
     borderRadius: theme.rouded.large,
     marginHorizontal: 5,
   },
-  loginButton: {
-    flex: 1,
+  loginButtonContent: {
+    justifyContent: "center",
   },
-  logoutButton: {
-    flex: 1,
+  logoutButtonContent: {
+    justifyContent: "center",
     backgroundColor: theme.colors.secondary,
-    paddingVertical: 2,
   },
 });
 

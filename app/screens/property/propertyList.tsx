@@ -68,7 +68,7 @@ const PropertyList = (props: any) => {
                       keyExtractor={(item, index) => index.toString()}
                       pagingEnabled
                     />
-                    <Button onPress={() => deleteProperty(property.id)}>delete</Button>
+                    <Button onPress={() => deleteProperty(property.id)}>{i18n.t("propertyList.delete")}</Button>
                   </View>
                 </Card.Content>
               </Card>

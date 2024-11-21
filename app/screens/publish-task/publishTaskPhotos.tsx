@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, FlatList, Modal, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Alert, FlatList, Modal, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import theme from '@app/constants/theme';
+import AirCarerText from '@app/constants/AirCarerText';
 import { i18n } from '@app/locales/i18n';
 
 const { width, height } = Dimensions.get('window');
@@ -13,7 +14,7 @@ const PublishTaskPhotosScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const { taskDetails } = route.params || {};
-    
+
     const [photos, setPhotos] = useState<string[]>([]);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -108,8 +109,8 @@ const PublishTaskPhotosScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>{i18n.t("publishTaskPhotos.header")}</Text>
-            <Text style={styles.subHeader}>{i18n.t("publishTaskPhotos.subHeader", { max: maxPhotos })}</Text>
+            <AirCarerText variant="h1" style={styles.header}>{i18n.t("publishTaskPhotos.header")}</AirCarerText>
+            <AirCarerText style={styles.subHeader}>{i18n.t("publishTaskPhotos.subHeader", { max: maxPhotos })}</AirCarerText>
             
             <View style={styles.photoGrid}>
                 <FlatList
@@ -138,14 +139,19 @@ const PublishTaskPhotosScreen = () => {
                 </TouchableOpacity>
             </Modal>
 
-            <Button
-                mode="contained"
-                style={[styles.continueButton, photos.length === 0 && styles.disabledButton]}
-                onPress={handleContinue}
-                disabled={photos.length === 0}
-            >
-                {i18n.t("common.continue")}
-            </Button>
+            <View style={styles.continueButtonContainer}>
+                <Button
+                    mode="contained"
+                    style={styles.continueButton}
+                    contentStyle={styles.continueButtonContent}
+                    onPress={handleContinue}
+                    disabled={photos.length === 0}
+                >
+                    <AirCarerText variant="button" style={styles.continueButtonText}>
+                        {i18n.t("common.continue")}
+                    </AirCarerText>
+                </Button>
+            </View>
         </View>
     );
 };
@@ -154,17 +160,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.paper,
     },
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: theme.colors.primary,
+        marginBottom: 10,
     },
     subHeader: {
-        fontSize: 16,
-        color: theme.colors.primary,
         marginVertical: 10,
+        color: theme.colors.text,
     },
     photoGrid: {
         marginTop: 20,
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 8,
-        backgroundColor: theme.colors.scrim,
+        backgroundColor: theme.colors.background,
         justifyContent: 'center',
         alignItems: 'center',
         margin: 5,
@@ -185,21 +188,24 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 8,
     },
-    continueButton: {
-        position: 'absolute',
-        bottom: 20,
-        left: 20,
-        right: 20,
-        paddingVertical: 12,
-        borderRadius: 8,
-        backgroundColor: theme.colors.primary,
+    continueButtonContainer: {
+        marginTop: 20,
+        marginBottom: 30,
     },
-    disabledButton: {
-        backgroundColor: theme.colors.disabled,
+    continueButton: {
+        backgroundColor: theme.colors.primary,
+        borderRadius: theme.rouded.large,
+    },
+    continueButtonContent: {
+        justifyContent: 'center',
+    },
+    continueButtonText: {
+        color: theme.colors.paper,
+        fontWeight: 'bold',
     },
     fullScreenContainer: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: theme.colors.background,
         justifyContent: 'center',
         alignItems: 'center',
     },

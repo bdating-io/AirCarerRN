@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, TextInput, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, TouchableOpacity, StyleSheet, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import theme from '@app/constants/theme';
@@ -64,8 +64,8 @@ export default function PublishTaskDateScreen() {
     };
 
     const handleTimeDurationChange = (input) => {
-        const sanitizedInput = input.replace(/[^0-9]/g, '');
-        setTimeDuration(sanitizedInput);
+        const sanitizedInput = input.replace(/[^0-9]/g, ''); // Allow only numeric values
+        setTimeDuration(sanitizedInput); // Update the state with sanitized input
     };
 
     const formattedDate = selectedDate
@@ -113,18 +113,31 @@ export default function PublishTaskDateScreen() {
                     <View style={styles.inputContainer}>
                         <AirCarerText style={styles.label}>{i18n.t('publishTab.expectedTimeDuration')}</AirCarerText>
                         <TextInput
-                            style={styles.input}
+                            mode="outlined"
                             placeholder={i18n.t('publishTab.enterHours')}
                             keyboardType="numeric"
                             value={timeDuration}
                             onChangeText={handleTimeDurationChange}
+                            style={styles.textInput}
                         />
                     </View>
                 )}
 
-                <Button mode="contained" style={styles.continueButton} onPress={handleContinue}>
-                    <AirCarerText variant="button" style={styles.continueButtonText}>{i18n.t('common.continue')}</AirCarerText>
-                </Button>
+                {/* Show the Continue button only if a valid option is selected */}
+                {selectedOption && (selectedOption === "I'm flexible" || selectedDate) && (
+                    <View style={styles.continueButtonContainer}>
+                        <Button
+                            mode="contained"
+                            style={styles.continueButton}
+                            contentStyle={styles.continueButtonContent}
+                            onPress={handleContinue}
+                        >
+                            <AirCarerText variant="button" style={styles.continueButtonText}>
+                                {i18n.t("common.continue")}
+                            </AirCarerText>
+                        </Button>
+                    </View>
+                )}
             </View>
         </TouchableWithoutFeedback>
     );
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.paper,
     },
     title: {
         fontSize: 24,
@@ -151,33 +164,40 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         marginBottom: 10,
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: theme.colors.primary,
     },
     selectedOption: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor: theme.colors.primary,
     },
     optionText: {
         fontSize: 16,
+        color: theme.colors.text,
     },
     inputContainer: {
         marginTop: 20,
+        marginBottom: 20,
     },
     label: {
         fontSize: 14,
         marginBottom: 8,
     },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        padding: 10,
+    textInput: {
         fontSize: 16,
     },
-    continueButton: {
+    continueButtonContainer: {
         marginTop: 20,
-        borderRadius: 8,
+        marginBottom: 30,
+    },
+    continueButton: {
         backgroundColor: theme.colors.primary,
+        borderRadius: theme.rouded.large,
+    },
+    continueButtonContent: {
+        justifyContent: 'center',
     },
     continueButtonText: {
-        color: 'white',
+        color: theme.colors.paper,
+        fontWeight: 'bold',
     },
 });

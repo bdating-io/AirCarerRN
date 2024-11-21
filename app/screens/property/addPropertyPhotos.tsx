@@ -19,7 +19,7 @@ const AddPropertyPhotos = () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
+      alert(i18n.t('addPropertyPhoto.cameraPermissionMessage'));
       return;
     }
 

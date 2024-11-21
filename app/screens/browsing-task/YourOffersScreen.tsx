@@ -61,7 +61,7 @@ const OfferItem = ({ data }: OfferItemProps) => {
             >
               {data.completionRate}%{" "}
               <AirCarerText style={styles.completionText}>
-                Completion rate
+              {i18n.t("taskConclusion.completionRate")}
               </AirCarerText>
             </AirCarerText>
           </View>

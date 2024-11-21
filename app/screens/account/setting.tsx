@@ -1,4 +1,3 @@
-
 import AirCarerText from '@app/constants/AirCarerText';
 import theme from '@app/constants/theme';
 import { useFontSize } from '@app/contexts/font.context';
@@ -15,10 +14,10 @@ const FontSizeControls: React.FC = () => {
       <AirCarerText>{i18n.t("accountTab.currentFont")} {fontSize}</AirCarerText>
       <View style={styles.buttonGroup}>
         <Button icon="plus" mode="contained" onPress={() => changeFontSize(fontSize + 2)} style={styles.button}>
-          <AirCarerText variant="button">increase</AirCarerText>
+          <AirCarerText variant="button">{i18n.t("settings.increase")}</AirCarerText>
         </Button>
         <Button icon="minus" mode="contained" onPress={() => changeFontSize(fontSize - 2)} style={styles.button}>
-          <AirCarerText variant="button">decrease</AirCarerText>
+          <AirCarerText variant="button">{i18n.t("settings.decrease")}</AirCarerText>
         </Button>
       </View>
     </View>
@@ -63,9 +62,7 @@ const AppSetting = () => {
   )
 }
 
-
 const styles = StyleSheet.create({
-
   controlsSection: {
     flex: 1,
     paddingHorizontal: 20,

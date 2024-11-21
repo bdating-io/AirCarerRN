@@ -73,7 +73,7 @@ const TaskList = (props: any) => {
         </View>
         {/* <AirCarerText>{item.offers} offers</AirCarerText> */}
         <TouchableOpacity onPress={() => navigation.navigate("browsing-task/task-conclusion/customer")}>
-          <AirCarerText style={styles.link}>See Detail</AirCarerText>
+          <AirCarerText style={styles.link}>{i18n.t("taskList.seeDetail")}</AirCarerText>
         </TouchableOpacity>
       </Card.Content>
     </Card>
@@ -107,7 +107,7 @@ const TaskList = (props: any) => {
         data={taskData}
         renderItem={renderTaskCard}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={<AirCarerText>No tasks available</AirCarerText>}
+        ListEmptyComponent={<AirCarerText>{i18n.t("taskList.noTasksAvailable")}</AirCarerText>}
       />
     </View>
   );

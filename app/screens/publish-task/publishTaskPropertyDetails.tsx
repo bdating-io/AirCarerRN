@@ -27,7 +27,7 @@ export default function PublishTaskPropertyDetailsScreen() {
             return;
         }
 
-        navigation.navigate('publishTaskDate', { // Updated to navigate to PublishTaskDateScreen
+        navigation.navigate('publishTaskDate', {
             taskDetails: {
                 ...taskDetails,
                 cleanType,
@@ -66,7 +66,7 @@ export default function PublishTaskPropertyDetailsScreen() {
 
                 {/* Property Selection Custom Dropdown */}
                 <View style={styles.questionTitle}>
-                    <AirCarerText variant="bold">{i18n.t("publishTab.selectProperty")}</AirCarerText>
+                    <AirCarerText variant="bold">{i18n.t("publishTab.selectPropertyPlaceholder")}</AirCarerText>
                 </View>
                 <Menu
                     visible={menuVisible}
@@ -181,20 +181,21 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: '100%',
         justifyContent: 'center',
+        borderColor: theme.colors.primary,
+        borderWidth: 1,
     },
     segmentedButtons: {
         marginBottom: 20,
-        justifyContent: 'space-around',
-        alignItems: 'center',
     },
     optionButton: {
         borderRadius: 20,
         marginHorizontal: 2,
-        borderColor: theme.colors.paper,
+        borderColor: theme.colors.primary,
+        borderWidth: 1,
     },
     optionButtonLabel: {
-        marginVertical: 15,
-        fontSize: 18,
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     equipmentButtonsContainer: {
         flexDirection: 'row',
@@ -206,6 +207,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         borderRadius: 8,
         backgroundColor: '#f5f5f5',
+        borderWidth: 1,
+        borderColor: theme.colors.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 10,
     },
     equipmentButtonSelected: {
         backgroundColor: theme.colors.primary,
@@ -213,6 +219,7 @@ const styles = StyleSheet.create({
     equipmentButtonText: {
         fontSize: 14,
         color: theme.colors.primary,
+        fontWeight: 'bold',
     },
     equipmentButtonTextSelected: {
         color: theme.colors.paper,
@@ -227,8 +234,10 @@ const styles = StyleSheet.create({
     },
     continueButton: {
         margin: 20,
-        paddingVertical: 10,
+        paddingVertical: 12,
         borderRadius: 8,
+        backgroundColor: theme.colors.primary,
+        justifyContent: 'center',
     },
     disabledButton: {
         backgroundColor: theme.colors.disabled,

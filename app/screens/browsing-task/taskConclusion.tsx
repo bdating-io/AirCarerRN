@@ -104,7 +104,7 @@ export default function TaskConclusionScreen(props: any) {
       >
         <View style={styles.contentContainer}>
           <View style={styles.headerSection}>
-            <AirCarerText style={styles.taskHeader}>Task Title</AirCarerText>
+            <AirCarerText style={styles.taskHeader}>{i18n.t("taskConclusion.taskTitle")}</AirCarerText>
             <View style={styles.posterInfo}>
               <Avatar.Text
                 size={48}

@@ -1,10 +1,13 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Switch, List } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { useSkills } from '@app/contexts/SkillsContext';
 import { i18n } from '@app/locales/i18n';
 import { RootStackParamList } from '@app/types/common.type';
+import AirCarerText from '@app/constants/AirCarerText';
+import theme from '@app/constants/theme';
 
 const transportationOptions = [
   { label: 'Bicycle', key: 'bicycle' },
@@ -12,7 +15,7 @@ const transportationOptions = [
   { label: 'Online', key: 'online' },
   { label: 'Scooter', key: 'scooter' },
   { label: 'Truck', key: 'truck' },
-  { label: 'Walk', key: 'walk' }
+  { label: 'Walk', key: 'walk' },
 ];
 
 const TransportationScreen = () => {
@@ -22,13 +25,13 @@ const TransportationScreen = () => {
   const [selectedTransport, setSelectedTransport] = useState<string[]>(skills.transportation || []);
 
   const toggleOption = (option: string) => {
-    setSelectedTransport((prev) => 
+    setSelectedTransport((prev) =>
       prev.includes(option) ? prev.filter((item) => item !== option) : [...prev, option]
     );
   };
 
   const goBackWithSelected = () => {
-    updateSkills("transportation", selectedTransport);
+    updateSkills('transportation', selectedTransport);
     navigation.navigate('SkillsSettings');
   };
 
@@ -36,10 +39,16 @@ const TransportationScreen = () => {
     navigation.setOptions({
       title: i18n.t('editProfile.transportation'),
       headerLeft: () => (
-        <TouchableOpacity onPress={goBackWithSelected} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>{i18n.t('back')}</Text>
-        </TouchableOpacity>
+        <View style={styles.backButton}>
+          <Ionicons name="chevron-back" size={24} color={theme.colors.primary} />
+          <AirCarerText
+            variant="button"
+            style={styles.backText}
+            onPress={goBackWithSelected}
+          >
+            {i18n.t('back')}
+          </AirCarerText>
+        </View>
       ),
     });
   }, [navigation, selectedTransport]);
@@ -47,13 +56,18 @@ const TransportationScreen = () => {
   return (
     <View style={styles.container}>
       {transportationOptions.map((option) => (
-        <View key={option.key} style={styles.row}>
-          <Text style={styles.optionLabel}>{i18n.t(`editProfile.${option.key}`)}</Text>
-          <Switch
-            value={selectedTransport.includes(option.key)}
-            onValueChange={() => toggleOption(option.key)}
-          />
-        </View>
+        <List.Item
+          key={option.key}
+          title={<AirCarerText variant="default">{i18n.t(`editProfile.${option.key}`)}</AirCarerText>}
+          right={() => (
+            <Switch
+              value={selectedTransport.includes(option.key)}
+              onValueChange={() => toggleOption(option.key)}
+              color={theme.colors.primary}
+            />
+          )}
+          style={styles.listItem}
+        />
       ))}
     </View>
   );
@@ -63,18 +77,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.paper,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 15,
-    borderBottomColor: '#ccc',
+  listItem: {
     borderBottomWidth: 1,
-  },
-  optionLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    borderBottomColor: theme.colors.grey,
+    paddingVertical: 10,
   },
   backButton: {
     flexDirection: 'row',
@@ -82,8 +90,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   backText: {
-    fontSize: 18,
-    color: '#000',
+    fontSize: 16,
+    color: theme.colors.primary,
+    marginLeft: 5,
   },
 });
 

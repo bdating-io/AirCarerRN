@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, FlatList, Modal, Dimensions } from 'react-native';
+import { View, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, FlatList, Modal, Dimensions } from 'react-native';
+import { TextInput, Button } from 'react-native-paper'; // TextInput and Button from react-native-paper
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -8,12 +9,15 @@ import { i18n } from '@app/locales/i18n';
 import theme from '@app/constants/theme';
 import { useSkills } from '@app/contexts/SkillsContext';
 import { RootStackParamList } from '@app/types/common.type';
+import { useFontSize } from '@app/contexts/font.context';
+import AirCarerText from '@app/constants/AirCarerText';
 
 const { width, height } = Dimensions.get('window');
 
 const EditPublicProfileScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { skills, updateSkills } = useSkills();
+    const { fontSize } = useFontSize();
 
     const [profileImage, setProfileImage] = useState<string | null>(skills.profilePicture || null);
     const [portfolioImages, setPortfolioImages] = useState<string[]>(skills.portfolioImages || []);
@@ -136,12 +140,12 @@ const EditPublicProfileScreen: React.FC = () => {
 
         // Show alert and then navigate
         Alert.alert(
-            "Success",
-            "Your changes have been updated successfully.",
+            i18n.t("editProfile.successAlertTitle"),
+            i18n.t("editProfile.successAlertMessage"),
             [
                 {
-                    text: "OK",
-                    onPress: () => navigation.navigate("Account")
+                    text: i18n.t("common.ok"),
+                    onPress: () => navigation.navigate("Account"),
                 }
             ]
         );
@@ -160,43 +164,58 @@ const EditPublicProfileScreen: React.FC = () => {
             <ScrollView style={styles.container}>
                 <View style={styles.infoBox}>
                     <Ionicons name="bulb-outline" size={24} color={theme.colors.primary} />
-                    <Text style={styles.infoBoxText}>
+                    <AirCarerText variant="subtitle">
                         {i18n.t("editProfile.infoBoxTitle")}
                         {"\n"}
-                        <Text style={styles.subInfoBoxText}>{i18n.t("editProfile.infoBoxDescription")}</Text>
-                    </Text>
+                        <AirCarerText>{i18n.t("editProfile.infoBoxDescription")}</AirCarerText>
+                    </AirCarerText>
                 </View>
 
                 {/* Profile Picture Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.profilePicture")}</Text>
-                    <Text style={styles.descriptionText}>{i18n.t("editProfile.profilePictureDescription")}</Text>
-                    <TouchableOpacity style={styles.imageContainer} onPress={handleChangePhoto}>
+                    <AirCarerText variant="h2">{i18n.t("editProfile.profilePicture")}</AirCarerText>
+                    <AirCarerText variant="default">{i18n.t("editProfile.profilePictureDescription")}</AirCarerText>
+                    <View style={styles.imageContainer}>
                         <Image
-                            style={styles.image}
+                            style={[
+                                styles.image,
+                                { width: fontSize * 4.5, height: fontSize * 4.5 }, // Dynamically set image size
+                            ]}
                             source={profileImage ? { uri: profileImage } : require('@assets/images/placeholder_image.png')}
                         />
-                        <Text style={styles.changePhotoText}>{i18n.t("editProfile.changePhoto")}</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.changePhotoButton} onPress={handleChangePhoto}>
+                            <AirCarerText style={{ fontSize }}>{i18n.t("editProfile.changePhoto")}</AirCarerText>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 {/* Bio Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.bio")}</Text>
-                    <Text style={styles.descriptionText}>{i18n.t("editProfile.bioDescription")}</Text>
-                    <TextInput
-                        style={styles.bioInput}
-                        placeholder={i18n.t("editProfile.bioPlaceholder")}
-                        value={bio}
-                        onChangeText={setBio}
-                        multiline
-                    />
+                    <AirCarerText variant="h2">{i18n.t("editProfile.bio")}</AirCarerText>
+                    <AirCarerText variant="default">{i18n.t("editProfile.bioDescription")}</AirCarerText>
+                    <View style={styles.bioInputContainer}>
+                        {bio === '' && (
+                            <AirCarerText style={styles.bioPlaceholder} variant="default">
+                                {i18n.t("editProfile.bioPlaceholder")}
+                            </AirCarerText>
+                        )}
+                        <TextInput
+                            style={[
+                                styles.bioInput,
+                                { fontSize }, // Dynamically apply fontSize from context
+                            ]}
+                            value={bio}
+                            onChangeText={setBio}
+                            multiline
+                            underlineColorAndroid="transparent" // Removes blue underline in Android
+                        />
+                    </View>
                 </View>
 
                 {/* Portfolio Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.portfolio")}</Text>
-                    <Text style={styles.descriptionText}>{i18n.t("editProfile.portfolioDescription")}</Text>
+                    <AirCarerText variant="h2">{i18n.t("editProfile.portfolio")}</AirCarerText>
+                    <AirCarerText variant="default">{i18n.t("editProfile.portfolioDescription")}</AirCarerText>
                     <TouchableOpacity style={styles.portfolioContainer} onPress={handlePickImage}>
                         <View style={styles.addIcon}>
                             <MaterialCommunityIcons name="plus" size={30} color={theme.colors.primary} />
@@ -225,16 +244,24 @@ const EditPublicProfileScreen: React.FC = () => {
 
                 {/* Verification Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.verificationTitle")}</Text>
-                    <Text style={styles.descriptionText}>{i18n.t("editProfile.verificationDescription")}</Text>
+                    <AirCarerText variant="h2">{i18n.t("editProfile.verificationTitle")}</AirCarerText>
+                    <AirCarerText variant="default">{i18n.t("editProfile.verificationDescription")}</AirCarerText>
                     <View style={styles.verificationContainer}>
-                        <Ionicons name={skills.verificationStatus === "verified" ? "checkmark-circle" : "alert-circle-outline"} size={24} color={skills.verificationStatus === "verified" ? theme.colors.success : "#999"} />
-                        <Text style={styles.verificationText}>
-                            {skills.verificationStatus === "verified" ? i18n.t("editProfile.verified") : i18n.t("editProfile.notVerified")}
-                        </Text>
+                        <Ionicons
+                            name={skills.verificationStatus === "verified" ? "checkmark-circle" : "alert-circle-outline"}
+                            size={fontSize * 1.5} // Dynamic size for icon
+                            color={skills.verificationStatus === "verified" ? theme.colors.success : "#999"}
+                        />
+                        <AirCarerText style={{ marginLeft: 10 }}>
+                            {skills.verificationStatus === "verified"
+                                ? i18n.t("editProfile.verified")
+                                : i18n.t("editProfile.notVerified")}
+                        </AirCarerText>
                         {skills.verificationStatus !== "verified" && (
-                            <TouchableOpacity onPress={() => navigation.navigate("VerificationScreen")}>
-                                <Text style={styles.getVerifiedText}>{i18n.t("editProfile.getVerified")}</Text>
+                            <TouchableOpacity style={styles.getVerifiedButton} onPress={() => navigation.navigate("VerificationScreen")}>
+                                <AirCarerText style={{ fontSize, color: theme.colors.primary }}>
+                                    {i18n.t("editProfile.getVerified")}
+                                </AirCarerText>
                             </TouchableOpacity>
                         )}
                     </View>
@@ -242,37 +269,66 @@ const EditPublicProfileScreen: React.FC = () => {
 
                 {/* Skills Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.skills")}</Text>
-                    <Text style={styles.descriptionText}>{i18n.t("editProfile.skillsDescription")}</Text>
+                    <AirCarerText variant="h2">{i18n.t("editProfile.skills")}</AirCarerText>
+                    <AirCarerText variant="default">{i18n.t("editProfile.skillsDescription")}</AirCarerText>
                     <TouchableOpacity style={styles.addSkillContainer} onPress={() => navigation.navigate("SkillsSettings")}>
-                        <MaterialCommunityIcons name="plus" size={24} color={theme.colors.primary} />
-                        <Text style={styles.addSkillText}>{i18n.t("editProfile.addSkills")}</Text>
+                        <MaterialCommunityIcons name="plus" size={fontSize * 1.5} color={theme.colors.primary} />
+                        <AirCarerText style={{ fontSize, marginLeft: 5 }} variant="button">
+                            {i18n.t("editProfile.addSkills")}
+                        </AirCarerText>
                     </TouchableOpacity>
                     {skillCategories.map((skill, index) => (
-                        <Text key={index} style={styles.skillText}>
+                        <AirCarerText key={index} variant="default">
                             {skill.label}: {skill.value.join(', ')}
-                        </Text>
+                        </AirCarerText>
                     ))}
                 </View>
 
                 {/* Personal Information Section */}
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.firstName")}</Text>
-                    <TextInput style={styles.input} placeholder={i18n.t("editProfile.firstNamePlaceholder")} value={firstName} onChangeText={setFirstName} />
+                    <TextInput
+                        label={i18n.t("editProfile.firstName")} // Display label
+                        value={firstName}
+                        onChangeText={setFirstName}
+                        mode="outlined"
+                        outlineStyle={styles.input} // Apply consistent style
+                    />
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.lastName")}</Text>
-                    <TextInput style={styles.input} placeholder={i18n.t("editProfile.lastNamePlaceholder")} value={lastName} onChangeText={setLastName} />
+                    <TextInput
+                        label={i18n.t("editProfile.lastName")} // Display label
+                        value={lastName}
+                        onChangeText={setLastName}
+                        mode="outlined"
+                        outlineStyle={styles.input} // Apply consistent style
+                    />
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.label}>{i18n.t("editProfile.location")}</Text>
-                    <TextInput style={styles.input} placeholder={i18n.t("editProfile.locationPlaceholder")} value={location} onChangeText={setLocation} />
+                    <TextInput
+                        label={i18n.t("editProfile.location")} // Display label
+                        value={location}
+                        onChangeText={setLocation}
+                        mode="outlined"
+                        outlineStyle={styles.input} // Apply consistent style
+                    />
                 </View>
 
                 {/* Save Button */}
-                <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-                    <Text style={styles.saveButtonText}>{i18n.t("editProfile.saveChanges")}</Text>
-                </TouchableOpacity>
+                <View style={styles.saveButtonContainer}>
+                    <Button
+                        mode="contained"
+                        onPress={handleSaveChanges}
+                        contentStyle={[
+                            styles.saveButtonContent,
+                            { height: fontSize * 2.5 }, // Dynamically adjust height with font size
+                        ]}
+                        style={styles.saveButton}
+                    >
+                        <AirCarerText variant="button" style={styles.saveButtonText}>
+                            {i18n.t("editProfile.saveChanges")}
+                        </AirCarerText>
+                    </Button>
+                </View>
             </ScrollView>
         </GestureHandlerRootView>
     );
@@ -280,28 +336,105 @@ const EditPublicProfileScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: { flex: 1, paddingHorizontal: 20, backgroundColor: '#fff' },
-    infoBox: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#F3F7FF', padding: 15, borderRadius: 8, marginBottom: 20, marginTop: 10 },
-    infoBoxText: { flex: 1, fontSize: 16, color: theme.colors.primary, marginLeft: 10 },
-    section: { marginBottom: 25 },
-    label: { fontSize: 16, fontWeight: 'bold', color: '#2F2F2F', marginBottom: 5 },
-    descriptionText: { fontSize: 14, color: '#666', marginBottom: 5 },
-    imageContainer: { flexDirection: 'row', alignItems: 'center' },
-    image: { width: 80, height: 80, borderRadius: 40, marginRight: 15 },
-    changePhotoText: { color: theme.colors.primary, fontSize: 16 },
-    bioInput: { height: 100, borderColor: '#ccc', borderWidth: 1, borderRadius: 8, padding: 12, fontSize: 14, textAlignVertical: 'top' },
+    infoBox: { 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        backgroundColor: '#F3F7FF', 
+        padding: 15, 
+        borderRadius: 8, 
+        marginBottom: 20, 
+        marginTop: 10 
+    },
+    section: { marginBottom: 35 },
+    imageContainer: { 
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    image: { 
+        borderRadius: 50,
+        marginRight: 10,
+    },
+    changePhotoButton: { 
+        flex: 1,
+        alignItems: 'flex-start',
+    },
+    bioInputContainer: {
+        height: 100,
+        borderWidth: 1,
+        borderRadius: 8,
+        padding: 12,
+        position: 'relative',
+        backgroundColor: theme.colors.paper,
+    },
+    bioPlaceholder: {
+        position: 'absolute',
+        top: 12,
+        left: 12,
+        color: '#aaa',
+        lineHeight: 20,
+    },
+    bioInput: {
+        flex: 1,
+        textAlignVertical: 'top',
+        padding: 0,
+        color: '#000',
+        backgroundColor: 'transparent',
+    },
     portfolioGrid: { marginTop: 10 },
-    portfolioImage: { width: 100, height: 100, margin: 5, borderRadius: 5 },
-    fullScreenContainer: { flex: 1, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' },
-    fullScreenImage: { width: width, height: height, resizeMode: 'contain' },
-    verificationContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 10 },
-    verificationText: { fontSize: 14, color: '#999', marginLeft: 10 },
-    getVerifiedText: { color: theme.colors.primary, marginLeft: 10 },
-    addSkillContainer: { borderColor: theme.colors.primary, borderWidth: 1, borderRadius: 5, padding: 12, alignItems: 'center', flexDirection: 'row', marginTop: 10 },
-    addSkillText: { color: theme.colors.primary, fontWeight: 'bold', marginLeft: 5 },
-    input: { height: 40, borderColor: '#ccc', borderWidth: 1, borderRadius: 8, paddingHorizontal: 12, fontSize: 14 },
-    saveButton: { backgroundColor: theme.colors.primary, padding: 18, borderRadius: 8, alignItems: 'center', marginTop: 20 },
-    saveButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-    skillText: { fontSize: 14, color: '#666', marginTop: 5 },
+    portfolioImage: { 
+        width: 100, 
+        height: 100, 
+        margin: 5, 
+        borderRadius: 5 
+    },
+    fullScreenContainer: { 
+        flex: 1, 
+        backgroundColor: '#000', 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+    },
+    fullScreenImage: { 
+        width: width, 
+        height: height, 
+        resizeMode: 'contain' 
+    },
+    verificationContainer: { 
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    getVerifiedButton: {
+        marginLeft: 'auto',
+    },
+    addSkillContainer: { 
+        borderColor: theme.colors.primary, 
+        borderWidth: 1, 
+        borderRadius: 5, 
+        padding: 12, 
+        alignItems: 'center', 
+        flexDirection: 'row',
+        marginTop: 10,
+    },
+    input: {
+        borderRadius: theme.rouded.small,
+        backgroundColor: theme.colors.paper,
+    },
+    saveButtonContainer: {
+        marginTop: 20,
+        marginBottom: 30,
+    },
+    saveButton: {
+        backgroundColor: theme.colors.primary,
+        borderRadius: theme.rouded.large, // Use a consistent radius
+    },
+    saveButtonContent: {
+        justifyContent: "center",
+    },
+    saveButtonText: {
+        color: theme.colors.paper,
+        fontWeight: "bold",
+    },
 });
 
 export default EditPublicProfileScreen;

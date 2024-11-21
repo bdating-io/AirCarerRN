@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, Modal, TouchableOpacity, Dimensions, FlatList, Alert } from 'react-native';
+import { View, StyleSheet, Image, Modal, TouchableOpacity, Dimensions, FlatList, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import theme from '@app/constants/theme';
+import AirCarerText from '@app/constants/AirCarerText';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { i18n } from '@app/locales/i18n';
 
@@ -79,47 +80,53 @@ export default function PublishTaskPostScreen() {
             <FlatList
                 ListHeaderComponent={
                     <View style={styles.contentContainer}>
-                        <Text style={styles.header}>{i18n.t("publishTaskPost.readyToPost")}</Text>
-                        <Text style={styles.subHeader}>{i18n.t("publishTaskPost.postWhenReady")}</Text>
+                        <AirCarerText variant="h1" style={styles.header}>
+                            {i18n.t("publishTaskPost.readyToPost")}
+                        </AirCarerText>
+                        <AirCarerText style={styles.subHeader}>
+                            {i18n.t("publishTaskPost.postWhenReady")}
+                        </AirCarerText>
 
                         {/* Clean Type */}
                         <View style={styles.detailContainer}>
                             <MaterialCommunityIcons name="clipboard-text" size={24} color={theme.colors.primary} />
-                            <Text style={styles.detailText}>
+                            <AirCarerText style={styles.detailText}>
                                 {cleanType === 'Regular' ? i18n.t("publishTaskPost.regularCleaning") : i18n.t("publishTaskPost.endOfLeaseCleaning")}
-                            </Text>
+                            </AirCarerText>
                         </View>
 
                         {/* Date */}
                         <View style={styles.detailContainer}>
                             <MaterialCommunityIcons name="calendar" size={24} color={theme.colors.primary} />
-                            <Text style={styles.detailText}>{formattedDate}</Text>
+                            <AirCarerText style={styles.detailText}>{formattedDate}</AirCarerText>
                         </View>
 
                         {/* Property Details */}
                         <View style={styles.detailContainer}>
                             <MaterialCommunityIcons name="home-outline" size={24} color={theme.colors.primary} />
                             <View>
-                                <Text style={styles.detailText}>
+                                <AirCarerText style={styles.detailText}>
                                     {`${formattedBedrooms}, ${formattedBathrooms}`}
-                                </Text>
-                                <Text style={styles.detailText}>{locationText}</Text>
-                                <Text style={styles.detailText}>{equipmentText}</Text>
-                                <Text style={styles.detailText}>
+                                </AirCarerText>
+                                <AirCarerText style={styles.detailText}>{locationText}</AirCarerText>
+                                <AirCarerText style={styles.detailText}>{equipmentText}</AirCarerText>
+                                <AirCarerText style={styles.detailText}>
                                     {cleaningDetails || i18n.t("publishTaskPost.noAdditionalDetails")}
-                                </Text>
+                                </AirCarerText>
                             </View>
                         </View>
 
                         {/* Budget */}
                         <View style={styles.detailContainer}>
                             <MaterialCommunityIcons name="currency-usd" size={24} color={theme.colors.primary} />
-                            <Text style={styles.detailText}>{budgetText}</Text>
+                            <AirCarerText style={styles.detailText}>{budgetText}</AirCarerText>
                         </View>
 
                         {/* Uploaded Photos Header */}
                         {photos.length > 0 && (
-                            <Text style={styles.photoSectionHeader}>{i18n.t("publishTaskPost.uploadedPhotos")}</Text>
+                            <AirCarerText variant="bold" style={styles.photoSectionHeader}>
+                                {i18n.t("publishTaskPost.uploadedPhotos")}
+                            </AirCarerText>
                         )}
                     </View>
                 }
@@ -140,13 +147,18 @@ export default function PublishTaskPostScreen() {
             </Modal>
 
             {/* Fixed Post Task Button */}
-            <Button
-                mode="contained"
-                style={styles.postButton}
-                onPress={handlePostTask}
-            >
-                {i18n.t("publishTaskPost.postTask")}
-            </Button>
+            <View style={styles.postButtonContainer}>
+                <Button
+                    mode="contained"
+                    style={styles.postButton}
+                    contentStyle={styles.postButtonContent}
+                    onPress={handlePostTask}
+                >
+                    <AirCarerText variant="button" style={styles.postButtonText}>
+                        {i18n.t("publishTaskPost.postTask")}
+                    </AirCarerText>
+                </Button>
+            </View>
         </View>
     );
 }
@@ -154,21 +166,17 @@ export default function PublishTaskPostScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.paper,
     },
     contentContainer: {
         paddingHorizontal: 10,
     },
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: theme.colors.primary,
         marginBottom: 5,
     },
     subHeader: {
-        fontSize: 16,
-        color: theme.colors.primary,
         marginBottom: 20,
+        color: theme.colors.text,
     },
     detailContainer: {
         flexDirection: 'row',
@@ -177,24 +185,30 @@ const styles = StyleSheet.create({
     },
     detailText: {
         fontSize: 16,
-        color: theme.colors.primary,
+        color: theme.colors.text,
         marginLeft: 10,
     },
-    postButton: {
+    postButtonContainer: {
         position: 'absolute',
         bottom: 20,
         left: 20,
         right: 20,
-        paddingVertical: 12,
-        borderRadius: 8,
+    },
+    postButton: {
         backgroundColor: theme.colors.primary,
+        borderRadius: theme.rouded.large,
+    },
+    postButtonContent: {
+        justifyContent: 'center',
+    },
+    postButtonText: {
+        color: theme.colors.paper,
+        fontWeight: 'bold',
     },
     photoSectionHeader: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: theme.colors.primary,
         marginTop: 20,
         marginBottom: 10,
+        color: theme.colors.text,
     },
     photoGrid: {
         paddingHorizontal: 10,

@@ -1,9 +1,12 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSkills } from '@app/contexts/SkillsContext';
 import { i18n } from '@app/locales/i18n';
+import AirCarerText from '@app/constants/AirCarerText';
+import theme from '@app/constants/theme';
 
 const EducationScreen = () => {
   const navigation = useNavigation();
@@ -23,49 +26,63 @@ const EducationScreen = () => {
   };
 
   const saveChanges = () => {
-    updateSkills("education", education); // Update context with new education list
-    navigation.navigate('SkillsSettings');
+    updateSkills('education', education); // Update context with new education list
+    navigation.goBack(); // Use goBack for consistent navigation behavior
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={saveChanges} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#000" />
-          <Text style={styles.backText}>{i18n.t("common.back")}</Text>
-        </TouchableOpacity>
-      ),
-      title: i18n.t("educationScreen.title")
+      headerTitle: i18n.t('educationScreen.title'), // Use default header styling
     });
-  }, [navigation, education]);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
+      {/* Input Field */}
       <TextInput
-        style={styles.input}
-        placeholder={i18n.t("educationScreen.placeholder")}
-        placeholderTextColor="#000"
+        mode="outlined"
+        label={i18n.t('educationScreen.placeholder')}
         value={educationInput}
         onChangeText={setEducationInput}
         onSubmitEditing={addEducation}
+        style={styles.input}
+        outlineColor={theme.colors.primary}
+        activeOutlineColor={theme.colors.primary}
       />
 
+      {/* List of Education Entries */}
       <FlatList
         data={education}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <Text style={styles.text}>{item}</Text>
-            <TouchableOpacity onPress={() => removeEducation(item)}>
-              <Text style={styles.removeButton}>✖</Text>
-            </TouchableOpacity>
+            <AirCarerText variant="default" style={styles.text}>
+              {item}
+            </AirCarerText>
+            <Button
+              mode="text"
+              onPress={() => removeEducation(item)}
+              contentStyle={styles.removeButtonContainer}
+            >
+              ✖
+            </Button>
           </View>
         )}
       />
 
-      <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-        <Text style={styles.saveButtonText}>{i18n.t("educationScreen.saveButton")}</Text>
-      </TouchableOpacity>
+      {/* Save Button */}
+      <View style={styles.saveButtonContainer}>
+        <Button
+          mode="contained"
+          onPress={saveChanges}
+          contentStyle={styles.saveButtonContent}
+          style={styles.saveButton}
+        >
+          <AirCarerText variant="button" style={styles.saveButtonText}>
+            {i18n.t('educationScreen.saveButton')}
+          </AirCarerText>
+        </Button>
+      </View>
     </View>
   );
 };
@@ -74,52 +91,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.paper,
   },
   input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderRadius: 5,
     marginBottom: 20,
-    color: '#000',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
   text: {
     fontSize: 16,
-    color: '#333',
+    color: theme.colors.text,
   },
-  removeButton: {
-    fontSize: 18,
-    color: '#999',
+  removeButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButtonContainer: {
+    marginTop: 20,
+    marginBottom: 30,
   },
   saveButton: {
-    marginTop: 20,
-    backgroundColor: '#007bff',
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignItems: 'center',
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.rouded.large,
+  },
+  saveButtonContent: {
+    justifyContent: 'center',
   },
   saveButtonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: theme.colors.paper,
     fontWeight: 'bold',
-  },
-  backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 5,
-  },
-  backText: {
-    fontSize: 18,
-    color: '#000',
   },
 });
 

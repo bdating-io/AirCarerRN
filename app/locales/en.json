@@ -19,6 +19,7 @@
     "3b2b": "3 Bedroom 2 Bathroom",
     "edit": "Edit",
     "accountTab": {
+        "greeting": "Hi",
         "publicProfile": "See your public profile",
         "language": "Language",
         "currentFont": "Current font size",
@@ -28,7 +29,8 @@
         "paymentOptions": "Payment Options",
         "notifications": "Notifications",
         "settings": "Settings",
-        "earningMoney": "EARNING MONEY"
+        "earningMoney": "EARNING MONEY",
+        "myDashboard": "My Dashboard"
     },
     "signupTab": {
         "createProfile": "Create your profile",
@@ -72,6 +74,9 @@
         "flexibleDate": "Flexible Date",
         "whatsPlaceLike": "What's the place like?",
         "provideDetails": "Provide more details",
+        "selectPropertyPlaceholder": "Select your property",
+        "noPropertiesTitle": "No Properties Available",
+        "noPropertiesMessage": "Please add a property before proceeding.",
         "cleanTypeQuestion": "What kind of clean is this?",
         "regularCleaning": "Regular Cleaning",
         "endOfLeaseCleaning": "End of Lease Cleaning",
@@ -147,7 +152,7 @@
         "portfolioDescription": "Show off your work (Max. 30 images).",
         "bio": "Bio",
         "bioDescription": "Introduce yourself to new customers.",
-        "bioPlaceholder": "A brief introduction of who you are and what you do on Airtasker",
+        "bioPlaceholder": "A brief introduction of who you are and what you do on AirCarer",
         "infoBoxTitle": "Make your profile shine!",
         "infoBoxDescription": "The information you add is visible to everyone.",
         "imageLimitExceeded": "Image Limit Exceeded",
@@ -181,7 +186,9 @@
         "online": "Online",
         "scooter": "Scooter",
         "truck": "Truck",
-        "walk": "Walk"
+        "walk": "Walk",
+        "successAlertTitle": "Success",
+        "successAlertMessage": "Your changes have been updated successfully."
     },
     "transportationOptions": {
         "bicycle": "Bicycle",
@@ -212,7 +219,19 @@
         "ShowLess" : "Show less",
         "YourPrice" : "Your Price",
         "YourDescription":"Your Description",
-        "Confirm":"Confirm"
+        "Confirm":"Confirm",
+        "taskTitle": "Task Title"
+    },
+    "taskDetail": {
+        "header": "Task Detail"
+    },
+    "myTaskDetail": {
+        "header": "My Task Detail",
+        "goToTaskDetail": "Go to task detail"
+    },
+    "taskList": {
+        "seeDetail": "See Detail",
+        "noTasksAvailable": "No tasks available"
     },
     "educationScreen": {
         "title": "Education",
@@ -249,6 +268,7 @@
     "propertyList": {
         "header": "Property List",
         "addProperty": "Add Property",
+        "delete": "Delete Property",
         "noProperty": "No property added yet!",
         "bedrooms": "bedrooms",
         "bedroom": "bedroom",
@@ -259,7 +279,7 @@
     "addProperty": {
         "header": "Add Property",
         "title": "What's the place like?",
-        "type": "Type",
+        "type": "Property Type",
         "subTitle": "Provide more details",
         "askBedroom": "How many bedrooms do you have?",
         "askBathroom": "How many bathrooms do you have?",
@@ -269,13 +289,32 @@
         "state": "State",
         "postcode": "Postcode",
         "addPhoto": "Add Photos",
-        "submit": "Submit"
+        "submit": "Submit",
+        "successMessage": "Property information submitted successfully!",
+        "errors": {
+            "requiredFields": "Please fill in all required fields.",
+            "invalidPostcode": "Postcode must be a 4-digit number."
+        },
+        "types": {
+            "house": "House",
+            "townhouse": "Townhouse",
+            "apartment": "Apartment",
+            "studio": "Studio"
+        },
+        "placeholders": {
+            "selectState": "Select a state"
+        }
     },
     "addPropertyPhoto": {
         "header": "Add Photo",
         "title": "Snap a photo",
         "subTitle": "Help yourself remember your property!",
         "upload": "Upload Photos",
-        "submit": "Submit"
+        "submit": "Submit",
+        "cameraPermissionMessage": "Permission to access the camera roll is required!"
+    },
+    "settings": {
+        "increase": "Increase",
+        "decrease": "Decrease"
     }
 }

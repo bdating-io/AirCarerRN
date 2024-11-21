@@ -40,12 +40,12 @@ const AddProperty = (props: any) => {
 
   const handleSubmit = () => {
     if (!address || !postcode || !type) {
-      error('Please fill in all required fields.');
+      error(i18n.t('addProperty.errors.requiredFields'));
       return;
     }
 
     if (!/^\d{4}$/.test(postcode)) {
-      error('Postcode must be a 4-digit number.');
+      error(i18n.t('addProperty.errors.invalidPostcode'));
       return;
     }
 
@@ -57,7 +57,7 @@ const AddProperty = (props: any) => {
       editProperty(property.id, updatedProperty);
     }
 
-    success('Property information submitted successfully!');
+    success(i18n.t('addProperty.successMessage'));
     navigation.navigate('property/list');
   };
 
@@ -93,28 +93,28 @@ const AddProperty = (props: any) => {
             contentStyle={styles.typeButton}
           >
             <AirCarerText variant="button" style={{ color: type === 'House' ? theme.colors.paper : theme.colors.primary }}>
-              House
+            {i18n.t("addProperty.types.house")}
             </AirCarerText>
           </Button>
           <Button mode="contained" onPress={() => setType('Townhouse')}
             contentStyle={styles.typeButton}
             style={{ backgroundColor: type === 'Townhouse' ? theme.colors.primary : Colors.light.tabDefault, borderRadius: theme.rouded.small }}>
             <AirCarerText variant="button" style={{ color: type === 'Townhouse' ? theme.colors.paper : theme.colors.primary }}>
-              Townhouse
+            {i18n.t("addProperty.types.townhouse")}
             </AirCarerText>
           </Button>
           <Button mode="contained" onPress={() => setType('Apartment')}
             contentStyle={styles.typeButton}
             style={{ backgroundColor: type === 'Apartment' ? theme.colors.primary : Colors.light.tabDefault, borderRadius: theme.rouded.small }}>
             <AirCarerText variant="button" style={{ color: type === 'Apartment' ? theme.colors.paper : theme.colors.primary }}>
-              Apartment
+            {i18n.t("addProperty.types.apartment")}
             </AirCarerText>
           </Button>
           <Button mode="contained" onPress={setStudio}
             contentStyle={styles.typeButton}
             style={{ backgroundColor: type === 'Studio' ? theme.colors.primary : Colors.light.tabDefault, borderRadius: theme.rouded.small }}>
             <AirCarerText variant="button" style={{ color: type === 'Studio' ? theme.colors.paper : theme.colors.primary }}>
-              Studio
+            {i18n.t("addProperty.types.studio")}
             </AirCarerText>
           </Button>
         </View>
@@ -175,7 +175,7 @@ const AddProperty = (props: any) => {
           items={states}
           // for android, the value is updated in onValueChange
           onValueChange={(value) => setState(value)}
-          placeholder={{ label: 'Select a state', value: null }}
+          placeholder={{ label: i18n.t('addProperty.placeholders.selectState'), value: null }}
         >
           <TextInput label={i18n.t("addProperty.state")} outlineStyle={{
             borderRadius: theme.rouded.small,

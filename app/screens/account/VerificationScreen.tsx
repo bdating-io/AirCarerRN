@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { i18n } from '@app/locales/i18n';
 import theme from '@app/constants/theme';
 import { useSkills } from '@app/contexts/SkillsContext';
 import * as FileSystem from 'expo-file-system';
+import { Button } from 'react-native-paper';
+import AirCarerText from "@app/constants/AirCarerText";
 
 const VerificationScreen: React.FC = () => {
     const { skills, setVerificationStatus } = useSkills();
@@ -29,15 +31,39 @@ const VerificationScreen: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.description}>{i18n.t("editProfile.verificationDescription")}</Text>
+            <AirCarerText
+                variant="default"
+                style={styles.description}
+                allowFontScaling={true}
+            >
+                {i18n.t("editProfile.verificationDescription")}
+            </AirCarerText>
 
-            <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
-                <Text style={styles.uploadButtonText}>{i18n.t("editProfile.uploadFile")}</Text>
-            </TouchableOpacity>
+            <Button
+                mode="contained"
+                onPress={handleFileUpload}
+                style={styles.uploadButton}
+                contentStyle={styles.uploadButtonContent}
+            >
+                <AirCarerText
+                    variant="button"
+                    style={styles.uploadButtonText}
+                    allowFontScaling={true}
+                >
+                    {i18n.t("editProfile.uploadFile")}
+                </AirCarerText>
+            </Button>
 
-            <Text style={styles.status}>
-                {i18n.t("editProfile.currentVerificationStatus")}: {skills.verificationStatus === "verified" ? i18n.t("editProfile.verified") : i18n.t("editProfile.notVerified")}
-            </Text>
+            <AirCarerText
+                variant="default"
+                style={styles.status}
+                allowFontScaling={true}
+            >
+                {i18n.t("editProfile.currentVerificationStatus")}:{" "}
+                {skills.verificationStatus === "verified"
+                    ? i18n.t("editProfile.verified")
+                    : i18n.t("editProfile.notVerified")}
+            </AirCarerText>
         </View>
     );
 };
@@ -46,32 +72,35 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.paper,
         alignItems: 'center',
         justifyContent: 'center',
     },
     description: {
         fontSize: 16,
-        color: '#666',
+        color: theme.colors.text,
         textAlign: 'center',
         marginBottom: 40,
     },
     uploadButton: {
         backgroundColor: theme.colors.primary,
-        paddingVertical: 15,
+        borderRadius: theme.rouded.large,
+        paddingVertical: 10,
         paddingHorizontal: 40,
-        borderRadius: 8,
         marginBottom: 20,
     },
+    uploadButtonContent: {
+        justifyContent: 'center',
+    },
     uploadButtonText: {
-        color: '#fff',
-        fontSize: 16,
+        color: theme.colors.paper,
         fontWeight: 'bold',
     },
     status: {
         fontSize: 16,
-        color: '#333',
+        color: theme.colors.text,
         marginTop: 20,
+        textAlign: 'center',
     },
 });
 

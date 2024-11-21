@@ -19,6 +19,7 @@
   "3b2b": "三室两卫",
   "edit": "编辑",
   "accountTab": {
+    "greeting": "你好",
     "publicProfile": "查看您的公共资料",
     "language": "语言",
     "fontSize": "字号",
@@ -28,7 +29,8 @@
     "paymentOptions": "支付设置",
     "notifications": "通知",
     "settings": "设置",
-    "earningMoney": "我的钱包"
+    "earningMoney": "我的钱包",
+    "myDashboard": "我的面板"
   },
   "signupTab": {
     "createProfile": "创建个人资料",
@@ -74,6 +76,8 @@
     "provideDetails": "提供更多内容",
     "selectProperty": "选择一个房产",
     "selectPropertyPlaceholder": "请选择一个房产",
+    "noPropertiesTitle": "抱歉，您还没有任何房产",
+    "noPropertiesMessage": "请先添加一个房产",
     "cleanTypeQuestion": "请选择您的清洁类型？",
     "regularCleaning": "常规清洁",
     "endOfLeaseCleaning": "搬家清洁",
@@ -130,7 +134,19 @@
     "ShowLess": "显示更少",
     "YourPrice" : "你的报价",
      "YourDescription":"你的描述",
-     "Confirm":"确认"
+     "Confirm":"确认",
+     "taskTitle": "任务标题"
+  },
+  "taskDetail": {
+    "header": "任务详情"
+  },
+  "myTaskDetail": {
+    "header": "我的任务详情",
+    "goToTaskDetail": "前往任务详情"
+  },
+  "taskList": {
+    "seeDetail": "查看详情",
+    "noTasksAvailable": "暂无任务"
   },
   "publishTaskPost": {
     "readyToPost": "准备好发布任务了吗？",
@@ -174,7 +190,7 @@
     "portfolioDescription": "展示您的作品（最多30张图片）。",
     "bio": "个人简介",
     "bioDescription": "向新客户介绍您自己。",
-    "bioPlaceholder": "简要介绍您自己以及您在Airtasker上的工作内容",
+    "bioPlaceholder": "简要介绍您自己以及您在AirCarer上的工作内容",
     "infoBoxTitle": "让您的个人资料更出彩！",
     "infoBoxDescription": "您添加的信息对所有人可见。",
     "imageLimitExceeded": "图片数量超限",
@@ -208,7 +224,9 @@
     "online": "在线",
     "scooter": "滑板车",
     "truck": "卡车",
-    "walk": "步行"
+    "walk": "步行",
+    "successAlertTitle": "更新完成",
+    "successAlertMessage": "您的信息更改已成功更新."
   },
   "transportationOptions": {
     "bicycle": "自行车",
@@ -250,13 +268,14 @@
     "invalidDate": "无效日期",
     "dateSelectionHint": "请选择今天或之后的日期。",
     "selectDate": "选择日期",
-    "continue": "继续",
+    "continue": "下一步",
     "insufficientDetails": "请完善您的日期信息",
     "ok": "确定"
   },
   "propertyList": {
     "header": "房源列表",
     "addProperty": "添加房源",
+    "delete": "移除房源",
     "noProperty": "暂时还没有任何房源信息！",
     "bedrooms": "室",
     "bedroom": "室",
@@ -266,24 +285,43 @@
   },
   "addProperty": {
     "header": "添加房源",
-    "type": "房屋类型",
+    "type": "房源类型",
     "title": "这套房子是什么样子的？",
     "subTitle": "请提供更多具体细节",
-    "askBedroom": "一共有多少卧室？",
-    "askBathroom": "一共有多少卫生间",
-    "askAddress": "房子位于哪里？",
+    "askBedroom": "您有多少间卧室？",
+    "askBathroom": "您有多少间浴室",
+    "askAddress": "房源位于哪里？",
     "address": "地址",
     "suburb": "地区",
     "state": "省份",
     "postcode": "邮编",
     "addPhoto": "添加照片",
-    "submit": "提交"
+    "submit": "提交",
+    "successMessage": "房源信息提交成功！",
+    "errors": {
+        "requiredFields": "请填写所有必填信息。",
+        "invalidPostcode": "邮政编码必须是4位数字。"
+    },
+    "types": {
+      "house": "别墅",
+      "townhouse": "联排别墅",
+      "apartment": "公寓",
+      "studio": "工作室"
+    },
+    "placeholders": {
+      "selectState": "请选择所在州"
+  }
   },
   "addPropertyPhoto": {
     "header": "添加照片",
     "title": "添加照片",
     "subTitle": "帮助您记住您的房屋信息",
     "upload": "上传照片",
-    "submit": "提交"
-  }
+    "submit": "提交",
+    "cameraPermissionMessage": "需要权限访问相册！",
+  },
+  "settings": {
+    "increase": "放大字体",
+    "decrease": "缩小字体"
+}
 }

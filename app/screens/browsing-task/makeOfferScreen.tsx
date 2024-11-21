@@ -42,7 +42,7 @@ const MakeOfferScreen = ({ visible, onDismiss }: MakeOfferScreenProps) => {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.expectedPricingContainer}>
-          <AirCarerText style={styles.title}>Task Title</AirCarerText>
+          <AirCarerText style={styles.title}>{i18n.t("taskConclusion.taskTitle")}</AirCarerText>
           <TextInput
             mode="outlined"
             style={styles.input}
@@ -79,7 +79,7 @@ const MakeOfferScreen = ({ visible, onDismiss }: MakeOfferScreenProps) => {
             onPress={onConfirm}
             disabled={!price}
           >
-            <AirCarerText variant="button">Confirm</AirCarerText>
+            <AirCarerText variant="button">{i18n.t("taskConclusion.Confirm")}</AirCarerText>
           </Button>
         </View>
       </ScrollView>
