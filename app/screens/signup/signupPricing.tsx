@@ -50,7 +50,7 @@ const SignupPricing = (props: any) => {
             }
         ];
     }, [i18n]);
-    const { logged_user } = useAirCarerAuth();
+    const { logged_user, updateProfile } = useAirCarerAuth();
 
     const [expectedPricing, setExpectedPricing] = useState<Pricing[]>(getDefaultPricing());
 
@@ -76,7 +76,8 @@ const SignupPricing = (props: any) => {
         for (const item of expectedPricing) {
             updatedUser[item.key] = item.pricing;
         }
-        //TODO:
+        
+        updateProfile(updatedUser);
         navigation.navigate('signup/servicingHours');
     }
 

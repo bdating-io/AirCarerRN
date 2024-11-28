@@ -6,9 +6,6 @@ import { useAirCarerAuth } from "@app/contexts/auth.context";
 import { useSnackbar } from "@app/contexts/snackbar.context";
 import { useAxios } from "@app/hooks/useAxios";
 import { i18n } from "@app/locales/i18n";
-import { aircarerSlice } from "@app/slices/aircarer.slice";
-import { RootState, useDispatch, useSelector } from "@app/store";
-import { useState } from "react";
 import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Card } from "react-native-paper";
 
@@ -18,7 +15,6 @@ const SignupServicingHours = (props: any) => {
     const { info } = useSnackbar();
     const { logged_user, updateProfile } = useAirCarerAuth();
     const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
-    const dispatch = useDispatch();
     const { put } = useAxios();
 
     const handleNext = () => {
@@ -40,8 +36,6 @@ const SignupServicingHours = (props: any) => {
         };
 
         updateProfile(registeredUser);
-
-        console.log(registeredUser)
 
         put('/profile', registeredUser)
             .then(() => {

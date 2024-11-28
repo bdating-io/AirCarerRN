@@ -31,6 +31,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) =
   const { error } = useSnackbar();
 
   useEffect(() => {
+    if (logged_user)
+      logged_user.nickname = logged_user?.firstName;
+  }, [logged_user]);
+
+  useEffect(() => {
     console.log("isLoading", isLoading);
     if (!isLoading && !user) {
       // navigation.navigate('login');
@@ -46,7 +51,6 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) =
           get("/profile")
             .then((res: any) => {
               const profile = res;
-              profile.nickname = profile.firstName;
               const aircarerUser = { ...user, ...profile };
               setLoggedUser(aircarerUser);
               console.log("Logged user", aircarerUser);
