@@ -1,16 +1,14 @@
 import React, { useCallback } from 'react';
 import { Alert, ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useAuth0 } from 'react-native-auth0';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import theme from '@app/constants/theme';
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
-import { RootStackParamList } from '@app/types/common.type';
+import { useAirCarerAuth } from '@app/contexts/auth.context';
 
 export default function PublishTaskScreen(props: any) {
-    const { user } = useAuth0();
     const { navigation } = props;
+    const { logged_user } = useAirCarerAuth();
 
     // Navigate to the task details screen
     const handleNavigateToNewTask = () => {
@@ -21,7 +19,7 @@ export default function PublishTaskScreen(props: any) {
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.searchContainer}>
                 <AirCarerText variant='bold' style={styles.goodDayText}>
-                    {`${i18n.t('publishTab.goodday')}, ${user?.nickname || 'Guest'}!`}
+                    {`${i18n.t('publishTab.goodday')}, ${logged_user?.nickname || 'Guest'}!`}
                 </AirCarerText>
                 <AirCarerText variant='h1' style={styles.slogen}>
                     {i18n.t('publishTab.publishTaskSlogen')}

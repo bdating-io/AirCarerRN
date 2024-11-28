@@ -12,6 +12,7 @@ import { Auth0Provider } from 'react-native-auth0';
 import { SkillsProvider } from "./contexts/SkillsContext";
 import { SnackbarProvider } from "./contexts/snackbar.context";
 import 'react-native-get-random-values';
+import { AuthContextProvider } from "./contexts/auth.context";
 
 
 export default function Index() {
@@ -23,7 +24,9 @@ export default function Index() {
                         <FontSizeProvider>
                             <PaperProvider theme={theme}>
                                 <SnackbarProvider>
-                                    <Navigation />
+                                    <AuthContextProvider>
+                                        <Navigation />
+                                    </AuthContextProvider>
                                 </SnackbarProvider>
                             </PaperProvider>
                         </FontSizeProvider>

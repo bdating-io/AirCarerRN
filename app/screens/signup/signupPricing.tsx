@@ -1,13 +1,11 @@
 import useManageTimeSlot from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
+import { useAirCarerAuth } from "@app/contexts/auth.context";
 import { i18n } from "@app/locales/i18n";
-import { aircarerSlice } from "@app/slices/aircarer.slice";
-import { RootState, useSelector } from "@app/store";
 import { useCallback, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Card, TextInput } from "react-native-paper";
-import { useDispatch } from "react-redux";
 
 interface Pricing {
     id: number;
@@ -52,10 +50,9 @@ const SignupPricing = (props: any) => {
             }
         ];
     }, [i18n]);
+    const { logged_user } = useAirCarerAuth();
 
     const [expectedPricing, setExpectedPricing] = useState<Pricing[]>(getDefaultPricing());
-    const { logged_user } = useSelector((state: RootState) => state.aircarer);
-    const dispatch = useDispatch();
 
     const updatePricing = (id: number, pricing: number) => {
         const newPricing = expectedPricing.map((item: Pricing) => {
@@ -79,7 +76,7 @@ const SignupPricing = (props: any) => {
         for (const item of expectedPricing) {
             updatedUser[item.key] = item.pricing;
         }
-        dispatch(aircarerSlice.actions.setLoggedUser(updatedUser));
+        //TODO:
         navigation.navigate('signup/servicingHours');
     }
 

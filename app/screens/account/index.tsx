@@ -3,11 +3,13 @@ import { View, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from "re
 import { Button, IconButton } from "react-native-paper";
 import AirCarerText from "@app/constants/AirCarerText";
 import { useAuth0 } from "react-native-auth0";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import theme from "@app/constants/theme";
 import { i18n } from "@app/locales/i18n";
 import { useNavigation, useIsFocused, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@app/types/common.type";
+import { RootState } from "@app/store";
+import { useAirCarerAuth } from "@app/contexts/auth.context";
 
 interface MenuItemProps {
   icon: string;
@@ -27,25 +29,15 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, text, onPress }) => (
 
 const AccountScreen: React.FC = (props: any) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const dispatch = useDispatch();
-  const { user, authorize, clearSession } = useAuth0();
   const isFocused = useIsFocused();
+
+  const { logged_user, signin, signout } = useAirCarerAuth();
 
   // Profile data states
   const [profileImage, setProfileImage] = useState(null);
   const [location, setLocation] = useState("Melbourne VIC, Australia");
   const [portfolioImages, setPortfolioImages] = useState([]);
   const [bio, setBio] = useState("");
-
-  const signin = async () => {
-    authorize().catch((error: any) => {
-      console.log(error);
-    });
-  };
-
-  const signout = async () => {
-    await clearSession();
-  };
 
   const Edit = () => {
     navigation.navigate("EditPublicProfile");
@@ -84,7 +76,7 @@ const AccountScreen: React.FC = (props: any) => {
         </View>
         <View style={styles.profileInfo}>
           <AirCarerText variant="bold" style={{ color: theme.colors.contrastText }}>
-            {i18n.t("accountTab.greeting")}, {user?.nickname}
+            {i18n.t("accountTab.greeting")}, {logged_user?.nickname}
           </AirCarerText>
           <AirCarerText style={{ color: theme.colors.contrastText }}>{location}</AirCarerText>
           <View style={styles.editContainer}>
@@ -131,7 +123,7 @@ const AccountScreen: React.FC = (props: any) => {
         />
 
         {/* Login/Logout Button */}
-        {user ? (
+        {logged_user ? (
           <Button
             mode="contained"
             style={styles.loginoutButtonBody}

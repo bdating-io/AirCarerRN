@@ -17,7 +17,7 @@ interface FontSizeProviderProps {
 }
 
 export const FontSizeProvider: React.FC<FontSizeProviderProps> = ({ children }) => {
-  const [fontSize, setFontSize] = useState<number>(18);
+  const [fontSize, setFontSize] = useState<number>(14);
 
   useEffect(() => {
     const fetchFontSize = async () => {

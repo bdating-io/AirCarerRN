@@ -1,5 +1,6 @@
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
+import { useAirCarerAuth } from "@app/contexts/auth.context";
 import { useSnackbar } from "@app/contexts/snackbar.context";
 import { useAxios } from "@app/hooks/useAxios";
 import { i18n } from "@app/locales/i18n";
@@ -25,8 +26,9 @@ const CreateProfile = (props: any) => {
     const [disableNext, setDisableNext] = useState<boolean>(true);
     const { info, error, success } = useSnackbar();
     const dispatch = useDispatch();
-    const { logged_user } = useSelector((state: RootState) => state.aircarer);
     const { put } = useAxios();
+
+    const { logged_user, updateProfile } = useAirCarerAuth();
     
     const validate = useCallback(() => {
         const postCode = parseInt(suburb ?? '0');
@@ -73,7 +75,7 @@ const CreateProfile = (props: any) => {
             purpose: purpose,
             abn: abn,
         };
-        dispatch(aircarerSlice.actions.setLoggedUser(registeredUser));
+        updateProfile(registeredUser);
 
         if (purpose === 'earnMoney') {
             navigation.navigate('signup/pricing');

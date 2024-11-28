@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useAuth0 } from "react-native-auth0";
 import { Icon } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
@@ -50,33 +49,15 @@ import { i18n } from "@app/locales/i18n";
 import Logo from "@assets/images/logo.png";
 import { useLanguage } from "@app/contexts/language.context";
 import AppSetting from "@app/screens/account/setting";
-import { useDispatch } from "react-redux";
-import { aircarerSlice } from "@app/slices/aircarer.slice";
+import { useAuth0 } from "react-native-auth0";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
-  const { user, isLoading, getCredentials } = useAuth0();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { lang } = useLanguage();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("isLoading", isLoading);
-    if (!isLoading && !user) {
-      // navigation.navigate('login');
-      // console.log('Not logged in, redirect to login');
-    }
-    getCredentials()
-      .then((credential) => {
-        dispatch(aircarerSlice.actions.setAccessToken(credential?.accessToken));
-        console.log("credential", credential);
-      })
-      .catch((error) => {
-        console.error("Error getting credentials:", error);
-      });
-  }, [isLoading, user]);
+  const { isLoading, user } = useAuth0();
 
   const renderTabIcon = (route: any, focused: boolean) => {
     let icon = "";
@@ -422,10 +403,9 @@ const Navigation = () => {
   }, [lang]);
 
   const renderNavigator = () => {
-  //   if (isLoading) return <></>;
-  //   if (user) return <AuthNavigator />;
-  //   return <UnAuthNavigator />;
-  return <AuthNavigator />;
+    if (isLoading) return <></>;
+    if (user) return <AuthNavigator />;
+    return <UnAuthNavigator />;
  };
 
   return renderNavigator();

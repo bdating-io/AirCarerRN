@@ -2,6 +2,7 @@ import Calendar from "@app/components/calendar.component";
 import ManageTimeSlotModal, { useManageTimeSlot } from "@app/components/manageTimeSlot.modal";
 import AirCarerText from "@app/constants/AirCarerText";
 import theme from "@app/constants/theme";
+import { useAirCarerAuth } from "@app/contexts/auth.context";
 import { useSnackbar } from "@app/contexts/snackbar.context";
 import { useAxios } from "@app/hooks/useAxios";
 import { i18n } from "@app/locales/i18n";
@@ -15,7 +16,7 @@ import { Button, Card } from "react-native-paper";
 const SignupServicingHours = (props: any) => {
     const { navigation } = props;
     const { info } = useSnackbar();
-    const { logged_user } = useSelector((state: RootState) => state.aircarer);
+    const { logged_user, updateProfile } = useAirCarerAuth();
     const { showTimePicker, setShowTimePicker, weeklyRoutine, setWeeklyRoutine } = useManageTimeSlot();
     const dispatch = useDispatch();
     const { put } = useAxios();
@@ -38,7 +39,7 @@ const SignupServicingHours = (props: any) => {
             availability: result,
         };
 
-        dispatch(aircarerSlice.actions.setLoggedUser(registeredUser));
+        updateProfile(registeredUser);
 
         console.log(registeredUser)
 
