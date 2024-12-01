@@ -1,41 +1,67 @@
-import AirCarerText from "@app/constants/AirCarerText";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
 import { i18n } from "@app/locales/i18n";
 import { useAuth0 } from "react-native-auth0";
-import { useEffect, useState } from "react";
 import theme from "@app/constants/theme";
 import Welcome from "@assets/images/welcome.png";
 import HalfScreenModal from "../../components/halfScreen.modal";
+import { useLanguage } from "@app/contexts/language.context";
+import AirCarerText from "@app/constants/AirCarerText";
 
 export default function LoginScreen(props: any) {
   const { authorize, error } = useAuth0();
   const { navigation } = props;
+  const { lang, changeLanguage } = useLanguage();
 
   useEffect(() => {
-    console.log(error);
+    console.log("Authentication error:", error);
   }, [error]);
 
   const signin = async () => {
     authorize({
       audience: "https://aircarer.au.auth0.com/api/v2/",
     })
-    .then((user) => {
-      if (user?.accessToken !== undefined) {
-        // if user has registered, navigate to index
-        // navigation.navigate("/");
-        // if user has not registered, navigate to signup
-        navigation.navigate("signup/profile")
-      }
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+      .then((user) => {
+        if (user?.accessToken !== undefined) {
+          navigation.navigate("signup/profile");
+        }
+      })
+      .catch((error: any) => {
+        console.log("Login error:", error);
+      });
   };
 
-  //test only，to index
   const testSignIN = () => {
     navigation.navigate("/");
+  };
+
+  const LanguageSelector = () => {
+    return (
+      <View style={styles.languageSelector}>
+        <TouchableOpacity
+          onPress={() => changeLanguage("en")}
+          activeOpacity={0.8}
+        >
+          <AirCarerText
+            style={[styles.languageText, lang === "en" && styles.selectedLanguageText]}
+          >
+            English
+          </AirCarerText>
+        </TouchableOpacity>
+        <AirCarerText style={styles.languageSeparator}>|</AirCarerText>
+        <TouchableOpacity
+          onPress={() => changeLanguage("zh")}
+          activeOpacity={0.8}
+        >
+          <AirCarerText
+            style={[styles.languageText, lang === "zh" && styles.selectedLanguageText]}
+          >
+            中文
+          </AirCarerText>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   return (
@@ -49,7 +75,7 @@ export default function LoginScreen(props: any) {
           />
         </View>
 
-        <HalfScreenModal heightPerc="20%" persist>
+        <HalfScreenModal heightPerc="25%" persist>
           <View style={styles.bottomContainer}>
             <View style={styles.buttonContainer}>
               <Button
@@ -73,9 +99,7 @@ export default function LoginScreen(props: any) {
                 <AirCarerText variant="button">{i18n.t("signup")}</AirCarerText>
               </Button>
             </View>
-            <AirCarerText style={styles.termsText}>
-              {i18n.t("termsAndConditions")}
-            </AirCarerText>
+            <LanguageSelector />
           </View>
         </HalfScreenModal>
       </View>
@@ -86,41 +110,37 @@ export default function LoginScreen(props: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
     paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: theme.colors.scrim,
-    width: "100%",
   },
   searchContainer: {
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 20,
   },
   imagesContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
     marginTop: 20,
     width: "100%",
   },
   welcomeImage: {
     width: "100%",
     height: 500,
-    marginTop: 20,
-    marginBottom: 20,
     borderRadius: 10,
     alignSelf: "center",
   },
   bottomContainer: {
     backgroundColor: "white",
     width: "100%",
+    height: 100,
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "100%",
   },
   button: {
     flex: 1,
@@ -128,18 +148,28 @@ const styles = StyleSheet.create({
     borderRadius: theme.rouded.large,
   },
   buttonContent: {
-    height: 60,
-    paddingVertical: 10,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
   },
-  buttonText: {
-    fontSize: 16,
-    textAlign: "center",
+  languageSelector: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  termsText: {
-    color: theme.colors.contrastText,
-    fontSize: 12,
+  languageText: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    marginHorizontal: 5,
+  },
+  selectedLanguageText: {
+    fontWeight: "bold",
+    color: theme.colors.primary,
+  },
+  languageSeparator: {
+    fontSize: 14,
+    color: theme.colors.primary,
+    marginHorizontal: 5,
     textAlign: "center",
   },
 });
