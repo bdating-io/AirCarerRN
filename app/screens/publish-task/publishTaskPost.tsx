@@ -6,23 +6,37 @@ import theme from '@app/constants/theme';
 import AirCarerText from '@app/constants/AirCarerText';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { i18n } from '@app/locales/i18n';
+import { useSelector } from 'react-redux';
 
 const { width, height } = Dimensions.get('window');
 
 export default function PublishTaskPostScreen() {
     const route = useRoute();
     const navigation = useNavigation();
-    const { taskDetails } = route.params;
+    // const { taskDetails } = route.params;
 
-    const {
-        date,
-        cleanType,
-        property,
-        equipment,
-        cleaningDetails,
-        budget,
-        photos = []
-    } = taskDetails || {};
+    // const {
+    //     date,
+    //     cleanType,
+    //     property,
+    //     equipment,
+    //     cleaningDetails,
+    //     budget,
+    //     photos = []
+    // } = taskDetails || {};
+    const draftTask = useSelector((state) => state.task.draftTask);
+    //test only
+    console.log(JSON.stringify(draftTask))
+
+const { 
+    startTime: date,
+    type: cleanType,
+    property,
+    equipmentProvided: equipment,
+    details: cleaningDetails,
+    budget,
+    descImages: photos = []
+} = draftTask || {};
 
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);

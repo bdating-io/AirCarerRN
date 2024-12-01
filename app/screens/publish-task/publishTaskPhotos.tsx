@@ -7,13 +7,16 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import theme from '@app/constants/theme';
 import AirCarerText from '@app/constants/AirCarerText';
 import { i18n } from '@app/locales/i18n';
+import { useDispatch } from 'react-redux';
+import { updateDraftTask } from '../../slices/task.slice';
 
 const { width, height } = Dimensions.get('window');
 
 const PublishTaskPhotosScreen = () => {
     const navigation = useNavigation();
-    const route = useRoute();
-    const { taskDetails } = route.params || {};
+    //const route = useRoute();
+    //const { taskDetails } = route.params || {};
+    const dispatch = useDispatch();
 
     const [photos, setPhotos] = useState<string[]>([]);
     const [isFullScreenVisible, setIsFullScreenVisible] = useState(false);
@@ -99,12 +102,11 @@ const PublishTaskPhotosScreen = () => {
     );
 
     const handleContinue = () => {
-        const updatedTaskDetails = {
-            ...taskDetails,
-            photos,
-        };
+        dispatch(updateDraftTask({
+            descImages: photos
+        }));
 
-        navigation.navigate("publishTaskBudget", { taskDetails: updatedTaskDetails });
+        navigation.navigate("publishTaskBudget");
     };
 
     return (

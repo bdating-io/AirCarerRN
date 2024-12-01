@@ -6,13 +6,16 @@ import { NavigationProp, useNavigation, useRoute } from '@react-navigation/nativ
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
 import { RootStackParamList } from '@app/types/common.type';
+import { useDispatch } from 'react-redux';
+import { updateDraftTask } from '../../slices/task.slice';
 
 const PublishTaskBudgetScreen = () => {
     const [budget, setBudget] = useState('0');
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-    const route = useRoute();
+    //const route = useRoute();
 
-    const { taskDetails } = route.params || {};
+    //const { taskDetails } = route.params || {};
+    const dispatch = useDispatch();
 
     const handlePress = (value: string) => {
         if (value === 'C') {
@@ -25,12 +28,11 @@ const PublishTaskBudgetScreen = () => {
     };
 
     const handleContinue = () => {
-        const updatedTaskDetails = {
-            ...taskDetails,
-            budget,
-        };
-
-        navigation.navigate('publishTaskPost', { taskDetails: updatedTaskDetails });
+        dispatch(updateDraftTask({
+            budget: Number(budget)
+        }));
+    
+        navigation.navigate('publishTaskPost');
     };
 
     return (

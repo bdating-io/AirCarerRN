@@ -6,6 +6,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import theme from '@app/constants/theme';
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
+import { useDispatch } from 'react-redux';
+import { updateDraftTask } from '../../slices/task.slice';
 
 export default function PublishTaskDateScreen() {
     const [selectedOption, setSelectedOption] = useState(null);
@@ -13,9 +15,11 @@ export default function PublishTaskDateScreen() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [timeDuration, setTimeDuration] = useState('');
     const navigation = useNavigation();
-    const route = useRoute();
+    //const route = useRoute();
+    const dispatch = useDispatch();
 
-    const taskDetails = route.params?.taskDetails || {};
+
+    //const taskDetails = route.params?.taskDetails || {};
 
     const handleOptionSelect = (option) => {
         setSelectedOption(option);
@@ -54,13 +58,19 @@ export default function PublishTaskDateScreen() {
                 value: selectedDate ? selectedDate.toLocaleDateString() : null,
             };
 
-        const updatedTaskDetails = {
-            ...taskDetails,
-            date: dateInfo,
-            timeDuration,
-        };
+        // const updatedTaskDetails = {
+        //     ...taskDetails,
+        //     date: dateInfo,
+        //     timeDuration,
+        // };
 
-        navigation.navigate('PublishTaskPhotosScreen', { taskDetails: updatedTaskDetails });
+        dispatch(updateDraftTask({
+            startTime: selectedDate || new Date(),
+            isFlexible: selectedOption === "I'm flexible",
+            estimateTime: Number(timeDuration)
+        }));
+
+        navigation.navigate('PublishTaskPhotosScreen');
     };
 
     const handleTimeDurationChange = (input) => {

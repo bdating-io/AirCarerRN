@@ -6,11 +6,14 @@ import theme from '@app/constants/theme';
 import AirCarerText from "@app/constants/AirCarerText";
 import { i18n } from '@app/locales/i18n';
 import { useProperties } from '@app/contexts/PropertiesContext';
+import { useDispatch } from 'react-redux';
+import { updateDraftTask } from '../../slices/task.slice';
 
 export default function PublishTaskPropertyDetailsScreen() {
     const navigation = useNavigation();
-    const route = useRoute();
+    //const route = useRoute();
     const { properties } = useProperties();
+    const dispatch = useDispatch();
 
     const [selectedProperty, setSelectedProperty] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
@@ -18,7 +21,7 @@ export default function PublishTaskPropertyDetailsScreen() {
     const [equipment, setEquipment] = useState('');
     const [cleaningDetails, setCleaningDetails] = useState('');
 
-    const taskDetails = route.params?.taskDetails || {};
+    //const taskDetails = route.params?.taskDetails || {};
     const isContinueEnabled = selectedProperty && cleanType && equipment && cleaningDetails.length >= 25;
 
     const handleContinue = () => {
@@ -27,15 +30,24 @@ export default function PublishTaskPropertyDetailsScreen() {
             return;
         }
 
-        navigation.navigate('publishTaskDate', {
-            taskDetails: {
-                ...taskDetails,
-                cleanType,
-                equipment,
-                cleaningDetails,
-                property: selectedProperty,
-            }
-        });
+        // navigation.navigate('publishTaskDate', {
+        //     taskDetails: {
+        //         ...taskDetails,
+        //         cleanType,
+        //         equipment,
+        //         cleaningDetails,
+        //         property: selectedProperty,
+        //     }
+        // });
+        dispatch(updateDraftTask({
+            type: cleanType === 'Regular' ? 'regular' : 'EndOfLease',
+            equipmentProvided: equipment === 'No',
+            details: cleaningDetails,
+            propertyId: selectedProperty?.id,
+            property: selectedProperty,
+        }));
+
+        navigation.navigate('publishTaskDate')
     };
 
     const handleDropdownPress = () => {
