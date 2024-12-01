@@ -172,6 +172,9 @@ manifestPlaceholders = [auth0Domain: "aircarer.au.auth0.com", auth0Scheme: "com.
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation("com.facebook.react:react-native-datetimepicker:7.6.1")
+    implementation("expo-image-picker:14.0.2")
+    implementation("expo-document-picker:11.0.1")
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

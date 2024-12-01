@@ -16,7 +16,6 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
-    "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-picker/picker": "2.7.5",
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native-stack": "^6.9.26",
@@ -59,7 +58,8 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
     "react-redux": "^9.1.2",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "@react-native-community/datetimepicker": "7.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
